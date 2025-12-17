@@ -263,7 +263,6 @@ export default function Header() {
                       <div key={dropdownItem.href}>
                         <Link
                           href={dropdownItem.href}
-                          onClick={(e) => e.preventDefault()}
                           className="flex items-center gap-2 py-2 hover:bg-gray-100 transition-colors duration-200"
                           style={{ 
                             fontFamily: 'Effra, Arial, sans-serif',
@@ -431,7 +430,6 @@ export default function Header() {
                       <div key={dropdownItem.href}>
                         <Link
                           href={dropdownItem.href}
-                          onClick={(e) => e.preventDefault()}
                           className="block py-2 hover:bg-gray-100 transition-colors duration-200"
                           style={{ 
                             fontFamily: 'Effra, Arial, sans-serif',
