@@ -4,15 +4,15 @@ export default function FeaturesSection() {
       height: '288px',
       bg: '#000000',
       image: {
-        src: 'https://cdn.legendholding.com/images/cdn_69427a156e6085.94279820_20251217_093829.webp',
+        src: 'https://cdn.legendholding.com/images/cdn_6943c9c03b9210.87412234_20251218_093040.webp',
         width: 311,
         height: 193,
         align: 'left' as const,
       },
       content: {
-        title: 'Most attractive appearance',
+        title: 'Super large space and exceptional performance',
         titleColor: '#DF0011',
-        body: `European truck design concept makes the vehicle more beautiful and produces spacious driving space. With car trimmings, its accuracy and control approach car level while providing comfortable driving experience.`,
+        body: `In the wide cargo body, two rows of logistics pallets can be placed side by side, this securing higher space use and providing users with accurate and scientific logistics solutions`,
         bodyColor: '#CFCFCF',
       },
     },
@@ -20,15 +20,15 @@ export default function FeaturesSection() {
       height: '288px',
       bg: 'linear-gradient(270deg, #E00E0E 0%, #7A0808 100%)',
       image: {
-        src: 'https://cdn.legendholding.com/images/cdn_69427a71046ba8.41991395_20251217_094001.webp',
+        src: 'https://cdn.legendholding.com/images/cdn_6943c9f144ce78.41921351_20251218_093129.webp',
         width: 309,
         height: 192,
         align: 'right' as const,
       },
       content: {
-        title: 'High load, efficiency and speed',
+        title: 'Robust power and classic high efficiency',
         titleColor: '#FFFFFF',
-        body: `The vehicle matches high strength frame, aluminum gearbox, aluminum alloy rim, fuel tank, air reservoir, tubeless tire, integral casting rear axle with equal height teeth, gradual leaf spring, and aluminum cargo body. It has the advantages of light weight, high power, fast running, and low fuel consumption.`,
+        body: `DEV2.5/3.0 engine designed by German FEV adopts 16-valve distribution system and timing gear + belt transmission system, with the features of low noise, stable operation, high transmission accuracy, compact structure, reliability and durability.`,
         bodyColor: '#F2F2F2',
       },
     },
@@ -36,15 +36,15 @@ export default function FeaturesSection() {
       height: '288px',
       bg: '#000000',
       image: {
-        src: 'https://cdn.legendholding.com/images/cdn_69427aaf8f1dd0.81359421_20251217_094103.webp',
+        src: 'https://cdn.legendholding.com/images/cdn_6943ca18991038.56907373_20251218_093208.webp',
         width: 309,
         height: 192,
         align: 'left' as const,
       },
       content: {
-        title: 'Super large cargo body and more load',
+        title: 'Comfortable driving',
         titleColor: '#FFFFFF',
-        body: `The super-large volume of the cargo body is 67.8 m³, the longest cargo body can reach 9.6m. Even more, the loading space is large, and the height of the cargo platform is 1.22m, which makes loading and unloading more convenient.`,
+        body: `With car trimmings, the standard configurations include central locking, electric window, remote control key, six-way adjustment hydraulic shock absorption seat, front row can lie down to rest, easy to operate, more comfortable to drive.`,
         bodyColor: '#CFCFCF',
       },
     },
@@ -53,17 +53,17 @@ export default function FeaturesSection() {
       bg: 'linear-gradient(270deg, #E00E0E 0%, #7A0808 100%)',
       images: [
         {
-          src: 'https://cdn.legendholding.com/images/cdn_6942a4fce0a404.83684126_20251217_124132.webp',
+          src: 'https://cdn.legendholding.com/images/cdn_6943caec9378b9.70673658_20251218_093540.webp',
           width: 279,
           height: 186,
         },
         {
-          src: 'https://cdn.legendholding.com/images/cdn_6942a58f104ae5.31009882_20251217_124359.webp',
+          src: 'https://cdn.legendholding.com/images/cdn_6943cb06a21193.47451017_20251218_093606.webp',
           width: 365,
           height: 239,
         },
         {
-          src: 'https://cdn.legendholding.com/images/cdn_6942a5a61788a0.85500238_20251217_124422.webp',
+          src: 'https://cdn.legendholding.com/images/cdn_6943cb2107d9f5.02504410_20251218_093633.webp',
           width: 280,
           height: 187,
         },
@@ -73,7 +73,7 @@ export default function FeaturesSection() {
       height: '593px',
       bg: '#000000',
       truckImage: {
-        src: 'https://cdn.legendholding.com/images/cdn_6940097700d295.64254957_20251215_131327.webp',
+        src: 'https://cdn.legendholding.com/images/cdn_694009a235ef95.34125296_20251215_131410.webp',
         width: 1151.320556640625,
         height: 450.13433837890625,
       },
@@ -204,7 +204,7 @@ export default function FeaturesSection() {
                       <div style={{ position: 'relative', display: 'inline-block' }}>
                         <img
                           src={block.truckImage.src}
-                          alt="Truck Image H7"
+                          alt="Truck Image L5"
                           width={block.truckImage.width}
                           height={block.truckImage.height}
                           style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
@@ -234,7 +234,7 @@ export default function FeaturesSection() {
                             height={32}
                             style={{ display: 'block' }}
                           />
-                          <img src="/text/H7-text.svg" alt="H7 Text" width={80} height={24} style={{ display: 'block' }} />
+                          <img src="/text/L5-text.svg" alt="L5 Text" width={80} height={24} style={{ display: 'block' }} />
                           <div
                             style={{
                               fontFamily: 'Effra, Arial, sans-serif',
@@ -262,5 +262,4 @@ export default function FeaturesSection() {
     </section>
   );
 }
-
 

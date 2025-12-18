@@ -13,24 +13,24 @@ export function VehicleSpecifications() {
           <SpecCard>
             <SpecList
               rows={[
-                { label: 'Overall dimensions (mm)', value: '8920×2460×2760 | 10070×2460×2760' },
-                { label: 'Cabin width (mm)', value: '2200' },
+                { label: 'Overall dimensions (mm)', value: '6950×2275×2380 | 7950×2275×2380' },
+                { label: 'Cabin width (mm)', value: '2060' },
               ]}
             />
           </SpecCard>
           <SpecCard>
             <SpecList
               rows={[
-                { label: 'Wheelbase (mm)', value: '5150 | 5750' },
-                { label: 'Cargo length (mm)', value: '6800 | 7800' },
+                { label: 'Wheelbase (mm)', value: '3800 | 4500' },
+                { label: 'Cargo length (mm)', value: '5000 | 6000' },
               ]}
             />
           </SpecCard>
           <SpecCard>
             <SpecList
               rows={[
-                { label: 'GVW (kg)', value: '16000' },
-                { label: 'Payload (kg)', value: '12000' },
+                { label: 'GVW (kg)', value: '9000' },
+                { label: 'Payload (kg)', value: '6000' },
               ]}
             />
           </SpecCard>
@@ -46,10 +46,10 @@ export function VehicleSpecifications() {
             <SpecCard>
               <SpecList
                 rows={[
-                  { label: 'Model', value: 'ISF4.5S5210' },
-                  { label: 'Displacement (L)', value: '4.46' },
-                  { label: 'Max power (Hp/rpm)', value: '210' },
-                  { label: 'Max torque (N·m/rpm)', value: '760' },
+                  { label: 'Model', value: 'ISF3.8S5154' },
+                  { label: 'Displacement (L)', value: '3.76' },
+                  { label: 'Max power (Hp/rpm)', value: '154' },
+                  { label: 'Max torque (N·m/rpm)', value: '491' },
                   { label: 'Exhaust emission standard', value: 'Euro V' },
                 ]}
               />
@@ -64,10 +64,10 @@ export function VehicleSpecifications() {
             <SpecCard>
               <SpecList
                 rows={[
-                  { label: 'Model', value: '8JS85TE, FAST' },
-                  { label: 'Technology type', value: '8MT' },
-                  { label: 'Clutch', value: 'φ395' },
-                  { label: 'Max speed (km/h)', value: '110' },
+                  { label: 'Model', value: 'ZF6S500' },
+                  { label: 'Technology type', value: '6MT' },
+                  { label: 'Clutch', value: 'Φ350' },
+                  { label: 'Max speed (km/h)', value: '120' },
                 ]}
               />
             </SpecCard>
@@ -82,14 +82,14 @@ export function VehicleSpecifications() {
           <SpecCard>
             <SpecList
               rows={[
-                { label: 'Frame', value: '234×65×6' },
-                { label: 'Axle', value: 'Front', subValue: '4.2T' },
-                { label: '', value: 'Rear', subValue: '1098Z/13.5T/4.875(4.33)' },
+                { label: 'Frame', value: '192×60×6' },
+                { label: 'Axle', value: 'Front', subValue: '2.4T' },
+                { label: '', value: 'Rear', subValue: '1080C/6.5T/4.33(4.875)' },
                 { label: 'Suspension', value: 'Front', subValue: 'Non-independent suspension with spring' },
                 { label: '', value: 'Rear', subValue: 'Non-independent suspension with spring' },
                 { label: 'Steering system', value: 'Round ball power steering' },
-                { label: 'Fuel tank', value: '450(600)' },
-                { label: 'Tire', value: '275/80R22.5, 2+4/1' },
+                { label: 'Fuel tank', value: '200' },
+                { label: 'Tire', value: '215/75R17.5.2+4/1' },
               ]}
             />
           </SpecCard>
@@ -99,7 +99,7 @@ export function VehicleSpecifications() {
               rows={[
                 { label: 'Brake system', value: 'Brake Brand', subValue: 'KNORR-BREMSE' },
                 { label: '', value: 'Brake type', subValue: 'Air' },
-                { label: '', value: 'Front', subValue: 'Drum' },
+                { label: '', value: 'Front', subValue: 'Disc' },
                 { label: '', value: 'Rear', subValue: 'Drum' },
                 { label: '', value: 'Exhaust brake', subValue: 'STD' },
                 { label: 'ABS', value: 'ESP/ESC - ASR - ABS' },
@@ -204,5 +204,4 @@ function SpecRow({ label, value, subValue }: { label: string; value?: string; su
     </div>
   );
 }
-
 

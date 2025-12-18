@@ -1,14 +1,14 @@
 import Header from '@/components/layout/Header';
 import Hero from '@/components/home/Hero';
 import Footer from '@/components/layout/Footer';
-import { VehicleSpecifications } from '@/components/products/h7/VehicleSpecifications';
+import { VehicleSpecifications } from '@/components/products/l5/VehicleSpecifications';
 import Container from '@/components/layout/Container';
-import ReasonBanner from '@/components/products/h7/ReasonBanner';
-import FeaturesSection from '@/components/products/h7/FeaturesSection';
-import QuoteSection from '@/components/products/h7/QuoteSection';
+import ReasonBanner from '@/components/products/l5/ReasonBanner';
+import FeaturesSection from '@/components/products/l5/FeaturesSection';
+import QuoteSection from '@/components/products/l5/QuoteSection';
 import Image from 'next/image';
 
-export default function ProductH7Page() {
+export default function ProductL5Page() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -46,8 +46,8 @@ export default function ProductH7Page() {
             className="object-contain"
           />
           <Image
-            src="/text/H7-text.svg"
-            alt="H7 Text"
+            src="/text/L5-text.svg"
+            alt="L5 Text"
             width={189.95}
             height={67.33}
             className="object-contain"
@@ -79,3 +79,4 @@ export default function ProductH7Page() {
     </div>
   );
 }
+
