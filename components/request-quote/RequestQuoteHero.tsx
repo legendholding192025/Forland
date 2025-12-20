@@ -32,8 +32,8 @@ export default function RequestQuoteHero() {
             fontStyle: 'normal',
           }}
         >
-          <span style={{ color: '#DF0011' }}>Request a</span>{' '}
-          <span style={{ color: '#000000' }}>Quote</span>
+          <span style={{ color: '#FFFFFF' }}>Request</span>{' '}
+          <span style={{ color: '#DF0011' }}>a Quote</span>
         </h1>
 
         {/* Right diagonal line */}
