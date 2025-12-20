@@ -15,7 +15,7 @@ export default function GetInTouchForm() {
                 fontFamily: 'Effra, Arial, sans-serif',
                 fontWeight: 400,
                 fontStyle: 'normal',
-                fontSize: '24px',
+                fontSize: '28px',
                 lineHeight: '100%',
                 letterSpacing: '0%',
                 color: '#DF0011',
@@ -60,8 +60,14 @@ export default function GetInTouchForm() {
                 </label>
                 <textarea
                   name="message"
-                  className="w-full border border-[#2F2F2F] rounded-md px-4 py-3 outline-none text-black"
-                  style={{ minHeight: '140px' }}
+                  className="w-full px-4 py-3 outline-none text-black"
+                  style={{
+                    height: '82px',
+                    borderRadius: '9.62px',
+                    border: '0.96px solid #2F2F2F',
+                    fontFamily: 'Effra, Arial, sans-serif',
+                    fontWeight: 400,
+                  }}
                 />
               </div>
 
@@ -114,7 +120,7 @@ export default function GetInTouchForm() {
                 fontFamily: 'Effra, Arial, sans-serif',
                 fontWeight: 400,
                 fontStyle: 'normal',
-                fontSize: '24px',
+                fontSize: '28px',
                 lineHeight: '100%',
                 letterSpacing: '0%',
                 color: '#DF0011',
@@ -228,7 +234,15 @@ function Field({
         name={name}
         type={type}
         required={required}
-        className="w-full border border-[#2F2F2F] rounded-md px-4 py-3 outline-none text-black"
+        className="w-full outline-none text-black px-4"
+        style={{
+          maxWidth: '555.77px',
+          height: '38.46px',
+          borderRadius: '9.62px',
+          border: '0.96px solid #2F2F2F',
+          fontFamily: 'Effra, Arial, sans-serif',
+          fontWeight: 400,
+        }}
       />
     </div>
   );
