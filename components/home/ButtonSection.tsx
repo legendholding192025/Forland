@@ -5,7 +5,7 @@ export default function ButtonSection() {
     { label: 'Book a Test Drive', href: '/test-drive' },
     { label: 'Request a Quote', href: '/request-quote' },
     { label: 'Book a Service', href: '/service' },
-    { label: 'Get in Touch', href: '/contact' },
+    { label: 'Get in Touch', href: '/get-in-touch' },
   ];
 
   return (
