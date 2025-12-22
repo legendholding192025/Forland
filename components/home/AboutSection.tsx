@@ -38,7 +38,7 @@ export default function AboutSection() {
           </div>
 
           {/* Main Title Section */}
-          <div className="mb-8" style={{ textAlign: 'left', width: '100%', maxWidth: '1200px' }}>
+          <div className="mb-8" style={{ textAlign: 'left', width: '100%', maxWidth: '1200px', paddingLeft: '40px' }}>
             <h2
               style={{
                 fontFamily: 'Effra, Arial, sans-serif',
@@ -75,7 +75,7 @@ export default function AboutSection() {
           </div>
 
           {/* Descriptive Text Section */}
-          <div className="mb-16" style={{ textAlign: 'left', maxWidth: '1200px', width: '100%' }}>
+          <div className="mb-16" style={{ textAlign: 'left', maxWidth: '1200px', width: '100%', paddingLeft: '40px' }}>
             <p
               style={{
                 fontFamily: 'Effra, Arial, sans-serif',

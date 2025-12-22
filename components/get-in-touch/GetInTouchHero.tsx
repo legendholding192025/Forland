@@ -3,9 +3,8 @@ import Image from 'next/image';
 export default function GetInTouchHero() {
   return (
     <section 
-      className="relative w-full overflow-hidden"
+      className="relative w-full overflow-hidden h-[200px] md:h-[234px]"
       style={{ 
-        height: '234px',
         backgroundColor: '#000000',
       }}
     >
@@ -20,13 +19,13 @@ export default function GetInTouchHero() {
         sizes="100vw"
       />
       {/* Heading centered */}
-      <div className="absolute inset-0 flex items-center justify-center gap-3 z-10">
+      <div className="absolute inset-0 flex items-center justify-center gap-2 md:gap-3 z-10 px-4">
         {/* Left diagonal line */}
-        <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-10 h-10" />
+        <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 md:w-10 md:h-10" />
 
         {/* Title */}
         <h1 
-          className="text-4xl font-normal"
+          className="text-2xl md:text-4xl font-normal"
           style={{
             fontFamily: 'Effra, Arial, sans-serif',
             fontWeight: 400,
@@ -38,7 +37,7 @@ export default function GetInTouchHero() {
         </h1>
 
         {/* Right diagonal line */}
-        <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-10 h-10" />
+        <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 md:w-10 md:h-10" />
       </div>
     </section>
   );

@@ -17,8 +17,8 @@ export default function TruckSection() {
           style={{
             position: 'absolute',
             top: '45%',
-            left: '328px',
-            transform: 'translateY(-50%)',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
             width: '774px',
             height: '247px',
             opacity: 1
