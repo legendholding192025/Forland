@@ -7,14 +7,14 @@ export default function Footer() {
       <div
         className="w-full"
         style={{
-          height: '290px',
+          minHeight: '290px',
           background: 'linear-gradient(90deg, #000000 0%, #910000 100%)'
         }}
       >
-        <div className="h-full mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '1440px' }}>
-          <div className="h-full flex items-start pt-12 gap-6 lg:gap-8 xl:gap-10">
+        <div className="h-full mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-0" style={{ maxWidth: '1440px' }}>
+          <div className="h-full flex flex-col md:flex-row items-start pt-0 md:pt-12 gap-8 md:gap-6 lg:gap-8 xl:gap-10">
             {/* Left Side - Logo and Content */}
-            <div className="flex flex-col gap-4 flex-shrink-0">
+            <div className="flex flex-col gap-4 flex-shrink-0 w-full md:w-auto">
               <Link href="/" className="flex items-center">
                 <Image
                   src="/logo/header-logo.svg"
@@ -94,9 +94,9 @@ export default function Footer() {
             </div>
 
             {/* Middle Sections - Products and Know More */}
-            <div className="flex gap-8 lg:gap-12 xl:gap-16 flex-1 justify-center">
+            <div className="flex flex-col sm:flex-row gap-8 sm:gap-6 lg:gap-12 xl:gap-16 flex-1 justify-center w-full md:w-auto">
               {/* Products Section */}
-              <div className="flex flex-col gap-4 flex-shrink-0 min-w-[150px]">
+              <div className="flex flex-col gap-4 flex-shrink-0 w-full sm:w-auto sm:min-w-[150px]">
                 <h3
                   style={{
                     fontFamily: 'Effra, Arial, sans-serif',
@@ -143,7 +143,7 @@ export default function Footer() {
               </div>
 
               {/* Know More Section */}
-              <div className="flex flex-col gap-4 flex-shrink-0 min-w-[150px]">
+              <div className="flex flex-col gap-4 flex-shrink-0 w-full sm:w-auto sm:min-w-[150px]">
                 <h3
                   style={{
                     fontFamily: 'Effra, Arial, sans-serif',
@@ -173,7 +173,7 @@ export default function Footer() {
                     About Us
                   </Link>
                   <Link
-                    href="/news"
+                    href="/newsfeed"
                     className="text-white hover:opacity-80 transition-opacity duration-200"
                     style={{
                       fontFamily: 'Effra, Arial, sans-serif',
@@ -205,7 +205,7 @@ export default function Footer() {
             </div>
 
             {/* Right Side - Get in Touch */}
-            <div className="flex flex-col gap-4 flex-shrink-0 min-w-[200px] max-w-[280px]">
+            <div className="flex flex-col gap-4 flex-shrink-0 w-full md:w-auto md:min-w-[200px] md:max-w-[280px]">
               <h3
                 style={{
                   fontFamily: 'Effra, Arial, sans-serif',
@@ -301,17 +301,17 @@ export default function Footer() {
       <div
         className="w-full"
         style={{
-          height: '48px',
+          minHeight: '48px',
           background: '#262626'
         }}
       >
-        <div className="h-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between" style={{ maxWidth: '1440px' }}>
+        <div className="h-full mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-3 sm:gap-0 py-3 sm:py-0" style={{ maxWidth: '1440px' }}>
           <p
+            className="text-center sm:text-left text-sm sm:text-base"
             style={{
               fontFamily: 'Effra, Arial, sans-serif',
               fontWeight: 400,
               fontStyle: 'normal',
-              fontSize: '16px',
               lineHeight: '10px',
               letterSpacing: '0%',
               color: '#D9D9D9'
@@ -321,12 +321,11 @@ export default function Footer() {
           </p>
           <Link
             href="/privacy-policy"
-            className="hover:opacity-80 transition-opacity duration-200"
+            className="hover:opacity-80 transition-opacity duration-200 text-center sm:text-left text-sm sm:text-base"
             style={{
               fontFamily: 'Effra, Arial, sans-serif',
               fontWeight: 400,
               fontStyle: 'normal',
-              fontSize: '16px',
               lineHeight: '10px',
               letterSpacing: '0%',
               color: '#D9D9D9'

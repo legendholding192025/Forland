@@ -61,7 +61,6 @@ export default function QuoteSection() {
               name="message"
               className="w-full px-4 py-3 outline-none text-black"
               style={{
-                maxWidth: '555.77px',
                 height: '82px',
                 borderRadius: '9.62px',
                 border: '0.96px solid #2F2F2F',
