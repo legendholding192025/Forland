@@ -302,17 +302,19 @@ export default function Footer() {
         className="w-full"
         style={{
           minHeight: '48px',
-          background: '#262626'
+          background: '#262626',
+          display: 'flex',
+          alignItems: 'center'
         }}
       >
-        <div className="h-full mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-3 sm:gap-0 py-3 sm:py-0" style={{ maxWidth: '1440px' }}>
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-3 sm:gap-0 py-3 sm:py-0" style={{ maxWidth: '1440px', minHeight: '48px' }}>
           <p
             className="text-center sm:text-left text-sm sm:text-base"
             style={{
               fontFamily: 'Effra, Arial, sans-serif',
               fontWeight: 400,
               fontStyle: 'normal',
-              lineHeight: '10px',
+              lineHeight: 'normal',
               letterSpacing: '0%',
               color: '#D9D9D9'
             }}
@@ -326,7 +328,7 @@ export default function Footer() {
               fontFamily: 'Effra, Arial, sans-serif',
               fontWeight: 400,
               fontStyle: 'normal',
-              lineHeight: '10px',
+              lineHeight: 'normal',
               letterSpacing: '0%',
               color: '#D9D9D9'
             }}

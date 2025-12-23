@@ -1,6 +1,6 @@
 'use client';
 
-import type React from 'react';
+import React from 'react';
 import Image from 'next/image';
 
 export function VehicleSpecifications() {
@@ -9,7 +9,7 @@ export function VehicleSpecifications() {
       {/* Main Dimensions Section */}
       <section>
         <SectionHeader icon={<Image src="/logo/dimensions.svg" alt="" width={40} height={40} className="w-10 h-10" />} title="Main Dimensions" />
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-6">
           <SpecCard>
             <SpecList
               rows={[
@@ -182,25 +182,61 @@ function SectionHeader({ icon, title }: { icon: React.ReactNode; title: string }
 }
 
 function SpecRow({ label, value, subValue }: { label: string; value?: string; subValue?: string }) {
+  const gridCols = subValue ? 'minmax(220px, auto) 70px 1fr' : 'minmax(220px, auto) 1fr';
+  
   return (
-    <div className="grid items-start gap-x-4 gap-y-1 min-w-0" style={{ gridTemplateColumns: '220px 1fr' }}>
-      <span className="text-base text-black">{label}</span>
+    <div className="grid items-start gap-y-1 min-w-0" style={{ gridTemplateColumns: gridCols, columnGap: '4px' }}>
+      <span className="text-base text-black break-words">{label}</span>
 
       {value && !subValue && (
-        <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{value}</span>
-      )}
-
-      {value && subValue && (
-        <div className="grid items-start gap-x-3 min-w-0" style={{ gridTemplateColumns: '90px 1fr' }}>
-          <span className="text-base text-black">{value}</span>
-          <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{subValue}</span>
+        <div className="flex justify-start items-center" style={{ gap: '4px' }}>
+          {value.includes(' | ') ? (
+            value.split(' | ').map((val, idx, arr) => (
+              <React.Fragment key={idx}>
+                <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{val.trim()}</span>
+                {idx < arr.length - 1 && (
+                  <span 
+                    style={{ 
+                      width: '1px', 
+                      height: '16px', 
+                      backgroundColor: '#EE2222',
+                      display: 'inline-block',
+                      marginLeft: '2px',
+                      marginRight: '2px'
+                    }}
+                  />
+                )}
+              </React.Fragment>
+            ))
+          ) : (
+            <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{value}</span>
+          )}
         </div>
       )}
 
-      {!value && subValue && (
-        <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{subValue}</span>
+      {value && subValue && (
+        <>
+          <span className="text-base text-black pr-1">{value}</span>
+          <div className="flex justify-start">
+            <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{subValue}</span>
+          </div>
+        </>
       )}
-      {!value && !subValue && <span className="text-base text-[#EE2222] font-normal"></span>}
+
+      {!value && subValue && (
+        <>
+          <span></span>
+          <div className="flex justify-start">
+            <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{subValue}</span>
+          </div>
+        </>
+      )}
+      {!value && !subValue && (
+        <>
+          <span></span>
+          <span className="text-base text-[#EE2222] font-normal"></span>
+        </>
+      )}
     </div>
   );
 }
