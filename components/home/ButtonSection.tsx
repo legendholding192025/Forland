@@ -11,14 +11,13 @@ export default function ButtonSection() {
   return (
     <section className="w-full">
       <div className="w-full">
-        <div className="flex w-full gap-1">
+        <div className="grid grid-cols-2 lg:flex lg:flex-row w-full gap-2 lg:gap-1">
           {buttons.map((button, index) => (
             <a
               key={index}
               href={button.href}
-              className="text-white flex-1 relative overflow-hidden group"
+              className="text-white lg:flex-1 relative overflow-hidden group h-12 lg:h-[48px]"
               style={{
-                height: '48px',
                 opacity: 1,
                 display: 'flex',
                 alignItems: 'center',
@@ -42,12 +41,11 @@ export default function ButtonSection() {
                 }}
               ></div>
               <span
-                className="relative z-10 pointer-events-none"
+                className="relative z-10 pointer-events-none text-xs sm:text-sm lg:text-[14px]"
                 style={{
                   fontFamily: 'Effra, Arial, sans-serif',
                   fontWeight: 400,
                   fontStyle: 'normal',
-                  fontSize: '14px',
                   lineHeight: '100%',
                   letterSpacing: '0%'
                 }}

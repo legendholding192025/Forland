@@ -23,16 +23,100 @@ export default function Hero() {
   }, [heroImages.length]);
 
   return (
-    <section 
-      className="relative overflow-hidden w-full"
-      style={{ 
-        width: '100%', 
-        height: '720px',
-        margin: 0,
-        padding: 0
-      }}
-    >
-      <div className="relative w-full" style={{ width: '100%', height: '720px' }}>
+    <>
+      <style dangerouslySetInnerHTML={{__html: `
+        .hero-text-1 {
+          font-size: 22px;
+        }
+        @media (min-width: 640px) {
+          .hero-text-1 {
+            font-size: 26px;
+          }
+        }
+        @media (min-width: 768px) {
+          .hero-text-1 {
+            font-size: 30px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .hero-text-1 {
+            font-size: 40px;
+          }
+        }
+        .hero-text-2 {
+          font-size: 28px;
+          top: 32px;
+        }
+        @media (min-width: 640px) {
+          .hero-text-2 {
+            font-size: 36px;
+            top: 38px;
+          }
+        }
+        @media (min-width: 768px) {
+          .hero-text-2 {
+            font-size: 42px;
+            top: 42px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .hero-text-2 {
+            font-size: 64px;
+            top: 45px;
+          }
+        }
+        .hero-text-3 {
+          font-size: 42px;
+          top: 64px;
+        }
+        @media (min-width: 640px) {
+          .hero-text-3 {
+            font-size: 56px;
+            top: 72px;
+          }
+        }
+        @media (min-width: 768px) {
+          .hero-text-3 {
+            font-size: 80px;
+            top: 84px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .hero-text-3 {
+            font-size: 110px;
+            top: 90px;
+          }
+        }
+        .hero-vector {
+          width: 48px;
+          height: auto;
+        }
+        @media (min-width: 640px) {
+          .hero-vector {
+            width: 64px;
+          }
+        }
+        @media (min-width: 768px) {
+          .hero-vector {
+            width: 80px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .hero-vector {
+            width: 96px;
+            height: 75px;
+          }
+        }
+      `}} />
+      <section 
+        className="relative overflow-hidden w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[720px]"
+        style={{ 
+          width: '100%', 
+          margin: 0,
+          padding: 0
+        }}
+      >
+      <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[720px]">
         {heroImages.map((src, index) => (
           <Image
             key={index}
@@ -49,12 +133,8 @@ export default function Hero() {
           />
         ))}
         <div 
-          className="relative" 
+          className="absolute top-8 left-4 sm:top-12 sm:left-8 md:top-16 md:left-12 lg:top-[120px] lg:left-[160px] w-[calc(100%-2rem)] sm:w-[calc(100%-4rem)] md:w-[calc(100%-6rem)] lg:w-[calc(100%-320px)]"
           style={{ 
-            position: 'absolute', 
-            top: '120px', 
-            left: '160px',
-            width: 'calc(100% - 320px)',
             minHeight: '200px'
           }}
         >
@@ -64,45 +144,32 @@ export default function Hero() {
             alt="Hero Vector"
             width={96}
             height={75}
-            className="absolute"
+            className="hero-vector absolute"
             style={{ top: 0, left: 0, transform: 'translate(-50%, -50%)' }}
           />
           <div
+            className="hero-text-1 absolute top-0 left-0 text-white"
             style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
               fontFamily: 'Effra, Arial, sans-serif',
               fontWeight: 200,
-              fontSize: '40px',
-              color: '#FFFFFF'
             }}
           >
             For Every Load
           </div>
           <div
+            className="hero-text-2 absolute left-0 text-white"
             style={{
-              position: 'absolute',
-              top: '45px',
-              left: 0,
               fontFamily: 'Effra, Arial, sans-serif',
               fontWeight: 500,
-              fontSize: '64px',
-              color: '#FFFFFF'
             }}
           >
             For Every
           </div>
           <div
-            className="relative inline-block"
+            className="hero-text-3 absolute text-white left-0"
             style={{
-              position: 'absolute',
-              top: '90px',
-              left: 0,
               fontFamily: 'Effra, Arial, sans-serif',
               fontWeight: 600,
-              fontSize: '110px',
-              color: '#FFFFFF'
             }}
           >
             Land.
@@ -112,7 +179,7 @@ export default function Hero() {
               alt="Hero Vector"
               width={96}
               height={75}
-              className="absolute"
+              className="hero-vector absolute"
               style={{ 
                 bottom: '6px', 
                 right: '-25px', 
@@ -124,7 +191,7 @@ export default function Hero() {
         
         {/* Navigation Dots */}
         <div 
-          className="absolute bottom-0 left-0 right-0 flex justify-center items-center gap-2 pb-6 z-10"
+          className="absolute bottom-0 left-0 right-0 flex justify-center items-center gap-2 pb-4 sm:pb-6 z-10"
         >
           {heroImages.map((_, index) => (
             <button
@@ -145,6 +212,7 @@ export default function Hero() {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

@@ -26,17 +26,12 @@ export default function ReasonSection() {
   ];
 
   return (
-    <section className="w-full" style={{ background: '#FFFFFF', padding: '60px 40px' }}>
+    <section className="w-full py-8 sm:py-12 lg:py-[60px] px-4 sm:px-6 lg:px-10" style={{ background: '#FFFFFF' }}>
       {/* Red Header Banner */}
       <div
+        className="max-w-[1152px] mx-auto mb-8 sm:mb-12 lg:mb-[60px] flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 p-6 sm:p-8 lg:py-10 lg:px-20"
         style={{
-          maxWidth: '1152px',
-          margin: '0 auto 60px auto',
-          background: '#DF0011',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '40px 80px'
+          background: '#DF0011'
         }}
       >
         {/* FORLAND Logo */}
@@ -45,17 +40,18 @@ export default function ReasonSection() {
           alt="FORLAND Logo"
           width={200}
           height={60}
-          className="object-contain"
+          className="object-contain w-32 sm:w-40 lg:w-[200px] h-auto"
         />
         
         {/* Title Text */}
         <h2
+          className="text-center sm:text-right"
           style={{
             fontFamily: 'Effra, Arial, sans-serif',
             fontWeight: 400,
             fontStyle: 'normal',
-            fontSize: '32px',
-            lineHeight: '100%',
+            fontSize: 'clamp(18px, 4vw, 32px)',
+            lineHeight: '120%',
             letterSpacing: '0%',
             color: '#FFFFFF',
             margin: 0
@@ -67,24 +63,15 @@ export default function ReasonSection() {
 
       {/* Content Blocks */}
       <div
-        style={{
-          maxWidth: '1152px',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: '30px'
-        }}
+        className="max-w-[1152px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-[30px]"
       >
         {reasons.map((reason, index) => (
           <div
             key={index}
+            className={`p-4 sm:p-6 lg:p-[30px] ${index === 4 ? 'md:col-span-2 md:max-w-[50%] md:mx-auto' : ''}`}
             style={{
               background: '#000000',
-              padding: '30px',
-              border: reason.hasBlueBorder ? '2px solid #0066CC' : 'none',
-              gridColumn: index === 4 ? '1 / -1' : 'auto',
-              maxWidth: index === 4 ? '50%' : '100%',
-              margin: index === 4 ? '0 auto' : '0'
+              border: reason.hasBlueBorder ? '2px solid #0066CC' : 'none'
             }}
           >
             <h3
@@ -92,12 +79,12 @@ export default function ReasonSection() {
                 fontFamily: 'Effra, Arial, sans-serif',
                 fontWeight: 400,
                 fontStyle: 'normal',
-                fontSize: '24px',
+                fontSize: 'clamp(18px, 4vw, 24px)',
                 lineHeight: '120%',
                 letterSpacing: '0%',
                 color: '#DF0011',
-                marginBottom: '20px',
-                margin: '0 0 20px 0'
+                marginBottom: 'clamp(12px, 3vw, 20px)',
+                margin: '0 0 clamp(12px, 3vw, 20px) 0'
               }}
             >
               {reason.title}
@@ -107,7 +94,7 @@ export default function ReasonSection() {
                 fontFamily: 'Effra, Arial, sans-serif',
                 fontWeight: 400,
                 fontStyle: 'normal',
-                fontSize: '16px',
+                fontSize: 'clamp(13px, 2.5vw, 16px)',
                 lineHeight: '160%',
                 letterSpacing: '0%',
                 color: '#FFFFFF',
