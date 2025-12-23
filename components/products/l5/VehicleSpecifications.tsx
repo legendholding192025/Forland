@@ -9,31 +9,33 @@ export function VehicleSpecifications() {
       {/* Main Dimensions Section */}
       <section>
         <SectionHeader icon={<Image src="/logo/dimensions.svg" alt="" width={40} height={40} className="w-10 h-10" />} title="Main Dimensions" />
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-6">
-          <SpecCard>
-            <SpecList
-              rows={[
-                { label: 'Overall dimensions (mm)', value: '6950×2275×2380 | 7950×2275×2380' },
-                { label: 'Cabin width (mm)', value: '2060' },
-              ]}
-            />
-          </SpecCard>
-          <SpecCard>
-            <SpecList
-              rows={[
-                { label: 'Wheelbase (mm)', value: '3800 | 4500' },
-                { label: 'Cargo length (mm)', value: '5000 | 6000' },
-              ]}
-            />
-          </SpecCard>
-          <SpecCard>
-            <SpecList
-              rows={[
-                { label: 'GVW (kg)', value: '9000' },
-                { label: 'Payload (kg)', value: '6000' },
-              ]}
-            />
-          </SpecCard>
+        <div className="mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-4 w-full max-w-[800px]">
+            <div className="rounded-xl bg-white px-4 py-5 shadow-[0_1px_0_rgba(0,0,0,0.06)]">
+              <SpecList
+                rows={[
+                  { label: 'Overall dimensions (mm)', value: '6950×2275×2380 | 7950×2275×2380' },
+                  { label: 'Cabin width (mm)', value: '2060' },
+                ]}
+              />
+            </div>
+            <div className="rounded-xl bg-white px-4 py-5 shadow-[0_1px_0_rgba(0,0,0,0.06)]">
+              <SpecList
+                rows={[
+                  { label: 'Wheelbase (mm)', value: '3800 | 4500' },
+                  { label: 'Cargo length (mm)', value: '5000 | 6000' },
+                ]}
+              />
+            </div>
+            <div className="rounded-xl bg-white px-4 py-5 shadow-[0_1px_0_rgba(0,0,0,0.06)]">
+              <SpecList
+                rows={[
+                  { label: 'GVW (kg)', value: '9000' },
+                  { label: 'Payload (kg)', value: '6000' },
+                ]}
+              />
+            </div>
+          </div>
         </div>
       </section>
 
