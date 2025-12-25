@@ -306,7 +306,11 @@ export default function FeaturesSection() {
                           alt=""
                           width={img.width}
                           height={img.height}
-                          className="w-[150px] sm:w-[180px] lg:w-auto h-auto"
+                          className={`h-auto ${
+                            i === 1 
+                              ? 'w-[220px] sm:w-[240px] lg:w-auto' 
+                              : 'w-[150px] sm:w-[180px] lg:w-auto'
+                          }`}
                           style={{ objectFit: 'contain', display: 'block' }}
                         />
                       ))}
