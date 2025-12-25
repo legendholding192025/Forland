@@ -1,17 +1,59 @@
+"use client";
+
 export default function WhiteSection() {
   return (
     <section
-      className="w-full relative"
+      className="w-full relative white-section"
       style={{
         height: '290px',
         background: '#FFFFFF',
         position: 'relative'
       }}
     >
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .white-section {
+            height: 200px !important;
+          }
+          .center-text {
+            width: 90% !important;
+            padding: 0 20px;
+          }
+          .main-text {
+            font-size: 32px !important;
+            white-space: normal !important;
+            line-height: 1.2 !important;
+          }
+          .corner-vector {
+            width: 70px !important;
+            height: auto !important;
+          }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .white-section {
+            height: 240px !important;
+          }
+          .center-text {
+            width: 90% !important;
+            padding: 0 20px;
+          }
+          .main-text {
+            font-size: 56px !important;
+            white-space: normal !important;
+            line-height: 1.2 !important;
+          }
+          .corner-vector {
+            width: 60px !important;
+            height: auto !important;
+          }
+        }
+      `}</style>
+
       {/* Top right corner vector */}
       <img
         src="/vector/white.svg"
         alt="Vector"
+        className="corner-vector"
         style={{
           position: 'absolute',
           top: 0,
@@ -24,6 +66,7 @@ export default function WhiteSection() {
       <img
         src="/vector/white.svg"
         alt="Vector"
+        className="corner-vector"
         style={{
           position: 'absolute',
           top: 0,
@@ -34,6 +77,7 @@ export default function WhiteSection() {
 
       {/* Center Text */}
       <div
+        className="center-text"
         style={{
           position: 'absolute',
           top: '45%',
@@ -43,6 +87,7 @@ export default function WhiteSection() {
         }}
       >
         <span
+          className="main-text"
           style={{
             fontFamily: 'Effra, Arial, sans-serif',
             fontWeight: 400,
