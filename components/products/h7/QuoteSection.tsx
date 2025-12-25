@@ -7,27 +7,24 @@ export default function QuoteSection() {
     <section className="w-full bg-white py-16">
       {/* Red banner (same style as download banner, text changed) */}
       <div
-        style={{
-          maxWidth: '1152px',
-          margin: '0 auto 60px auto',
-          background: '#DF0011',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '40px 80px',
-        }}
+        className="mx-auto mb-8 lg:mb-[60px] max-w-[1152px] bg-[#DF0011] flex flex-col lg:flex-row items-center justify-center lg:justify-between px-6 py-6 lg:px-20 lg:py-10 gap-4 lg:gap-0"
       >
-        <Image src="/logo/white-logo.svg" alt="FORLAND Logo" width={200} height={60} className="object-contain" />
+        <Image 
+          src="/logo/white-logo.svg" 
+          alt="FORLAND Logo" 
+          width={200} 
+          height={60} 
+          className="object-contain w-[120px] lg:w-[200px] h-auto" 
+        />
         <h2
+          className="text-lg lg:text-[32px] m-0 text-center lg:text-left"
           style={{
             fontFamily: 'Effra, Arial, sans-serif',
             fontWeight: 400,
             fontStyle: 'normal',
-            fontSize: '32px',
             lineHeight: '100%',
             letterSpacing: '0%',
             color: '#FFFFFF',
-            margin: 0,
           }}
         >
           REQUEST A QUOTE OR RECEIVE A CALL
@@ -36,17 +33,17 @@ export default function QuoteSection() {
 
       {/* Form */}
       <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '1152px' }}>
-        <p className="text-black text-2xl mb-10" style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400 }}>
+        <p className="text-black text-lg lg:text-2xl mb-6 lg:mb-10" style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400 }}>
           Our team is entirely at your disposal.
         </p>
 
         <form
-          className="space-y-6"
+          className="space-y-4 lg:space-y-6"
           onSubmit={(e) => {
             e.preventDefault();
           }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             <Field label="First Name" required name="firstName" />
             <Field label="Last Name" required name="lastName" />
             <Field label="Email" required type="email" name="email" />
@@ -70,17 +67,14 @@ export default function QuoteSection() {
             />
           </div>
 
-          <div className="flex justify-center pt-6">
+          <div className="flex justify-center pt-4 lg:pt-6">
             <button
               type="submit"
-              className="text-white relative overflow-hidden group"
+              className="text-white relative overflow-hidden group w-full max-w-[332px] lg:w-[332px] h-[37px] text-lg lg:text-[24px]"
               style={{
-                width: '332px',
-                height: '37px',
                 borderRadius: '7px',
                 fontFamily: 'Effra, Arial, sans-serif',
                 fontWeight: 400,
-                fontSize: '24px',
                 background: 'linear-gradient(90deg, #000000 0%, #910000 100%)',
                 border: 'none',
                 cursor: 'pointer',
@@ -135,9 +129,8 @@ function Field({
         name={name}
         type={type}
         required={required}
-        className="w-full outline-none text-black px-4"
+        className="w-full lg:max-w-[555.77px] outline-none text-black px-4"
         style={{
-          maxWidth: '555.77px',
           height: '38.46px',
           borderRadius: '9.62px',
           border: '0.96px solid #2F2F2F',

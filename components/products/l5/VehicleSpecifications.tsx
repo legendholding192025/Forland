@@ -84,14 +84,14 @@ export function VehicleSpecifications() {
           <SpecCard>
             <SpecList
               rows={[
-                { label: 'Frame', value: '192×60×6' },
+                { label: 'Frame', value: '', subValue: '192×60×6' },
                 { label: 'Axle', value: 'Front', subValue: '2.4T' },
                 { label: '', value: 'Rear', subValue: '1080C/6.5T/4.33(4.875)' },
                 { label: 'Suspension', value: 'Front', subValue: 'Non-independent suspension with spring' },
                 { label: '', value: 'Rear', subValue: 'Non-independent suspension with spring' },
-                { label: 'Steering system', value: 'Round ball power steering' },
-                { label: 'Fuel tank', value: '200' },
-                { label: 'Tire', value: '215/75R17.5.2+4/1' },
+                { label: 'Steering system', value: '', subValue: 'Round ball power steering' },
+                { label: 'Fuel tank', value: '', subValue: '200' },
+                { label: 'Tire', value: '', subValue: '215/75R17.5.2+4/1' },
               ]}
             />
           </SpecCard>
@@ -104,7 +104,7 @@ export function VehicleSpecifications() {
                 { label: '', value: 'Front', subValue: 'Disc' },
                 { label: '', value: 'Rear', subValue: 'Drum' },
                 { label: '', value: 'Exhaust brake', subValue: 'STD' },
-                { label: 'ABS', value: 'ESP/ESC - ASR - ABS' },
+                { label: 'ABS', value: '', subValue: 'ESP/ESC - ASR - ABS' },
                 { label: '', value: '', subValue: 'Automatic adjustment of braking clearance' },
               ]}
             />

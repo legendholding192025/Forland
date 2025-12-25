@@ -5,13 +5,13 @@ import Image from 'next/image';
 
 export function VehicleSpecifications() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 md:space-y-12 px-4 lg:px-0">
       {/* Main Dimensions Section */}
       <section>
-        <SectionHeader icon={<Image src="/logo/dimensions.svg" alt="" width={40} height={40} className="w-10 h-10" />} title="Main Dimensions" />
-        <div className="mt-10">
+        <SectionHeader icon={<Image src="/logo/dimensions.svg" alt="" width={40} height={40} className="w-8 h-8 lg:w-10 lg:h-10" />} title="Main Dimensions" />
+        <div className="mt-6 lg:mt-10">
           <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-4 w-full max-w-[800px]">
-            <div className="rounded-xl bg-white px-4 py-5 shadow-[0_1px_0_rgba(0,0,0,0.06)]">
+            <div className="rounded-xl bg-white px-4 py-4 lg:py-5 shadow-[0_1px_0_rgba(0,0,0,0.06)]">
               <SpecList
                 rows={[
                   { label: 'Overall dimensions (mm)', value: '8920×2460×2760 | 10070×2460×2760' },
@@ -19,7 +19,7 @@ export function VehicleSpecifications() {
                 ]}
               />
             </div>
-            <div className="rounded-xl bg-white px-4 py-5 shadow-[0_1px_0_rgba(0,0,0,0.06)]">
+            <div className="rounded-xl bg-white px-4 py-4 lg:py-5 shadow-[0_1px_0_rgba(0,0,0,0.06)]">
               <SpecList
                 rows={[
                   { label: 'Wheelbase (mm)', value: '5150 | 5750' },
@@ -27,7 +27,7 @@ export function VehicleSpecifications() {
                 ]}
               />
             </div>
-            <div className="rounded-xl bg-white px-4 py-5 shadow-[0_1px_0_rgba(0,0,0,0.06)]">
+            <div className="rounded-xl bg-white px-4 py-4 lg:py-5 shadow-[0_1px_0_rgba(0,0,0,0.06)]">
               <SpecList
                 rows={[
                   { label: 'GVW (kg)', value: '16000' },
@@ -40,11 +40,11 @@ export function VehicleSpecifications() {
       </section>
 
       {/* Power and Transmission Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
         {/* Power Section */}
         <section>
-          <SectionHeader icon={<Image src="/logo/power.svg" alt="" width={40} height={40} className="w-10 h-10" />} title="Power" />
-          <div className="mt-10">
+          <SectionHeader icon={<Image src="/logo/power.svg" alt="" width={40} height={40} className="w-8 h-8 lg:w-10 lg:h-10" />} title="Power" />
+          <div className="mt-6 lg:mt-10">
             <SpecCard>
               <SpecList
                 rows={[
@@ -61,8 +61,8 @@ export function VehicleSpecifications() {
 
         {/* Transmission Section */}
         <section>
-          <SectionHeader icon={<Image src="/logo/transmission.svg" alt="" width={40} height={40} className="w-10 h-10" />} title="Transmission" />
-          <div className="mt-10">
+          <SectionHeader icon={<Image src="/logo/transmission.svg" alt="" width={40} height={40} className="w-8 h-8 lg:w-10 lg:h-10" />} title="Transmission" />
+          <div className="mt-6 lg:mt-10">
             <SpecCard>
               <SpecList
                 rows={[
@@ -79,19 +79,19 @@ export function VehicleSpecifications() {
 
       {/* Chassis Section */}
       <section>
-        <SectionHeader icon={<Image src="/logo/chassis.svg" alt="" width={40} height={40} className="w-10 h-10" />} title="Chassis" />
-        <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <SectionHeader icon={<Image src="/logo/chassis.svg" alt="" width={40} height={40} className="w-8 h-8 lg:w-10 lg:h-10" />} title="Chassis" />
+        <div className="mt-6 lg:mt-10 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
           <SpecCard>
             <SpecList
               rows={[
-                { label: 'Frame', value: '234×65×6' },
+                { label: 'Frame', value: '', subValue: '234×65×6' },
                 { label: 'Axle', value: 'Front', subValue: '4.2T' },
                 { label: '', value: 'Rear', subValue: '1098Z/13.5T/4.875(4.33)' },
                 { label: 'Suspension', value: 'Front', subValue: 'Non-independent suspension with spring' },
                 { label: '', value: 'Rear', subValue: 'Non-independent suspension with spring' },
-                { label: 'Steering system', value: 'Round ball power steering' },
-                { label: 'Fuel tank', value: '450(600)' },
-                { label: 'Tire', value: '275/80R22.5, 2+4/1' },
+                { label: 'Steering system', value: '', subValue: 'Round ball power steering' },
+                { label: 'Fuel tank', value: '', subValue: '450(600)' },
+                { label: 'Tire', value: '', subValue: '275/80R22.5, 2+4/1' },
               ]}
             />
           </SpecCard>
@@ -104,7 +104,7 @@ export function VehicleSpecifications() {
                 { label: '', value: 'Front', subValue: 'Drum' },
                 { label: '', value: 'Rear', subValue: 'Drum' },
                 { label: '', value: 'Exhaust brake', subValue: 'STD' },
-                { label: 'ABS', value: 'ESP/ESC - ASR - ABS' },
+                { label: 'ABS', value: '', subValue: 'ESP/ESC - ASR - ABS' },
                 { label: '', value: '', subValue: 'Automatic adjustment of braking clearance' },
               ]}
             />
@@ -114,24 +114,24 @@ export function VehicleSpecifications() {
 
       {/* Features Section */}
       <section>
-        <SectionHeader icon={<Image src="/logo/features.svg" alt="" width={40} height={40} className="w-10 h-10" />} title="Features" />
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <SectionHeader icon={<Image src="/logo/features.svg" alt="" width={40} height={40} className="w-8 h-8 lg:w-10 lg:h-10" />} title="Features" />
+        <div className="mt-6 lg:mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
           <SpecCard>
-            <ul className="space-y-2 text-base text-black">
+            <ul className="space-y-2 text-sm lg:text-base text-black">
               <li>Battery : 24V</li>
               <li>Radio</li>
               <li>MP3</li>
             </ul>
           </SpecCard>
           <SpecCard>
-            <ul className="space-y-2 text-base text-black">
+            <ul className="space-y-2 text-sm lg:text-base text-black">
               <li>Central lock + electronic control window</li>
               <li>High Slope Start Assist System</li>
               <li>Multi-function steering wheel</li>
             </ul>
           </SpecCard>
           <SpecCard>
-            <ul className="space-y-2 text-base text-black">
+            <ul className="space-y-2 text-sm lg:text-base text-black">
               <li>Automatic headlights</li>
               <li>Cruise control</li>
               <li>Back-up alarm</li>
@@ -144,7 +144,7 @@ export function VehicleSpecifications() {
 }
 
 function SpecCard({ children }: { children: React.ReactNode }) {
-  return <div className="rounded-xl bg-white px-6 py-5 shadow-[0_1px_0_rgba(0,0,0,0.06)]">{children}</div>;
+  return <div className="rounded-xl bg-white px-4 lg:px-6 py-4 lg:py-5 shadow-[0_1px_0_rgba(0,0,0,0.06)]">{children}</div>;
 }
 
 type SpecListRow = {
@@ -165,20 +165,20 @@ function SpecList({ rows }: { rows: SpecListRow[] }) {
 
 function SectionHeader({ icon, title }: { icon: React.ReactNode; title: string }) {
   return (
-    <div className="relative flex items-center gap-3">
+    <div className="relative flex items-center gap-2 lg:gap-3">
       {/* Left line (same as ProductSection heading) */}
-      <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-10 h-10" />
+      <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
 
       {/* Icon */}
       <div className="flex items-center justify-center">{icon}</div>
 
       {/* Title */}
-      <h2 className="text-2xl font-normal text-black">
+      <h2 className="text-lg lg:text-2xl font-normal text-black">
         <span className="font-medium">{title.split(' ')[0]}</span> {title.split(' ').slice(1).join(' ')}
       </h2>
 
       {/* Right line (same as ProductSection heading) */}
-      <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-10 h-10" />
+      <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
     </div>
   );
 }
@@ -187,59 +187,94 @@ function SpecRow({ label, value, subValue }: { label: string; value?: string; su
   const gridCols = subValue ? 'minmax(220px, auto) 70px 1fr' : 'minmax(220px, auto) 1fr';
   
   return (
-    <div className="grid items-start gap-y-1 min-w-0" style={{ gridTemplateColumns: gridCols, columnGap: '4px' }}>
-      <span className="text-base text-black break-words">{label}</span>
-
-      {value && !subValue && (
-        <div className="flex justify-start items-center" style={{ gap: '4px' }}>
-          {value.includes(' | ') ? (
-            value.split(' | ').map((val, idx, arr) => (
-              <React.Fragment key={idx}>
-                <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{val.trim()}</span>
-                {idx < arr.length - 1 && (
-                  <span 
-                    style={{ 
-                      width: '1px', 
-                      height: '16px', 
-                      backgroundColor: '#EE2222',
-                      display: 'inline-block',
-                      marginLeft: '2px',
-                      marginRight: '2px'
-                    }}
-                  />
-                )}
-              </React.Fragment>
-            ))
-          ) : (
-            <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{value}</span>
+    <>
+      {/* Mobile Layout */}
+      <div className="flex flex-col gap-1 md:hidden">
+        <span className="text-sm text-black">{label}</span>
+        <div className="flex flex-wrap items-center gap-1">
+          {value && !subValue && (
+            <>
+              {value.includes(' | ') ? (
+                value.split(' | ').map((val, idx, arr) => (
+                  <React.Fragment key={idx}>
+                    <span className="text-sm text-[#EE2222] font-normal">{val.trim()}</span>
+                    {idx < arr.length - 1 && (
+                      <span className="w-px h-4 bg-[#EE2222] mx-1" />
+                    )}
+                  </React.Fragment>
+                ))
+              ) : (
+                <span className="text-sm text-[#EE2222] font-normal">{value}</span>
+              )}
+            </>
+          )}
+          {value && subValue && (
+            <>
+              <span className="text-sm text-black pr-1">{value}</span>
+              <span className="text-sm text-[#EE2222] font-normal">{subValue}</span>
+            </>
+          )}
+          {!value && subValue && (
+            <span className="text-sm text-[#EE2222] font-normal">{subValue}</span>
           )}
         </div>
-      )}
+      </div>
 
-      {value && subValue && (
-        <>
-          <span className="text-base text-black pr-1">{value}</span>
-          <div className="flex justify-start">
-            <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{subValue}</span>
-          </div>
-        </>
-      )}
+      {/* Desktop Layout - Original Grid */}
+      <div className="hidden md:grid items-start gap-y-1 min-w-0" style={{ gridTemplateColumns: gridCols, columnGap: '4px' }}>
+        <span className="text-base text-black break-words">{label}</span>
 
-      {!value && subValue && (
-        <>
-          <span></span>
-          <div className="flex justify-start">
-            <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{subValue}</span>
+        {value && !subValue && (
+          <div className="flex justify-start items-center" style={{ gap: '4px' }}>
+            {value.includes(' | ') ? (
+              value.split(' | ').map((val, idx, arr) => (
+                <React.Fragment key={idx}>
+                  <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{val.trim()}</span>
+                  {idx < arr.length - 1 && (
+                    <span 
+                      style={{ 
+                        width: '1px', 
+                        height: '16px', 
+                        backgroundColor: '#EE2222',
+                        display: 'inline-block',
+                        marginLeft: '2px',
+                        marginRight: '2px'
+                      }}
+                    />
+                  )}
+                </React.Fragment>
+              ))
+            ) : (
+              <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{value}</span>
+            )}
           </div>
-        </>
-      )}
-      {!value && !subValue && (
-        <>
-          <span></span>
-          <span className="text-base text-[#EE2222] font-normal"></span>
-        </>
-      )}
-    </div>
+        )}
+
+        {value && subValue && (
+          <>
+            <span className="text-base text-black pr-1">{value}</span>
+            <div className="flex justify-start">
+              <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{subValue}</span>
+            </div>
+          </>
+        )}
+
+        {!value && subValue && (
+          <>
+            <span></span>
+            <div className="flex justify-start">
+              <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{subValue}</span>
+            </div>
+          </>
+        )}
+        {!value && !subValue && (
+          <>
+            <span></span>
+            <span className="text-base text-[#EE2222] font-normal"></span>
+          </>
+        )}
+      </div>
+    </>
   );
 }
 

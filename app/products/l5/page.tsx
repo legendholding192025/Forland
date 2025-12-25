@@ -24,18 +24,13 @@ export default function ProductL5Page() {
         
         {/* Red box with model name - overlapping hero and specs */}
         <div
-          className="absolute z-10"
+          className="absolute z-10 right-4 lg:right-[max(0px,calc((100%-1440px)/2))] w-[120px] h-[100px] lg:w-[288px] lg:h-[238px] top-[350px] sm:top-[450px] md:top-[550px] lg:top-[601px]"
           style={{
-            top: '601px',
-            right: 'max(0px, calc((100% - 1440px) / 2))',
-            width: '288px',
-            height: '238px',
             background: '#DF0011',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '16px',
           }}
         >
           <Image
@@ -43,29 +38,25 @@ export default function ProductL5Page() {
             alt="Forland Text"
             width={189.34}
             height={27.11}
-            className="object-contain"
+            className="object-contain w-[70px] lg:w-[189px] h-auto"
           />
           <Image
             src="/text/L5-text.svg"
             alt="L5 Text"
             width={189.95}
             height={67.33}
-            className="object-contain"
+            className="object-contain w-[70px] lg:w-[190px] h-auto mt-1 lg:mt-4"
           />
           <div
+            className="text-[14px] lg:text-[36px] mt-1 lg:mt-4"
             style={{
               fontFamily: 'Effra, Arial, sans-serif',
               fontWeight: 400,
               fontStyle: 'normal',
-              fontSize: '36px',
               lineHeight: '100%',
               letterSpacing: '0%',
               color: '#FFFFFF',
               textAlign: 'center',
-              width: '190px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             Cargo Truck
