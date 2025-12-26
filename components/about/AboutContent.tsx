@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export default function AboutContent() {
   const [counters, setCounters] = useState({
@@ -193,13 +194,20 @@ export default function AboutContent() {
                   opacity: 1
                 }}
               >
-                <Image
+                <motion.img
                   src="/logo/1.svg"
                   alt="Icon 1"
-                  width={48}
-                  height={48}
                   className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12"
                   style={{ filter: 'brightness(0) invert(1)' }}
+                  animate={{ 
+                    y: [0, -6, 0, 6, 0],
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    ease: 'linear',
+                    repeat: Infinity,
+                    times: [0, 0.25, 0.5, 0.75, 1],
+                  }}
                 />
               </div>
               {/* Text outside red box */}
@@ -255,13 +263,21 @@ export default function AboutContent() {
                   opacity: 1
                 }}
               >
-                <Image
+                <motion.img
                   src="/logo/2.svg"
                   alt="Icon 2"
-                  width={48}
-                  height={48}
                   className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12"
                   style={{ filter: 'brightness(0) invert(1)' }}
+                  animate={{ 
+                    y: [0, -6, 0, 6, 0],
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    ease: 'linear',
+                    repeat: Infinity,
+                    times: [0, 0.25, 0.5, 0.75, 1],
+                    delay: 0.5
+                  }}
                 />
               </div>
               {/* Text outside red box */}
@@ -317,13 +333,21 @@ export default function AboutContent() {
                   opacity: 1
                 }}
               >
-                <Image
+                <motion.img
                   src="/logo/3.svg"
                   alt="Icon 3"
-                  width={48}
-                  height={48}
                   className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12"
                   style={{ filter: 'brightness(0) invert(1)' }}
+                  animate={{ 
+                    y: [0, -6, 0, 6, 0],
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    ease: 'linear',
+                    repeat: Infinity,
+                    times: [0, 0.25, 0.5, 0.75, 1],
+                    delay: 1
+                  }}
                 />
               </div>
               {/* Text outside red box */}
@@ -379,13 +403,21 @@ export default function AboutContent() {
                   opacity: 1
                 }}
               >
-                <Image
+                <motion.img
                   src="/logo/4.svg"
                   alt="Icon 4"
-                  width={48}
-                  height={48}
                   className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12"
                   style={{ filter: 'brightness(0) invert(1)' }}
+                  animate={{ 
+                    y: [0, -6, 0, 6, 0],
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    ease: 'linear',
+                    repeat: Infinity,
+                    times: [0, 0.25, 0.5, 0.75, 1],
+                    delay: 1.5
+                  }}
                 />
               </div>
               {/* Text outside red box */}

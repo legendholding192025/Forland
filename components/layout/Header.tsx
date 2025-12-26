@@ -16,7 +16,7 @@ export default function Header() {
     { label: 'Home', href: '/' },
     { 
       label: 'Products', 
-      href: '/products',
+      href: '#',
       dropdown: [
         { label: 'FORLAND H7', href: '/products/h7' },
         { label: 'FORLAND L5', href: '/products/l5' },
@@ -29,7 +29,7 @@ export default function Header() {
     { label: 'About', href: '/about' },
     { 
       label: 'Contact', 
-      href: '/contact',
+      href: '/get-in-touch',
       dropdown: [
         { label: 'Get a Quote', href: '/request-quote' },
         { label: 'Book a Service', href: '/service' },

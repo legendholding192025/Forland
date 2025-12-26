@@ -1,4 +1,8 @@
+'use client';
+
 import Image from 'next/image';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 export default function ProductSection() {
   return (
@@ -52,7 +56,7 @@ export default function ProductSection() {
           
           {/* Product Boxes */}
           <div className="flex flex-col lg:flex-row gap-8 sm:gap-12 lg:gap-20 justify-center items-center w-full">
-            <div className="relative w-[90%] max-w-[400px] sm:max-w-[450px] lg:w-[528px]" style={{ aspectRatio: '528/485' }}>
+            <Link href="/products/h7" className="relative w-[90%] max-w-[400px] sm:max-w-[450px] lg:w-[528px] cursor-pointer" style={{ aspectRatio: '528/485' }}>
               {/* Gray Box - Bottom */}
               <div
                 className="absolute bottom-0 left-0 w-full flex items-center justify-center"
@@ -65,12 +69,12 @@ export default function ProductSection() {
                  <img
                    src="/img/white.png"
                    alt="White Image"
-                   className="max-w-full max-h-full object-contain relative"
+                   className="max-w-full max-h-full object-contain relative transition-transform duration-300 ease-in-out hover:scale-125 cursor-pointer"
                    style={{ marginTop: '-14.4%', zIndex: 20 }}
                  />
               </div>
               {/* Red Box - Centered on top */}
-              <div
+              <motion.div
                 className="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center gap-2 sm:gap-3 lg:gap-4"
                 style={{
                   width: '62.1%',
@@ -78,6 +82,10 @@ export default function ProductSection() {
                   background: '#DF0011',
                   zIndex: 5
                 }}
+                initial={{ y: '40.6%', opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.9, ease: 'easeOut' }}
               >
                 <Image
                   src="/text/forland-text.svg"
@@ -106,33 +114,39 @@ export default function ProductSection() {
                 >
                   Cargo Truck
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </Link>
             
-            <div className="relative w-[90%] max-w-[400px] sm:max-w-[450px] lg:w-[528px]" style={{ aspectRatio: '528/485' }}>
+            <Link href="/products/l5" className="relative w-[90%] max-w-[400px] sm:max-w-[450px] lg:w-[528px] cursor-pointer" style={{ aspectRatio: '528/485' }}>
               {/* Gray Box - Top */}
               <div
                 className="absolute top-0 left-0 w-full flex items-center justify-center"
                 style={{
                   height: '40.6%',
-                  background: '#343434'
+                  background: '#343434',
+                  zIndex: 10
                 }}
               >
                  <img
                    src="/img/red.png"
                    alt="Red Image"
-                   className="max-w-full max-h-full object-contain relative"
+                   className="max-w-full max-h-full object-contain relative transition-transform duration-300 ease-in-out hover:scale-125 cursor-pointer"
                    style={{ marginTop: '-14.4%', zIndex: 20 }}
                  />
               </div>
               {/* Red Box - Centered on bottom */}
-              <div
+              <motion.div
                 className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center gap-2 sm:gap-3 lg:gap-4"
                 style={{
                   width: '62.1%',
                   height: '59.4%',
-                  background: '#DF0011'
+                  background: '#DF0011',
+                  zIndex: 5
                 }}
+                initial={{ y: '-40.6%', opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.9, ease: 'easeOut' }}
               >
                 <Image
                   src="/text/forland-text.svg"
@@ -161,8 +175,8 @@ export default function ProductSection() {
                 >
                   Cargo Truck
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </Link>
           </div>
         </div>
       </div>
