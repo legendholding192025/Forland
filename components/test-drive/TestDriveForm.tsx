@@ -1,13 +1,20 @@
 'use client';
 
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export default function TestDriveForm() {
   return (
     <section className="w-full bg-white py-16">
       <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '1152px' }}>
         {/* Heading Section */}
-        <div className="flex items-center justify-center gap-2 lg:gap-3 mb-8 lg:mb-16">
+        <motion.div 
+          className="flex items-center justify-center gap-2 lg:gap-3 mb-8 lg:mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.9, ease: 'easeOut' }}
+        >
           {/* Left diagonal line */}
           <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
 
@@ -26,12 +33,16 @@ export default function TestDriveForm() {
 
           {/* Right diagonal line */}
           <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
-        </div>
+        </motion.div>
 
         <div>
           {/* Send us a message section */}
-          <div>
-
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
+          >
             <form
               className="space-y-6"
               onSubmit={(e) => {
@@ -56,7 +67,7 @@ export default function TestDriveForm() {
                   <select
                     name="model"
                     required
-                    className="w-full outline-none px-4"
+                    className="w-full outline-none px-4 focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200"
                     style={{
                       maxWidth: '555.77px',
                       height: '38.46px',
@@ -80,7 +91,7 @@ export default function TestDriveForm() {
                   <select
                     name="emirates"
                     required
-                    className="w-full outline-none px-4"
+                    className="w-full outline-none px-4 focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200"
                     style={{
                       maxWidth: '555.77px',
                       height: '38.46px',
@@ -110,7 +121,7 @@ export default function TestDriveForm() {
                 </label>
                 <textarea
                   name="additionalInfo"
-                  className="w-full px-4 py-3 outline-none text-black"
+                  className="w-full px-4 py-3 outline-none text-black focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200"
                   style={{
                     height: '82px',
                     borderRadius: '9.62px',
@@ -160,7 +171,7 @@ export default function TestDriveForm() {
                 </button>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -188,7 +199,7 @@ function Field({
         name={name}
         type={type}
         required={required}
-        className="w-full outline-none text-black px-4"
+        className="w-full outline-none text-black px-4 focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200"
         style={{
           maxWidth: '555.77px',
           height: '38.46px',

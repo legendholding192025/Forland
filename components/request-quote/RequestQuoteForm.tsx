@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export default function RequestQuoteForm() {
   return (
@@ -8,7 +9,12 @@ export default function RequestQuoteForm() {
       <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '1152px' }}>
         <div>
           {/* Send us a message section */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.9, ease: 'easeOut' }}
+          >
             <h2
               className="mb-2"
               style={{
@@ -62,7 +68,7 @@ export default function RequestQuoteForm() {
                   <select
                     name="subject"
                     required
-                    className="w-full outline-none px-4"
+                    className="w-full outline-none px-4 focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200"
                     style={{
                       maxWidth: '555.77px',
                       height: '38.46px',
@@ -92,7 +98,7 @@ export default function RequestQuoteForm() {
                 </label>
                 <textarea
                   name="message"
-                  className="w-full px-4 py-3 outline-none text-black"
+                  className="w-full px-4 py-3 outline-none text-black focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200"
                   style={{
                     height: '82px',
                     borderRadius: '9.62px',
@@ -142,10 +148,16 @@ export default function RequestQuoteForm() {
                 </button>
               </div>
             </form>
-          </div>
+          </motion.div>
 
           {/* Or Contact Us section - below the form */}
-          <div className="mt-12">
+          <motion.div 
+            className="mt-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.9, ease: 'easeOut', delay: 0.2 }}
+          >
             <h2
               className="mb-6"
               style={{
@@ -238,7 +250,7 @@ export default function RequestQuoteForm() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -266,8 +278,7 @@ function Field({
         name={name}
         type={type}
         required={required}
-        className="outline-none text-black px-4"
-        className="w-full"
+        className="w-full outline-none text-black px-4 focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200"
         style={{
           maxWidth: '555.77px',
           height: '38.46px',

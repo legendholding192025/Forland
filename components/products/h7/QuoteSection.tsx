@@ -1,13 +1,18 @@
 'use client';
 
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export default function QuoteSection() {
   return (
     <section className="w-full bg-white py-16">
       {/* Red banner (same style as download banner, text changed) */}
-      <div
+      <motion.div
         className="mx-auto mb-8 lg:mb-[60px] max-w-[1152px] bg-[#DF0011] flex flex-col lg:flex-row items-center justify-center lg:justify-between px-6 py-6 lg:px-20 lg:py-10 gap-4 lg:gap-0"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.9, ease: 'easeOut' }}
       >
         <Image 
           src="/logo/white-logo.svg" 
@@ -29,10 +34,17 @@ export default function QuoteSection() {
         >
           REQUEST A QUOTE OR RECEIVE A CALL
         </h2>
-      </div>
+      </motion.div>
 
       {/* Form */}
-      <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '1152px' }}>
+      <motion.div 
+        className="mx-auto px-4 sm:px-6 lg:px-8" 
+        style={{ maxWidth: '1152px' }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
+      >
         <p className="text-black text-lg lg:text-2xl mb-6 lg:mb-10" style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400 }}>
           Our team is entirely at your disposal.
         </p>
@@ -56,7 +68,7 @@ export default function QuoteSection() {
             </label>
             <textarea
               name="message"
-              className="w-full px-4 py-3 outline-none text-black"
+              className="w-full px-4 py-3 outline-none text-black focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200"
               style={{
                 height: '82px',
                 borderRadius: '9.62px',
@@ -103,7 +115,7 @@ export default function QuoteSection() {
             </button>
           </div>
         </form>
-      </div>
+      </motion.div>
     </section>
   );
 }
@@ -129,7 +141,7 @@ function Field({
         name={name}
         type={type}
         required={required}
-        className="w-full lg:max-w-[555.77px] outline-none text-black px-4"
+        className="w-full lg:max-w-[555.77px] outline-none text-black px-4 focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200"
         style={{
           height: '38.46px',
           borderRadius: '9.62px',
