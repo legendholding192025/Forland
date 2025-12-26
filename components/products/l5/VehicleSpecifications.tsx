@@ -222,7 +222,7 @@ function SpecRow({ label, value, subValue }: { label: string; value?: string; su
 
       {/* Desktop Layout - Original Grid */}
       <div className="hidden md:grid items-start gap-y-1 min-w-0" style={{ gridTemplateColumns: gridCols, columnGap: '4px' }}>
-        <span className="text-base text-black break-words">{label}</span>
+      <span className="text-base text-black break-words">{label}</span>
 
       {value && !subValue && (
         <div className="flex justify-start items-center" style={{ gap: '4px' }}>
@@ -273,7 +273,7 @@ function SpecRow({ label, value, subValue }: { label: string; value?: string; su
           <span className="text-base text-[#EE2222] font-normal"></span>
         </>
       )}
-      </div>
+    </div>
     </>
   );
 }

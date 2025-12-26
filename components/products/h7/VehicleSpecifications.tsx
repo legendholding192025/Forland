@@ -222,58 +222,58 @@ function SpecRow({ label, value, subValue }: { label: string; value?: string; su
 
       {/* Desktop Layout - Original Grid */}
       <div className="hidden md:grid items-start gap-y-1 min-w-0" style={{ gridTemplateColumns: gridCols, columnGap: '4px' }}>
-        <span className="text-base text-black break-words">{label}</span>
+      <span className="text-base text-black break-words">{label}</span>
 
-        {value && !subValue && (
-          <div className="flex justify-start items-center" style={{ gap: '4px' }}>
-            {value.includes(' | ') ? (
-              value.split(' | ').map((val, idx, arr) => (
-                <React.Fragment key={idx}>
-                  <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{val.trim()}</span>
-                  {idx < arr.length - 1 && (
-                    <span 
-                      style={{ 
-                        width: '1px', 
-                        height: '16px', 
-                        backgroundColor: '#EE2222',
-                        display: 'inline-block',
-                        marginLeft: '2px',
-                        marginRight: '2px'
-                      }}
-                    />
-                  )}
-                </React.Fragment>
-              ))
-            ) : (
-              <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{value}</span>
-            )}
+      {value && !subValue && (
+        <div className="flex justify-start items-center" style={{ gap: '4px' }}>
+          {value.includes(' | ') ? (
+            value.split(' | ').map((val, idx, arr) => (
+              <React.Fragment key={idx}>
+                <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{val.trim()}</span>
+                {idx < arr.length - 1 && (
+                  <span 
+                    style={{ 
+                      width: '1px', 
+                      height: '16px', 
+                      backgroundColor: '#EE2222',
+                      display: 'inline-block',
+                      marginLeft: '2px',
+                      marginRight: '2px'
+                    }}
+                  />
+                )}
+              </React.Fragment>
+            ))
+          ) : (
+            <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{value}</span>
+          )}
+        </div>
+      )}
+
+      {value && subValue && (
+        <>
+          <span className="text-base text-black pr-1">{value}</span>
+          <div className="flex justify-start">
+            <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{subValue}</span>
           </div>
-        )}
+        </>
+      )}
 
-        {value && subValue && (
-          <>
-            <span className="text-base text-black pr-1">{value}</span>
-            <div className="flex justify-start">
-              <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{subValue}</span>
-            </div>
-          </>
-        )}
-
-        {!value && subValue && (
-          <>
-            <span></span>
-            <div className="flex justify-start">
-              <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{subValue}</span>
-            </div>
-          </>
-        )}
-        {!value && !subValue && (
-          <>
-            <span></span>
-            <span className="text-base text-[#EE2222] font-normal"></span>
-          </>
-        )}
-      </div>
+      {!value && subValue && (
+        <>
+          <span></span>
+          <div className="flex justify-start">
+            <span className="text-base text-[#EE2222] font-normal break-words whitespace-normal min-w-0">{subValue}</span>
+          </div>
+        </>
+      )}
+      {!value && !subValue && (
+        <>
+          <span></span>
+          <span className="text-base text-[#EE2222] font-normal"></span>
+        </>
+      )}
+    </div>
     </>
   );
 }

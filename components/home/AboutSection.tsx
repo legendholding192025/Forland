@@ -1,8 +1,76 @@
+'use client';
+
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
 export default function AboutSection() {
+  const [counters, setCounters] = useState({
+    year: 0,
+    vehicles: 0,
+    countries: 0,
+    years: 0
+  });
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true);
+            animateCounters();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasAnimated]);
+
+  const animateCounters = () => {
+    const duration = 2000; // 2 seconds
+    const steps = 60;
+    const stepDuration = duration / steps;
+
+    let currentStep = 0;
+
+    const interval = setInterval(() => {
+      currentStep++;
+      const progress = currentStep / steps;
+
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+
+      setCounters({
+        year: Math.floor(1999 * easeOutQuart),
+        vehicles: Math.floor(6 * easeOutQuart),
+        countries: Math.floor(50 * easeOutQuart),
+        years: Math.floor(20 * easeOutQuart)
+      });
+
+      if (currentStep >= steps) {
+        clearInterval(interval);
+        setCounters({
+          year: 1999,
+          vehicles: 6,
+          countries: 50,
+          years: 20
+        });
+      }
+    }, stepDuration);
+  };
   return (
-    <section className="w-full py-10 sm:py-14 lg:py-20" style={{ background: '#000000' }}>
+    <section ref={sectionRef} className="w-full py-10 sm:py-14 lg:py-20" style={{ background: '#000000' }}>
       <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '1440px' }}>
         <div className="flex flex-col items-center">
           {/* About Forland Header with vector images */}
@@ -16,7 +84,6 @@ export default function AboutSection() {
                 fontSize: 'clamp(14px, 3vw, 24px)',
                 lineHeight: '100%',
                 letterSpacing: '0%',
-                color: '#910000',
                 margin: 0
               }}
             >
@@ -26,7 +93,8 @@ export default function AboutSection() {
                 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-auto lg:h-auto"
                 style={{ display: 'inline-block' }}
               />
-              About Forland
+              <span style={{ color: '#910000' }}>About</span>{' '}
+              <span style={{ color: '#FFFFFF' }}>Forland</span>
               <img
                 src="/vector/small.svg"
                 alt="Vector"
@@ -148,7 +216,7 @@ export default function AboutSection() {
                     marginBottom: '8px'
                   }}
                 >
-                  1999
+                  {counters.year}
                 </div>
                 <div
                   style={{
@@ -204,7 +272,7 @@ export default function AboutSection() {
                     marginBottom: '8px'
                   }}
                 >
-                  +6M
+                  +{counters.vehicles}M
                 </div>
                 <div
                   style={{
@@ -260,7 +328,7 @@ export default function AboutSection() {
                     marginBottom: '8px'
                   }}
                 >
-                  50 countries
+                  {counters.countries} countries
                 </div>
                 <div
                   style={{
@@ -316,7 +384,7 @@ export default function AboutSection() {
                     marginBottom: '8px'
                   }}
                 >
-                  +20 Years
+                  +{counters.years} Years
                 </div>
                 <div
                   style={{

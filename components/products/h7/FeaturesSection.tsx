@@ -229,7 +229,7 @@ export default function FeaturesSection() {
                         alt=""
                         width={block.image.width}
                         height={block.image.height}
-                        className="w-[200px] lg:w-auto h-auto"
+                        className="w-[200px] lg:w-[311px] h-auto"
                         style={{ objectFit: 'contain', display: 'block' }}
                       />
                     </div>
@@ -308,8 +308,8 @@ export default function FeaturesSection() {
                           height={img.height}
                           className={`h-auto ${
                             i === 1 
-                              ? 'w-[220px] sm:w-[240px] lg:w-auto' 
-                              : 'w-[150px] sm:w-[180px] lg:w-auto'
+                              ? 'w-[220px] sm:w-[240px] lg:w-[365px]' 
+                              : 'w-[150px] sm:w-[180px] lg:w-[280px]'
                           }`}
                           style={{ objectFit: 'contain', display: 'block' }}
                         />
@@ -324,7 +324,7 @@ export default function FeaturesSection() {
                         alt=""
                         width={block.image.width}
                         height={block.image.height}
-                        className="w-[200px] lg:w-auto h-auto"
+                        className="w-[200px] lg:w-[309px] h-auto"
                         style={{ objectFit: 'contain', display: 'block' }}
                       />
                     </div>
@@ -338,8 +338,8 @@ export default function FeaturesSection() {
                           alt="Truck Image H7"
                           width={block.truckImage.width}
                           height={block.truckImage.height}
-                          className="w-full lg:w-auto h-auto"
-                          style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
+                          className="w-full lg:max-w-[1150px] h-auto"
+                          style={{ display: 'block', height: 'auto' }}
                         />
 
                         {/* Red Card - responsive size */}
@@ -360,13 +360,13 @@ export default function FeaturesSection() {
                           }}
                         >
                           <div className="feature-red-card-logo-forland">
-                            <img
-                              src="/text/forland-text.svg"
-                              alt="Forland Text"
-                              width={110}
-                              height={32}
+                          <img
+                            src="/text/forland-text.svg"
+                            alt="Forland Text"
+                            width={110}
+                            height={32}
                               style={{ display: 'block', width: '100%', height: 'auto' }}
-                            />
+                          />
                           </div>
                           <div className="feature-red-card-logo-model">
                             <img 

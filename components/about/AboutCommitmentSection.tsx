@@ -3,11 +3,7 @@ import Image from 'next/image';
 export default function AboutCommitmentSection() {
   return (
     <section 
-      className="relative w-full overflow-hidden"
-      style={{ 
-        minHeight: '580px',
-        paddingBottom: '60px',
-      }}
+      className="relative w-full min-h-[900px] sm:min-h-[800px] lg:min-h-[580px] pb-12 lg:pb-[60px]"
     >
       <Image
         src="https://cdn.legendholding.com/images/cdn_69467fb3a76b81.50381106_20251220_105131.webp"
@@ -20,14 +16,14 @@ export default function AboutCommitmentSection() {
         sizes="100vw"
       />
       {/* Heading at top */}
-      <div className="absolute top-0 left-0 right-0 flex flex-col items-center z-10 pt-12 pb-12">
-        <div className="flex items-center justify-center gap-3 mb-8">
+      <div className="relative lg:absolute lg:top-0 lg:left-0 lg:right-0 flex flex-col items-center z-10 pt-6 pb-6 lg:pt-12 lg:pb-12">
+        <div className="flex items-center justify-center gap-2 lg:gap-3 mb-6 lg:mb-8">
           {/* Left diagonal line */}
-          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-10 h-10" />
+          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
 
           {/* Title */}
           <h1 
-            className="text-4xl font-normal"
+            className="text-2xl sm:text-3xl lg:text-4xl font-normal"
             style={{
               fontFamily: 'Effra, Arial, sans-serif',
               fontWeight: 400,
@@ -39,27 +35,36 @@ export default function AboutCommitmentSection() {
           </h1>
 
           {/* Right diagonal line */}
-          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-10 h-10" />
+          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
         </div>
 
         {/* Images below heading */}
-        <div className="flex flex-col items-center gap-8" style={{ width: '100%' }}>
+        <div className="flex flex-col items-center gap-6 lg:gap-8 px-4" style={{ width: '100%' }}>
           {/* Container matching reason cards alignment */}
-          <div style={{ maxWidth: '1152px', width: '100%', margin: '0 auto', position: 'relative' }}>
+          <div className="max-w-[1152px] w-full mx-auto relative">
             {/* First image with content on both sides */}
-            <div className="flex items-center" style={{ position: 'relative', minHeight: '173px' }}>
-              {/* Left side content - aligned with reason card left column */}
-              <div className="flex flex-col" style={{ flex: '1', maxWidth: 'calc((1152px - 30px) / 2)', paddingRight: '135px' }}>
+            <div className="flex flex-col lg:flex-row items-center relative min-h-[200px] lg:min-h-[173px] gap-6 lg:gap-0">
+              {/* Center image - appears first on mobile */}
+              <div className="relative lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 z-10 order-1 lg:order-2 flex items-center justify-center w-full lg:w-auto">
+                <img
+                  src="https://cdn.legendholding.com/images/cdn_69468212a29c47.42339452_20251220_110138.webp"
+                  alt="FORLAND Commitment 1"
+                  className="w-[150px] h-auto sm:w-[180px] lg:w-[210px] lg:h-[173px] block mx-auto lg:mx-0"
+                  style={{ objectFit: 'contain', display: 'block' }}
+                />
+              </div>
+
+              {/* Left side content - appears second on mobile */}
+              <div className="flex flex-col w-full lg:w-auto lg:flex-1 lg:max-w-[calc((1152px-30px)/2)] lg:pr-[135px] order-2 lg:order-1">
                 <h3
+                  className="text-lg lg:text-[24px] mb-3 lg:mb-3"
                   style={{
                     fontFamily: 'Effra, Arial, sans-serif',
                     fontWeight: 400,
                     fontStyle: 'normal',
-                    fontSize: '24px',
                     lineHeight: '120%',
                     letterSpacing: '0%',
                     color: '#DF0011',
-                    marginBottom: '12px',
                     whiteSpace: 'normal',
                     wordWrap: 'break-word'
                   }}
@@ -67,44 +72,33 @@ export default function AboutCommitmentSection() {
                   COMMERCIAL LOGISTICS PLATFORM
                 </h3>
                 <ul
+                  className="text-sm lg:text-[16px] pl-5 lg:pl-5"
                   style={{
                     fontFamily: 'Effra, Arial, sans-serif',
                     fontWeight: 400,
                     fontStyle: 'normal',
-                    fontSize: '16px',
                     lineHeight: '160%',
                     color: '#FFFFFF',
                     margin: 0,
-                    paddingLeft: '20px',
                     listStyleType: 'disc'
                   }}
                 >
-                  <li style={{ marginBottom: '8px' }}>Create high quality and high efficiency logistics products.</li>
-                  <li style={{ marginBottom: '8px' }}>Provide scientific and accurate logistics solutions to users.</li>
+                  <li className="mb-2 lg:mb-2">Create high quality and high efficiency logistics products.</li>
+                  <li className="mb-2 lg:mb-2">Provide scientific and accurate logistics solutions to users.</li>
                 </ul>
               </div>
 
-              {/* Center image - fixed position */}
-              <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', zIndex: 10 }}>
-                <img
-                  src="https://cdn.legendholding.com/images/cdn_69468212a29c47.42339452_20251220_110138.webp"
-                  alt="FORLAND Commitment 1"
-                  style={{ width: '210px', height: '173px', objectFit: 'contain' }}
-                />
-              </div>
-
-              {/* Right side content - aligned with reason card right column */}
-              <div className="flex flex-col" style={{ flex: '1', maxWidth: 'calc((1152px - 30px) / 2)', marginLeft: 'auto', paddingLeft: '135px' }}>
+              {/* Right side content - appears third on mobile */}
+              <div className="flex flex-col w-full lg:w-auto lg:flex-1 lg:max-w-[calc((1152px-30px)/2)] lg:ml-auto lg:pl-[135px] order-3">
                 <h3
+                  className="text-lg lg:text-[24px] mb-3 lg:mb-3"
                   style={{
                     fontFamily: 'Effra, Arial, sans-serif',
                     fontWeight: 400,
                     fontStyle: 'normal',
-                    fontSize: '24px',
                     lineHeight: '120%',
                     letterSpacing: '0%',
                     color: '#DF0011',
-                    marginBottom: '12px',
                     whiteSpace: 'normal',
                     wordWrap: 'break-word'
                   }}
@@ -112,40 +106,48 @@ export default function AboutCommitmentSection() {
                   ALL-TERRAIN TRANSPORT
                 </h3>
                 <ul
+                  className="text-sm lg:text-[16px] pl-5 lg:pl-5"
                   style={{
                     fontFamily: 'Effra, Arial, sans-serif',
                     fontWeight: 400,
                     fontStyle: 'normal',
-                    fontSize: '16px',
                     lineHeight: '160%',
                     color: '#FFFFFF',
                     margin: 0,
-                    paddingLeft: '20px',
                     listStyleType: 'disc'
                   }}
                 >
-                  <li style={{ marginBottom: '8px' }}>Exceptional load capacity and adaptability to difficult roads.</li>
-                  <li style={{ marginBottom: '8px' }}>No path, however rugged, can stop it.</li>
+                  <li className="mb-2 lg:mb-2">Exceptional load capacity and adaptability to difficult roads.</li>
+                  <li className="mb-2 lg:mb-2">No path, however rugged, can stop it.</li>
                 </ul>
               </div>
             </div>
           </div>
 
           {/* Second image with content on both sides */}
-          <div style={{ maxWidth: '1152px', width: '100%', margin: '0 auto', position: 'relative' }}>
-            <div className="flex items-center" style={{ position: 'relative', minHeight: '162px' }}>
-              {/* Left side content - aligned with reason card left column */}
-              <div className="flex flex-col" style={{ flex: '1', maxWidth: 'calc((1152px - 30px) / 2)', paddingRight: '145px' }}>
+          <div className="max-w-[1152px] w-full mx-auto relative">
+            <div className="flex flex-col lg:flex-row items-center relative min-h-[200px] lg:min-h-[162px] gap-6 lg:gap-0">
+              {/* Center image - appears first on mobile */}
+              <div className="relative lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 z-10 order-1 lg:order-2 flex items-center justify-center w-full lg:w-auto">
+                <img
+                  src="https://cdn.legendholding.com/images/cdn_694682e4afc615.15283109_20251220_110508.webp"
+                  alt="FORLAND Commitment 2"
+                  className="w-[150px] h-auto sm:w-[180px] lg:w-[222px] lg:h-[162px] block mx-auto lg:mx-0"
+                  style={{ objectFit: 'contain', display: 'block' }}
+                />
+              </div>
+
+              {/* Left side content - appears second on mobile */}
+              <div className="flex flex-col w-full lg:w-auto lg:flex-1 lg:max-w-[calc((1152px-30px)/2)] lg:pr-[145px] order-2 lg:order-1">
                 <h3
+                  className="text-lg lg:text-[24px] mb-3 lg:mb-3"
                   style={{
                     fontFamily: 'Effra, Arial, sans-serif',
                     fontWeight: 400,
                     fontStyle: 'normal',
-                    fontSize: '24px',
                     lineHeight: '120%',
                     letterSpacing: '0%',
                     color: '#DF0011',
-                    marginBottom: '12px',
                     whiteSpace: 'normal',
                     wordWrap: 'break-word'
                   }}
@@ -153,44 +155,33 @@ export default function AboutCommitmentSection() {
                   CONSTRUCTION VEHICLES
                 </h3>
                 <ul
+                  className="text-sm lg:text-[16px] pl-5 lg:pl-5"
                   style={{
                     fontFamily: 'Effra, Arial, sans-serif',
                     fontWeight: 400,
                     fontStyle: 'normal',
-                    fontSize: '16px',
                     lineHeight: '160%',
                     color: '#FFFFFF',
                     margin: 0,
-                    paddingLeft: '20px',
                     listStyleType: 'disc'
                   }}
                 >
-                  <li style={{ marginBottom: '8px' }}>Vehicles designed for extremely heavy, robust and durable loads.</li>
-                  <li style={{ marginBottom: '8px' }}>A revolution for the global development of modern transport.</li>
+                  <li className="mb-2 lg:mb-2">Vehicles designed for extremely heavy, robust and durable loads.</li>
+                  <li className="mb-2 lg:mb-2">A revolution for the global development of modern transport.</li>
                 </ul>
               </div>
 
-              {/* Center image - fixed position */}
-              <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', zIndex: 10 }}>
-                <img
-                  src="https://cdn.legendholding.com/images/cdn_694682e4afc615.15283109_20251220_110508.webp"
-                  alt="FORLAND Commitment 2"
-                  style={{ width: '222px', height: '162px', objectFit: 'contain' }}
-                />
-              </div>
-
-              {/* Right side content - aligned with reason card right column */}
-              <div className="flex flex-col" style={{ flex: '1', maxWidth: 'calc((1152px - 30px) / 2)', marginLeft: 'auto', paddingLeft: '145px' }}>
+              {/* Right side content - appears third on mobile */}
+              <div className="flex flex-col w-full lg:w-auto lg:flex-1 lg:max-w-[calc((1152px-30px)/2)] lg:ml-auto lg:pl-[145px] order-3">
                 <h3
+                  className="text-lg lg:text-[24px] mb-3 lg:mb-3"
                   style={{
                     fontFamily: 'Effra, Arial, sans-serif',
                     fontWeight: 400,
                     fontStyle: 'normal',
-                    fontSize: '24px',
                     lineHeight: '120%',
                     letterSpacing: '0%',
                     color: '#DF0011',
-                    marginBottom: '12px',
                     whiteSpace: 'normal',
                     wordWrap: 'break-word'
                   }}
@@ -198,11 +189,11 @@ export default function AboutCommitmentSection() {
                   SOLUTIONS FOR SPECIAL CONDITIONS
                 </h3>
                 <p
+                  className="text-sm lg:text-[16px] mb-0"
                   style={{
                     fontFamily: 'Effra, Arial, sans-serif',
                     fontWeight: 400,
                     fontStyle: 'normal',
-                    fontSize: '16px',
                     lineHeight: '160%',
                     color: '#FFFFFF',
                     margin: 0,

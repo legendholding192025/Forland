@@ -3,7 +3,7 @@ import Image from 'next/image';
 export default function RequestQuoteHero() {
   return (
     <section 
-      className="relative w-full overflow-hidden h-[300px] md:h-[480px]"
+      className="relative w-full overflow-hidden h-[220px] sm:h-[280px] md:h-[480px]"
     >
       <Image
         src="https://cdn.legendholding.com/images/cdn_6945544a644ce2.36760022_20251219_133402.webp"

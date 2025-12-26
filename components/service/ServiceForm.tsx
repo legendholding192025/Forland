@@ -7,13 +7,13 @@ export default function ServiceForm() {
     <section className="w-full bg-white py-16">
       <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '1152px' }}>
         {/* Heading Section */}
-        <div className="flex items-center justify-center gap-3 mb-16">
+        <div className="flex items-center justify-center gap-2 lg:gap-3 mb-8 lg:mb-16">
           {/* Left diagonal line */}
-          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-10 h-10" />
+          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
 
           {/* Title */}
           <h1 
-            className="text-4xl font-normal"
+            className="text-2xl sm:text-3xl lg:text-4xl font-normal"
             style={{
               fontFamily: 'Effra, Arial, sans-serif',
               fontWeight: 400,
@@ -25,7 +25,7 @@ export default function ServiceForm() {
           </h1>
 
           {/* Right diagonal line */}
-          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-10 h-10" />
+          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
         </div>
 
         <div>
@@ -256,8 +256,7 @@ function Field({
         name={name}
         type={type}
         required={required}
-        className="outline-none text-black px-4"
-        className="w-full"
+        className="w-full outline-none text-black px-4"
         style={{
           maxWidth: '555.77px',
           height: '38.46px',

@@ -41,18 +41,10 @@ export default function AboutReasonSection() {
   ];
 
   return (
-    <section className="w-full" style={{ background: '#FFFFFF', padding: '60px 40px' }}>
+    <section className="w-full py-10 px-5 lg:py-[60px] lg:px-10" style={{ background: '#FFFFFF' }}>
       {/* Red Header Banner */}
       <div
-        style={{
-          maxWidth: '1152px',
-          margin: '0 auto 60px auto',
-          background: '#DF0011',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '40px 80px'
-        }}
+        className="mx-auto mb-8 lg:mb-[60px] max-w-[1152px] bg-[#DF0011] flex flex-col lg:flex-row items-center justify-center lg:justify-between px-6 py-6 lg:px-20 lg:py-10 gap-4 lg:gap-0"
       >
         {/* FORLAND Logo */}
         <Image
@@ -60,20 +52,19 @@ export default function AboutReasonSection() {
           alt="FORLAND Logo"
           width={200}
           height={60}
-          className="object-contain"
+          className="object-contain w-[120px] lg:w-[200px] h-auto"
         />
         
         {/* Title Text */}
         <h2
+          className="text-lg lg:text-[32px] m-0 text-center lg:text-left"
           style={{
             fontFamily: 'Effra, Arial, sans-serif',
             fontWeight: 400,
             fontStyle: 'normal',
-            fontSize: '32px',
             lineHeight: '100%',
             letterSpacing: '0%',
             color: '#FFFFFF',
-            margin: 0
           }}
         >
           FORLAND DRIVES VALUE
@@ -82,34 +73,26 @@ export default function AboutReasonSection() {
 
       {/* Content Blocks */}
       <div
-        style={{
-          maxWidth: '1152px',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: '30px'
-        }}
+        className="max-w-[1152px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-[30px]"
       >
         {reasons.map((reason, index) => (
           <div
             key={index}
+            className="bg-black p-6 lg:p-[30px]"
             style={{
-              background: '#000000',
-              padding: '30px',
               border: reason.hasBlueBorder ? '2px solid #0066CC' : 'none'
             }}
           >
             <h3
+              className="text-lg lg:text-[24px] mb-4 lg:mb-5"
               style={{
                 fontFamily: 'Effra, Arial, sans-serif',
                 fontWeight: 400,
                 fontStyle: 'normal',
-                fontSize: '24px',
                 lineHeight: '120%',
                 letterSpacing: '0%',
                 color: '#DF0011',
-                marginBottom: '20px',
-                margin: '0 0 20px 0'
+                margin: 0
               }}
             >
               {reason.title}
@@ -120,15 +103,15 @@ export default function AboutReasonSection() {
                   {reason.paragraphs.map((paragraph, pIndex) => (
                     <p
                       key={pIndex}
+                      className="text-sm lg:text-[16px] mb-4 lg:mb-4"
                       style={{
                         fontFamily: 'Effra, Arial, sans-serif',
                         fontWeight: 400,
                         fontStyle: 'normal',
-                        fontSize: '16px',
                         lineHeight: '160%',
                         letterSpacing: '0%',
                         color: '#FFFFFF',
-                        margin: pIndex === 0 ? '0 0 16px 0' : '0 0 16px 0'
+                        margin: 0
                       }}
                     >
                       {paragraph}
@@ -138,22 +121,22 @@ export default function AboutReasonSection() {
               )}
               {reason.bullets && (
                 <ul
+                  className="text-sm lg:text-[16px] mb-4 lg:mb-4 pl-5 lg:pl-5"
                   style={{
                     fontFamily: 'Effra, Arial, sans-serif',
                     fontWeight: 400,
                     fontStyle: 'normal',
-                    fontSize: '16px',
                     lineHeight: '160%',
                     letterSpacing: '0%',
                     color: '#FFFFFF',
-                    margin: '0 0 16px 0',
-                    paddingLeft: '20px',
+                    margin: 0,
                     listStyleType: 'disc'
                   }}
                 >
                   {reason.bullets.map((bullet, bIndex) => (
                     <li
                       key={bIndex}
+                      className="mb-3 lg:mb-3"
                       style={{
                         marginBottom: '12px'
                       }}
@@ -168,11 +151,11 @@ export default function AboutReasonSection() {
                   {reason.paragraphsAfterBullets.map((paragraph, pIndex) => (
                     <p
                       key={pIndex}
+                      className="text-sm lg:text-[16px] mb-0"
                       style={{
                         fontFamily: 'Effra, Arial, sans-serif',
                         fontWeight: 400,
                         fontStyle: 'normal',
-                        fontSize: '16px',
                         lineHeight: '160%',
                         letterSpacing: '0%',
                         color: '#FFFFFF',
