@@ -168,6 +168,52 @@ export default function AboutContent() {
             >
               After more than 20 years of rapid development, FORLAND has grown from being a "leading brand in China" to "world-renowned brand", offering transport solutions adapted to various sectors, with the best value for money.
             </p>
+
+            {/* Additional Text Section Below Stats */}
+          <div className="mt-12 lg:mt-16" style={{ textAlign: 'left', maxWidth: '1200px', width: '100%' }}>
+            <p
+              className="text-sm sm:text-base lg:text-[24px] mb-6 lg:mb-8"
+              style={{
+                fontFamily: 'Effra, Arial, sans-serif',
+                fontWeight: 300,
+                fontStyle: 'normal',
+                lineHeight: '150%',
+                letterSpacing: '0%',
+                color: '#000000',
+                marginTop: 0,
+              }}
+            >
+              Thanks to its commitment to innovation and production expertise, Forland quickly conquered international markets.
+            </p>
+            <p
+              className="text-sm sm:text-base lg:text-[24px] mb-6 lg:mb-8"
+              style={{
+                fontFamily: 'Effra, Arial, sans-serif',
+                fontWeight: 300,
+                fontStyle: 'normal',
+                lineHeight: '150%',
+                letterSpacing: '0%',
+                color: '#000000',
+                marginTop: 0,
+              }}
+            >
+              Present in 50 countries and strong of its heritage, the brand has adapted its products to the specific needs of each region while maintaining high standards of safety and efficiency.
+            </p>
+            <p
+              className="text-sm sm:text-base lg:text-[24px] mb-0"
+              style={{
+                fontFamily: 'Effra, Arial, sans-serif',
+                fontWeight: 300,
+                fontStyle: 'normal',
+                lineHeight: '150%',
+                letterSpacing: '0%',
+                color: '#000000',
+                marginTop: 0,
+              }}
+            >
+              Today, Forland is much more than just a vehicle manufacturer: it is a trusted partner, offering vehicles designed to improve productivity and support the growth of the activities of all its customers.
+            </p>
+          </div>
           </div>
 
           {/* Statistical / Key Achievements Section */}
@@ -454,6 +500,16 @@ export default function AboutContent() {
 
           {/* Additional Text Section Below Stats */}
           <div className="mt-12 lg:mt-16" style={{ textAlign: 'left', maxWidth: '1200px', width: '100%' }}>
+            <div className="mb-6 lg:mb-8">
+              <Image
+                src="/logo/legend.svg"
+                alt="Legend Logo"
+                width={200}
+                height={60}
+                className="h-auto"
+                style={{ display: 'block' }}
+              />
+            </div>
             <p
               className="text-sm sm:text-base lg:text-[24px] mb-6 lg:mb-8"
               style={{
@@ -466,7 +522,7 @@ export default function AboutContent() {
                 marginTop: 0,
               }}
             >
-              Thanks to its commitment to innovation and production expertise, Forland quickly conquered international markets.
+              Legend Commercial Vehicles is the official distributor of Forland Trucks in the United Arab Emirates, overseeing both sales and after-sales services for corporate clients across the country.
             </p>
             <p
               className="text-sm sm:text-base lg:text-[24px] mb-6 lg:mb-8"
@@ -480,7 +536,7 @@ export default function AboutContent() {
                 marginTop: 0,
               }}
             >
-              Present in 50 countries and strong of its heritage, the brand has adapted its products to the specific needs of each region while maintaining high standards of safety and efficiency.
+              Legend Holding Group is a diversified enterprise headquartered in Dubai, operating across the Middle East, Africa, Europe, and the Americas. With a strong focus on sustainability, innovation, and value creation, the Group manages a growing portfolio of companies in automotive, trading, energy, travel and tourism, and mobility services.
             </p>
             <p
               className="text-sm sm:text-base lg:text-[24px] mb-0"
@@ -494,7 +550,7 @@ export default function AboutContent() {
                 marginTop: 0,
               }}
             >
-              Today, Forland is much more than just a vehicle manufacturer: it is a trusted partner, offering vehicles designed to improve productivity and support the growth of the activities of all its customers.
+              Our partnership with Forland represents a strategic step forward, strengthening our commercial vehicles business, enhancing logistics capabilities, and supporting the region’s long-term mobility and infrastructure development. Boost the strategic logistics in UAE and the Middle East Region.
             </p>
           </div>
         </div>

@@ -53,7 +53,7 @@ export default function Footer() {
                   Follow Us
                 </h3>
                 <div className="flex items-center gap-3">
-                  <a href="#" className="hover:opacity-80 transition-opacity duration-200">
+                  <a href="https://www.instagram.com/forlanduae/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity duration-200">
                     <Image
                       src="/logo/insta.svg"
                       alt="Instagram"
@@ -62,7 +62,7 @@ export default function Footer() {
                       className="w-4 h-4"
                     />
                   </a>
-                  <a href="#" className="hover:opacity-80 transition-opacity duration-200">
+                  <a href="https://www.facebook.com/profile.php?id=61584053656197&locale=tr_TR" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity duration-200">
                     <Image
                       src="/logo/fb.svg"
                       alt="Facebook"
@@ -71,19 +71,10 @@ export default function Footer() {
                       className="w-4 h-4"
                     />
                   </a>
-                  <a href="#" className="hover:opacity-80 transition-opacity duration-200">
+                  <a href="https://www.linkedin.com/company/110311735/admin/dashboard/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity duration-200">
                     <Image
                       src="/logo/linkedin.svg"
                       alt="LinkedIn"
-                      width={16}
-                      height={16}
-                      className="w-4 h-4"
-                    />
-                  </a>
-                  <a href="#" className="hover:opacity-80 transition-opacity duration-200">
-                    <Image
-                      src="/logo/TikTok.svg"
-                      alt="TikTok"
                       width={16}
                       height={16}
                       className="w-4 h-4"
