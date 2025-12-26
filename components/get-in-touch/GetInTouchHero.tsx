@@ -3,16 +3,17 @@ import Image from 'next/image';
 export default function GetInTouchHero() {
   return (
     <section 
-      className="relative w-full overflow-hidden h-[200px] md:h-[234px]"
+      className="relative w-full overflow-hidden h-[286px]"
       style={{ 
         backgroundColor: '#000000',
       }}
     >
       <Image
-        src="https://cdn.legendholding.com/images/cdn_694647b58bac47.20710499_20251220_065237.webp"
+        src="https://cdn.legendholding.com/images/cdn_694e7951293693.75946638_20251226_120225.webp"
         alt="Get in Touch Hero"
         fill
         className="object-cover"
+        style={{ objectPosition: 'center 75%' }}
         priority
         quality={100}
         unoptimized={true}
