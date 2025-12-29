@@ -500,16 +500,32 @@ export default function AboutContent() {
 
           {/* Additional Text Section Below Stats */}
           <div className="mt-12 lg:mt-16" style={{ textAlign: 'left', maxWidth: '1200px', width: '100%' }}>
-            <div className="mb-6 lg:mb-8">
-              <Image
-                src="/logo/legend.svg"
-                alt="Legend Logo"
-                width={200}
-                height={60}
-                className="h-auto"
-                style={{ display: 'block' }}
-              />
-            </div>
+          <div className="mb-6 lg:mb-8 flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-4 sm:gap-6" style={{ textAlign: 'left', width: '100%', maxWidth: '1200px' }}>
+            <h2
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-[58.61px] whitespace-normal lg:whitespace-nowrap"
+              style={{
+                fontFamily: 'Effra, Arial, sans-serif',
+                fontWeight: 400,
+                fontStyle: 'normal',
+                lineHeight: '100%',
+                letterSpacing: '0%',
+                color: '#000000',
+                margin: 0,
+                maxWidth: '768px',
+              }}
+            >
+              <span style={{ color: '#EE8900' }}>LEGEND </span>
+              <span style={{ color: '#5D376E' }}>COMMERCIAL VEHICLES</span>
+            </h2>
+            <Image
+              src="/logo/legend.svg"
+              alt="Legend Logo"
+              width={200}
+              height={60}
+              className="h-auto flex-shrink-0"
+              style={{ display: 'block' }}
+            />
+          </div>
             <p
               className="text-sm sm:text-base lg:text-[24px] mb-6 lg:mb-8"
               style={{
