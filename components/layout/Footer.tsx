@@ -313,7 +313,7 @@ export default function Footer() {
             © FORLAND UAE. All rights reserved.
           </p>
           <Link
-            href="/get-in-touch"
+            href="/privacy-policy"
             className="hover:opacity-80 transition-opacity duration-200 text-center sm:text-left text-sm sm:text-base"
             style={{
               fontFamily: 'Effra, Arial, sans-serif',
@@ -324,7 +324,7 @@ export default function Footer() {
               color: '#D9D9D9'
             }}
           >
-            Contact Us
+            Privacy Policy
           </Link>
         </div>
       </div>
