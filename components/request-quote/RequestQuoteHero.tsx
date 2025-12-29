@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export default function RequestQuoteHero() {
   return (
@@ -18,7 +21,14 @@ export default function RequestQuoteHero() {
       {/* Heading - Centered on mobile, right side on desktop */}
       <div className="absolute inset-0 md:right-0 md:inset-auto md:top-1/2 md:-translate-y-1/2 flex items-center justify-center md:justify-start md:pr-8 lg:pr-16 gap-2 md:gap-3 z-10 px-4">
         {/* Left diagonal line */}
-        <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 md:w-10 md:h-10" />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, rotate: 45 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.9, ease: 'easeOut' }}
+        >
+          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 md:w-10 md:h-10" />
+        </motion.div>
 
         {/* Title */}
         <h1 
@@ -34,7 +44,14 @@ export default function RequestQuoteHero() {
         </h1>
 
         {/* Right diagonal line */}
-        <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 md:w-10 md:h-10" />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
+        >
+          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 md:w-10 md:h-10" />
+        </motion.div>
       </div>
     </section>
   );

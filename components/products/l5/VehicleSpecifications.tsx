@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export function VehicleSpecifications() {
   return (
@@ -167,7 +168,14 @@ function SectionHeader({ icon, title }: { icon: React.ReactNode; title: string }
   return (
     <div className="relative flex items-center gap-2 lg:gap-3">
       {/* Left line (same as ProductSection heading) */}
-      <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8, rotate: 45 }}
+        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.9, ease: 'easeOut' }}
+      >
+        <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
+      </motion.div>
 
       {/* Icon */}
       <div className="flex items-center justify-center">{icon}</div>
@@ -178,7 +186,14 @@ function SectionHeader({ icon, title }: { icon: React.ReactNode; title: string }
       </h2>
 
       {/* Right line (same as ProductSection heading) */}
-      <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
+        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
+      >
+        <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
+      </motion.div>
     </div>
   );
 }

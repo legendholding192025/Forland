@@ -88,19 +88,27 @@ export default function AboutSection() {
                 margin: 0
               }}
             >
-              <img
+              <motion.img
                 src="/vector/small.svg"
                 alt="Vector"
                 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-auto lg:h-auto"
                 style={{ display: 'inline-block' }}
+                initial={{ opacity: 0, scale: 0.8, rotate: 45 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.9, ease: 'easeOut' }}
               />
               <span style={{ color: '#910000' }}>About</span>{' '}
               <span style={{ color: '#FFFFFF' }}>Forland</span>
-              <img
+              <motion.img
                 src="/vector/small.svg"
                 alt="Vector"
                 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-auto lg:h-auto"
                 style={{ display: 'inline-block' }}
+                initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
               />
             </h4>
           </div>

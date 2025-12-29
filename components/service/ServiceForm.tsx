@@ -8,15 +8,16 @@ export default function ServiceForm() {
     <section className="w-full bg-white py-16">
       <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '1152px' }}>
         {/* Heading Section */}
-        <motion.div 
-          className="flex items-center justify-center gap-2 lg:gap-3 mb-8 lg:mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.9, ease: 'easeOut' }}
-        >
+        <div className="flex items-center justify-center gap-2 lg:gap-3 mb-8 lg:mb-16">
           {/* Left diagonal line */}
-          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: 45 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.9, ease: 'easeOut' }}
+          >
+            <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
+          </motion.div>
 
           {/* Title */}
           <h1 
@@ -32,8 +33,15 @@ export default function ServiceForm() {
           </h1>
 
           {/* Right diagonal line */}
-          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
+          >
+            <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
+          </motion.div>
+        </div>
 
         <div>
           {/* Send us a message section */}

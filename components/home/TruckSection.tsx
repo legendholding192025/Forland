@@ -1,6 +1,8 @@
 "use client";
 
 import Image from 'next/image';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 export default function TruckSection() {
   return (
@@ -237,7 +239,7 @@ export default function TruckSection() {
         </div>
         
         {/* Top right corner vector */}
-        <img
+        <motion.img
           src="/vector/white.svg"
           alt="Vector"
           className="corner-vector"
@@ -246,10 +248,14 @@ export default function TruckSection() {
             top: 0,
             right: 0
           }}
+          initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.9, ease: 'easeOut' }}
         />
         
         {/* Bottom left corner vector */}
-        <img
+        <motion.img
           src="/vector/white.svg"
           alt="Vector"
           className="corner-vector"
@@ -258,6 +264,10 @@ export default function TruckSection() {
             bottom: 0,
             left: 0
           }}
+          initial={{ opacity: 0, scale: 0.8, rotate: 45 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
         />
       </div>
 
@@ -277,11 +287,14 @@ export default function TruckSection() {
         }}
       >
         {/* First image with overlapping red card */}
-        <div
+        <Link
+          href="/products/h7"
           className="truck-image-container"
           style={{
             position: 'relative',
-            display: 'inline-block'
+            display: 'inline-block',
+            cursor: 'pointer',
+            textDecoration: 'none'
           }}
         >
           <img
@@ -290,7 +303,13 @@ export default function TruckSection() {
             width={1151.320556640625}
             height={450.13433837890625}
             className="truck-image"
-            style={{ display: 'block' }}
+            style={{ display: 'block', transition: 'opacity 0.3s ease' }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.opacity = '0.9';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.opacity = '1';
+            }}
           />
 
           {/* Red Card - 144x144 half on image, half outside */}
@@ -345,10 +364,16 @@ export default function TruckSection() {
               Cargo Truck
             </div>
           </div>
-        </div>
-        <div 
+        </Link>
+        <Link
+          href="/products/l5"
           className="truck-image-container"
-          style={{ position: 'relative', display: 'inline-block' }}
+          style={{
+            position: 'relative',
+            display: 'inline-block',
+            cursor: 'pointer',
+            textDecoration: 'none'
+          }}
         >
           <img
             src="https://cdn.legendholding.com/images/cdn_694009a235ef95.34125296_20251215_131410.webp"
@@ -356,7 +381,13 @@ export default function TruckSection() {
             width={1151.320556640625}
             height={450.13433837890625}
             className="truck-image"
-            style={{ display: 'block' }}
+            style={{ display: 'block', transition: 'opacity 0.3s ease' }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.opacity = '0.9';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.opacity = '1';
+            }}
           />
 
           {/* Red Card - 144x144 half on image, half outside */}
@@ -411,7 +442,7 @@ export default function TruckSection() {
               Cargo Truck
             </div>
           </div>
-        </div>
+        </Link>
       </div>
     </section>
   );

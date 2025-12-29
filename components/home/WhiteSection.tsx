@@ -1,5 +1,7 @@
 "use client";
 
+import { motion } from 'framer-motion';
+
 export default function WhiteSection() {
   return (
     <section
@@ -50,7 +52,7 @@ export default function WhiteSection() {
       `}</style>
 
       {/* Top right corner vector */}
-      <img
+      <motion.img
         src="/vector/white.svg"
         alt="Vector"
         className="corner-vector"
@@ -60,10 +62,14 @@ export default function WhiteSection() {
           right: 0,
           filter: 'brightness(0) saturate(100%) invert(14%) sepia(100%) saturate(10000%) hue-rotate(0deg) brightness(0.88)'
         }}
+        initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
+        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.9, ease: 'easeOut' }}
       />
       
       {/* Top left corner vector */}
-      <img
+      <motion.img
         src="/vector/white.svg"
         alt="Vector"
         className="corner-vector"
@@ -73,6 +79,10 @@ export default function WhiteSection() {
           left: 0,
           filter: 'brightness(0) saturate(100%) invert(14%) sepia(100%) saturate(10000%) hue-rotate(0deg) brightness(0.88)'
         }}
+        initial={{ opacity: 0, scale: 0.8, rotate: 45 }}
+        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
       />
 
       {/* Center Text */}

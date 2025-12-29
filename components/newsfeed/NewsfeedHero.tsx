@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export default function NewsfeedHero() {
   return (
@@ -21,7 +24,14 @@ export default function NewsfeedHero() {
       {/* Heading on left side */}
       <div className="absolute left-0 top-1/2 -translate-y-1/2 pl-8 lg:pl-16 flex items-center gap-3 z-10">
         {/* Left diagonal line */}
-        <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-10 h-10" />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, rotate: 45 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.9, ease: 'easeOut' }}
+        >
+          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-10 h-10" />
+        </motion.div>
 
         {/* Title */}
         <h1 
@@ -36,7 +46,14 @@ export default function NewsfeedHero() {
         </h1>
 
         {/* Right diagonal line */}
-        <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-10 h-10" />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
+        >
+          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-10 h-10" />
+        </motion.div>
       </div>
     </section>
   );

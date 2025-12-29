@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -139,14 +140,22 @@ export default function Hero() {
           }}
         >
           {/* Top Left Corner Vector */}
-          <Image
-            src="/vector/hero-vector.svg"
-            alt="Hero Vector"
-            width={96}
-            height={75}
+          <motion.div
             className="hero-vector absolute"
-            style={{ top: 0, left: 0, transform: 'translate(-50%, -50%)' }}
-          />
+            style={{ top: 0, left: 0 }}
+            initial={{ opacity: 0, scale: 0.8, rotate: 45, x: '-50%', y: '-50%' }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0, x: '-50%', y: '-50%' }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.9, ease: 'easeOut' }}
+          >
+            <Image
+              src="/vector/hero-vector.svg"
+              alt="Hero Vector"
+              width={96}
+              height={75}
+              className="hero-vector"
+            />
+          </motion.div>
           <div
             className="hero-text-1 absolute top-0 left-0 text-white"
             style={{
@@ -174,18 +183,25 @@ export default function Hero() {
           >
             Land.
             {/* Bottom Right Corner Vector - positioned relative to text */}
-            <Image
-              src="/vector/hero-vector.svg"
-              alt="Hero Vector"
-              width={96}
-              height={75}
+            <motion.div
               className="hero-vector absolute"
               style={{ 
                 bottom: '6px', 
-                right: '-25px', 
-                transform: 'translate(25%, 25%)' 
+                right: '-25px'
               }}
-            />
+              initial={{ opacity: 0, scale: 0.8, rotate: -45, x: '25%', y: '25%' }}
+              whileInView={{ opacity: 1, scale: 1, rotate: 0, x: '25%', y: '25%' }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
+            >
+              <Image
+                src="/vector/hero-vector.svg"
+                alt="Hero Vector"
+                width={96}
+                height={75}
+                className="hero-vector"
+              />
+            </motion.div>
           </div>
         </div>
         

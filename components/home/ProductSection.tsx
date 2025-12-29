@@ -24,18 +24,26 @@ export default function ProductSection() {
                 textAlign: 'center'
               }}
             >
-              <img
+              <motion.img
                 src="/vector/small.svg"
                 alt="Vector"
                 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-auto lg:h-auto"
                 style={{ display: 'inline-block' }}
+                initial={{ opacity: 0, scale: 0.8, rotate: 45 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.9, ease: 'easeOut' }}
               />
               <span style={{ color: '#DF0011' }}>A RANGE OF PRODUCTS TO</span> FIT YOUR BUSINESS
-              <img
+              <motion.img
                 src="/vector/small.svg"
                 alt="Vector"
                 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-auto lg:h-auto"
                 style={{ display: 'inline-block' }}
+                initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
               />
             </h2>
             <h3

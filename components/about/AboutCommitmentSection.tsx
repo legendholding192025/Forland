@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export default function AboutCommitmentSection() {
   return (
@@ -19,7 +22,14 @@ export default function AboutCommitmentSection() {
       <div className="relative lg:absolute lg:top-0 lg:left-0 lg:right-0 flex flex-col items-center z-10 pt-6 pb-6 lg:pt-12 lg:pb-12">
         <div className="flex items-center justify-center gap-2 lg:gap-3 mb-6 lg:mb-8">
           {/* Left diagonal line */}
-          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: 45 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.9, ease: 'easeOut' }}
+          >
+            <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
+          </motion.div>
 
           {/* Title */}
           <h1 
@@ -35,7 +45,14 @@ export default function AboutCommitmentSection() {
           </h1>
 
           {/* Right diagonal line */}
-          <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
+          >
+            <Image src="/vector/small.svg" alt="" width={40} height={40} className="w-6 h-6 lg:w-10 lg:h-10" />
+          </motion.div>
         </div>
 
         {/* Images below heading */}
