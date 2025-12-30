@@ -399,8 +399,8 @@ export default function PrivacyPolicy() {
               </p>
               <p style={{ marginBottom: '12px' }}>
                 <strong>Phone:</strong>{' '}
-                <a href="tel:8001234567" style={{ color: '#DF0011', textDecoration: 'underline' }}>
-                  800 123 4567
+                <a href="tel:80010888" style={{ color: '#DF0011', textDecoration: 'underline' }}>
+                  800 10 888
                 </a>
               </p>
               <p style={{ marginBottom: '0' }}>

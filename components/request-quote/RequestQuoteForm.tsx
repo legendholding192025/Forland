@@ -184,7 +184,7 @@ export default function RequestQuoteForm() {
                   style={{ filter: 'brightness(0) saturate(100%) invert(12%) sepia(94%) saturate(7151%) hue-rotate(353deg) brightness(96%) contrast(95%)' }}
                 />
                 <a 
-                  href="tel:8001234567"
+                  href="tel:80010888"
                   className="text-black hover:opacity-80 transition-opacity duration-200"
                   style={{ 
                     fontFamily: 'Effra, Arial, sans-serif',
@@ -195,7 +195,7 @@ export default function RequestQuoteForm() {
                     letterSpacing: '0%'
                   }}
                 >
-                  800 123 4567
+                  800 10 888
                 </a>
               </div>
               {/* Email */}

@@ -201,7 +201,7 @@ export default function Header() {
           {/* Mobile: Left side - Phone and Email icons */}
           <div className="md:hidden flex items-center gap-3">
             <a 
-              href="tel:8001234567"
+              href="tel:80010888"
               className="text-white hover:opacity-80 transition-opacity duration-200"
               aria-label="Call us"
             >
