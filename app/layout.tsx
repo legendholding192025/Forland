@@ -28,6 +28,11 @@ const richmond = localFont({
 export const metadata: Metadata = {
   title: "FORLAND UAE - Drive The Future, Drive Forland",
   description: "FORLAND UAE - Premium cargo trucks and commercial vehicles. Explore our range of products including FORLAND H7 and FORLAND L5. Book a test drive or request a quote today.",
+  icons: {
+    icon: '/logo/header-logo.svg',
+    shortcut: '/logo/header-logo.svg',
+    apple: '/logo/header-logo.svg',
+  },
 };
 
 export default function RootLayout({
