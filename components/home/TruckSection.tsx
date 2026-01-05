@@ -114,10 +114,6 @@ export default function TruckSection() {
           .red-card-text {
             font-size: 11px !important;
           }
-          .corner-vector {
-            width: 40px !important;
-            height: auto !important;
-          }
         }
         @media (min-width: 769px) and (max-width: 1024px) {
           .red-block {
@@ -181,7 +177,27 @@ export default function TruckSection() {
           .red-card-text {
             font-size: 14px !important;
           }
-          .corner-vector {
+        }
+      `}</style>
+      <style jsx global>{`
+        .truck-section-vector {
+          width: 288px;
+          height: auto;
+        }
+        @media (max-width: 768px) {
+          .truck-section-vector {
+            width: 80px !important;
+            height: auto !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .truck-section-vector {
+            width: 60px !important;
+            height: auto !important;
+          }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .truck-section-vector {
             width: 60px !important;
             height: auto !important;
           }
@@ -242,7 +258,7 @@ export default function TruckSection() {
         <motion.img
           src="/vector/white.svg"
           alt="Vector"
-          className="corner-vector"
+          className="truck-section-vector"
           style={{
             position: 'absolute',
             top: 0,
@@ -258,7 +274,7 @@ export default function TruckSection() {
         <motion.img
           src="/vector/white.svg"
           alt="Vector"
-          className="corner-vector"
+          className="truck-section-vector"
           style={{
             position: 'absolute',
             bottom: 0,

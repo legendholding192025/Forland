@@ -12,7 +12,11 @@ export default function WhiteSection() {
         position: 'relative'
       }}
     >
-      <style jsx>{`
+      <style jsx global>{`
+        .white-section-vector {
+          width: 288px;
+          height: auto;
+        }
         @media (max-width: 768px) {
           .white-section {
             height: 200px !important;
@@ -26,8 +30,14 @@ export default function WhiteSection() {
             white-space: normal !important;
             line-height: 1.2 !important;
           }
-          .corner-vector {
-            width: 70px !important;
+          .white-section-vector {
+            width: 80px !important;
+            height: auto !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .white-section-vector {
+            width: 60px !important;
             height: auto !important;
           }
         }
@@ -44,7 +54,7 @@ export default function WhiteSection() {
             white-space: normal !important;
             line-height: 1.2 !important;
           }
-          .corner-vector {
+          .white-section-vector {
             width: 60px !important;
             height: auto !important;
           }
@@ -55,7 +65,7 @@ export default function WhiteSection() {
       <motion.img
         src="/vector/white.svg"
         alt="Vector"
-        className="corner-vector"
+        className="white-section-vector"
         style={{
           position: 'absolute',
           top: 0,
@@ -72,7 +82,7 @@ export default function WhiteSection() {
       <motion.img
         src="/vector/white.svg"
         alt="Vector"
-        className="corner-vector"
+        className="white-section-vector"
         style={{
           position: 'absolute',
           top: 0,
