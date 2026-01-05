@@ -2,8 +2,50 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 
 export default function ServiceForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
+  const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    const form = e.currentTarget || formRef.current;
+    if (!form) {
+      setIsSubmitting(false);
+      return;
+    }
+
+    const formData = new FormData(form);
+    const data = {
+      first_name: formData.get('firstName') as string,
+      last_name: formData.get('lastName') as string,
+      email: formData.get('email') as string,
+      phone: formData.get('phone') as string,
+      message: formData.get('message') as string || null,
+    };
+
+    try {
+      const { error } = await supabase
+        .from('service')
+        .insert([data]);
+
+      if (error) throw error;
+
+      router.push('/thank-you');
+    } catch (error: any) {
+      setIsSubmitting(false);
+      setSubmitStatus({ type: 'error', message: error.message || 'Failed to submit. Please try again.' });
+    }
+  };
+
   return (
     <section className="w-full bg-white py-16">
       <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '1152px' }}>
@@ -80,11 +122,18 @@ export default function ServiceForm() {
               Fill out the form below and we will get back to you as soon as possible.
             </p>
 
+            {submitStatus.type === 'error' && (
+              <div
+                className="mb-6 p-4 rounded-lg bg-red-50 text-red-800"
+                style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400 }}
+              >
+                {submitStatus.message}
+              </div>
+            )}
             <form
+              ref={formRef}
               className="space-y-6"
-              onSubmit={(e) => {
-                e.preventDefault();
-              }}
+              onSubmit={handleSubmit}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <Field label="First Name" required name="firstName" />
@@ -116,7 +165,8 @@ export default function ServiceForm() {
               <div className="flex justify-center pt-6">
                 <button
                   type="submit"
-                  className="text-white relative overflow-hidden group"
+                  disabled={isSubmitting}
+                  className="text-white relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
                     width: '332px',
                     height: '37px',
@@ -126,14 +176,16 @@ export default function ServiceForm() {
                     fontSize: '24px',
                     background: 'linear-gradient(90deg, #000000 0%, #910000 100%)',
                     border: 'none',
-                    cursor: 'pointer',
+                    cursor: isSubmitting ? 'not-allowed' : 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}
                   onMouseEnter={(e) => {
-                    const overlay = e.currentTarget.querySelector('.hover-overlay') as HTMLElement;
-                    if (overlay) overlay.style.opacity = '1';
+                    if (!isSubmitting) {
+                      const overlay = e.currentTarget.querySelector('.hover-overlay') as HTMLElement;
+                      if (overlay) overlay.style.opacity = '1';
+                    }
                   }}
                   onMouseLeave={(e) => {
                     const overlay = e.currentTarget.querySelector('.hover-overlay') as HTMLElement;
@@ -148,7 +200,9 @@ export default function ServiceForm() {
                       borderRadius: '7px',
                     }}
                   ></div>
-                  <span className="relative z-10 pointer-events-none">Send Message</span>
+                  <span className="relative z-10 pointer-events-none">
+                    {isSubmitting ? 'Submitting...' : 'Send Message'}
+                  </span>
                 </button>
               </div>
             </form>
