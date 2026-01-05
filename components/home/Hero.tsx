@@ -8,10 +8,10 @@ export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const heroImages = [
-    'https://cdn.legendholding.com/images/cdn_693a82214a51d0.36842266_20251211_083441.webp',
-    'https://cdn.legendholding.com/images/cdn_693fc33e179731.42408997_20251215_081350.webp', // Replace with actual image URL
-    'https://cdn.legendholding.com/images/cdn_693fc3d64eb3b1.87446915_20251215_081622.webp', // Replace with actual image URL
-    'https://cdn.legendholding.com/images/cdn_693fc402c92b97.96828768_20251215_081706.webp', // Replace with actual image URL
+    'https://res.cloudinary.com/dzfhqvxnf/image/upload/v1767613686/H7-Banner-1_2_1_blth7x.png',
+    'https://res.cloudinary.com/dzfhqvxnf/image/upload/v1767613593/L5-Banner-1_1_to0mgs.png', // Replace with actual image URL
+    'https://res.cloudinary.com/dzfhqvxnf/image/upload/v1767613513/H7-Banner-2_1_rgtaj9.png', // Replace with actual image URL
+    'https://res.cloudinary.com/dzfhqvxnf/image/upload/v1767613545/L5-Banner-2_1_sokczh.png', // Replace with actual image URL
   ];
 
   // Auto-slide functionality (optional)
