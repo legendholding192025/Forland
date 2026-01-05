@@ -4,8 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
-export default function ThankYouPage() {
+function ThankYouContent() {
   const searchParams = useSearchParams();
   const type = searchParams.get('type');
 
@@ -141,6 +142,35 @@ export default function ThankYouPage() {
         </motion.div>
       </div>
     </div>
+  );
+}
+
+export default function ThankYouPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-white flex items-center justify-center px-4 py-16">
+          <div className="max-w-2xl w-full text-center">
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="mb-8"
+            >
+              <Image 
+                src="/logo/header-logo.svg" 
+                alt="FORLAND Logo" 
+                width={200} 
+                height={60} 
+                className="mx-auto object-contain w-[150px] lg:w-[200px] h-auto" 
+              />
+            </motion.div>
+          </div>
+        </div>
+      }
+    >
+      <ThankYouContent />
+    </Suspense>
   );
 }
 
