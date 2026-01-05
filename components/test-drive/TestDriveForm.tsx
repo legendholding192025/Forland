@@ -41,7 +41,7 @@ export default function TestDriveForm() {
 
       if (error) throw error;
 
-      router.push('/thank-you');
+      router.push('/thank-you?type=test-drive');
     } catch (error: any) {
       setIsSubmitting(false);
       setSubmitStatus({ type: 'error', message: error.message || 'Failed to submit. Please try again.' });

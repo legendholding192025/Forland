@@ -39,7 +39,7 @@ export default function GetInTouchForm() {
 
       if (error) throw error;
 
-      router.push('/thank-you');
+      router.push('/thank-you?type=get-in-touch');
     } catch (error: any) {
       setIsSubmitting(false);
       setSubmitStatus({ type: 'error', message: error.message || 'Failed to submit. Please try again.' });

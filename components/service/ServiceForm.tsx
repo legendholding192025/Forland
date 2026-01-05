@@ -39,7 +39,7 @@ export default function ServiceForm() {
 
       if (error) throw error;
 
-      router.push('/thank-you');
+      router.push('/thank-you?type=service');
     } catch (error: any) {
       setIsSubmitting(false);
       setSubmitStatus({ type: 'error', message: error.message || 'Failed to submit. Please try again.' });

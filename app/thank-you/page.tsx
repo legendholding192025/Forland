@@ -3,8 +3,44 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useSearchParams } from 'next/navigation';
 
 export default function ThankYouPage() {
+  const searchParams = useSearchParams();
+  const type = searchParams.get('type');
+
+  // Define messages based on form type
+  const getMessages = () => {
+    switch (type) {
+      case 'test-drive':
+        return {
+          title: 'Thank you for your Test Drive request',
+          subtitle: 'One of our representative would contact you shortly',
+        };
+      case 'get-in-touch':
+        return {
+          title: 'Thank you for sharing your experience with us',
+          subtitle: 'Our team will be reaching out shortly to provide an update on your submission.',
+        };
+      case 'service':
+        return {
+          title: 'Thank you for your Service request',
+          subtitle: 'One of our representative would contact you shortly',
+        };
+      case 'request-quote':
+        return {
+          title: 'Thank you for your Quote request',
+          subtitle: 'One of our representative would contact you shortly',
+        };
+      default:
+        return {
+          title: 'Thank you for sharing your experience with us',
+          subtitle: 'Our team will be reaching out shortly to provide an update on your submission.',
+        };
+    }
+  };
+
+  const messages = getMessages();
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4 py-16">
@@ -42,7 +78,7 @@ export default function ThankYouPage() {
             }}
           >
             <span style={{ color: '#DF0011' }}>Thank you</span>{' '}
-            <span style={{ color: '#000000' }}>for sharing your experience with us</span>
+            <span style={{ color: '#000000' }}>{messages.title.replace(/^Thank you\s+/i, '')}</span>
           </h1>
           <p
             className="text-lg lg:text-xl"
@@ -54,7 +90,7 @@ export default function ThankYouPage() {
               lineHeight: '140%',
             }}
           >
-            Our team will be reaching out shortly to provide an update on your submission.
+            {messages.subtitle}
           </p>
         </motion.div>
 
@@ -63,6 +99,7 @@ export default function ThankYouPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
+          className="flex justify-center"
         >
           <Link
             href="/"
