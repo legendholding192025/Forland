@@ -7,11 +7,56 @@ import ReasonBanner from '@/components/products/l5/ReasonBanner';
 import FeaturesSection from '@/components/products/l5/FeaturesSection';
 import QuoteSection from '@/components/products/l5/QuoteSection';
 import Image from 'next/image';
+import { Metadata } from 'next';
+import { generateMetadata as generateSEOMetadata, generateStructuredData, siteConfig } from '@/lib/seo';
+
+export const metadata: Metadata = generateSEOMetadata({
+  title: 'FORLAND L5 - Premium Cargo Truck',
+  description: 'Discover the FORLAND L5 - a premium cargo truck designed for durability, performance, and efficiency. View specifications, features, and book a test drive.',
+  keywords: [
+    'FORLAND L5',
+    'FORLAND L5 price',
+    'FORLAND L5 UAE',
+    'FORLAND L5 for sale',
+    'FORLAND L5 specifications',
+    'FORLAND L5 Dubai',
+    'L5 cargo truck',
+    'L5 truck price',
+    'L5 truck specifications',
+    'FORLAND L5 price in UAE',
+    'L5 commercial truck',
+    'buy FORLAND L5',
+    'L5 truck dealer',
+    'FORLAND L5 features',
+    'L5 truck review',
+    'FORLAND L5 test drive',
+    'cargo truck L5',
+    'L5 truck model',
+  ],
+  url: '/products/l5',
+  type: 'product',
+});
+
+const productStructuredData = generateStructuredData('Product', {
+  name: 'FORLAND L5',
+  description: 'Premium cargo truck designed for durability, performance, and efficiency',
+  image: `${siteConfig.url}/products/l5`,
+  sku: 'FORLAND-L5',
+  category: 'Commercial Vehicle',
+  vehicleIdentificationNumber: 'FORLAND-L5',
+  vehicleModelDate: '2024',
+  brand: 'FORLAND',
+});
 
 export default function ProductL5Page() {
   return (
-    <div className="min-h-screen bg-white">
-      <Header />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productStructuredData) }}
+      />
+      <div className="min-h-screen bg-white">
+        <Header />
       <div className="relative">
         <Hero />
         <section className="w-full py-16 bg-[#fafafa]">
@@ -68,6 +113,7 @@ export default function ProductL5Page() {
       <QuoteSection />
       <Footer />
     </div>
+    </>
   );
 }
 

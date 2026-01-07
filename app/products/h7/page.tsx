@@ -7,11 +7,56 @@ import ReasonBanner from '@/components/products/h7/ReasonBanner';
 import FeaturesSection from '@/components/products/h7/FeaturesSection';
 import QuoteSection from '@/components/products/h7/QuoteSection';
 import Image from 'next/image';
+import { Metadata } from 'next';
+import { generateMetadata as generateSEOMetadata, generateStructuredData, siteConfig } from '@/lib/seo';
+
+export const metadata: Metadata = generateSEOMetadata({
+  title: 'FORLAND H7 - Premium Cargo Truck',
+  description: 'Discover the FORLAND H7 - a premium cargo truck designed for durability, performance, and efficiency. View specifications, features, and book a test drive.',
+  keywords: [
+    'FORLAND H7',
+    'FORLAND H7 price',
+    'FORLAND H7 UAE',
+    'FORLAND H7 for sale',
+    'FORLAND H7 specifications',
+    'FORLAND H7 Dubai',
+    'H7 cargo truck',
+    'H7 truck price',
+    'H7 truck specifications',
+    'FORLAND H7 price in UAE',
+    'H7 commercial truck',
+    'buy FORLAND H7',
+    'H7 truck dealer',
+    'FORLAND H7 features',
+    'H7 truck review',
+    'FORLAND H7 test drive',
+    'cargo truck H7',
+    'H7 truck model',
+  ],
+  url: '/products/h7',
+  type: 'product',
+});
+
+const productStructuredData = generateStructuredData('Product', {
+  name: 'FORLAND H7',
+  description: 'Premium cargo truck designed for durability, performance, and efficiency',
+  image: `${siteConfig.url}/products/h7`,
+  sku: 'FORLAND-H7',
+  category: 'Commercial Vehicle',
+  vehicleIdentificationNumber: 'FORLAND-H7',
+  vehicleModelDate: '2024',
+  brand: 'FORLAND',
+});
 
 export default function ProductH7Page() {
   return (
-    <div className="min-h-screen bg-white">
-      <Header />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productStructuredData) }}
+      />
+      <div className="min-h-screen bg-white">
+        <Header />
       <div className="relative">
         <Hero />
         <section className="w-full py-16 bg-[#fafafa]">
@@ -68,5 +113,6 @@ export default function ProductH7Page() {
       <QuoteSection />
       <Footer />
     </div>
+    </>
   );
 }

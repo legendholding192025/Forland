@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import { generateMetadata as generateSEOMetadata, generateStructuredData } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,15 +26,14 @@ const richmond = localFont({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "FORLAND UAE - Drive The Future, Drive Forland",
+export const metadata: Metadata = generateSEOMetadata({
+  title: "Drive The Future, Drive Forland",
   description: "FORLAND UAE - Premium cargo trucks and commercial vehicles. Explore our range of products including FORLAND H7 and FORLAND L5. Book a test drive or request a quote today.",
-  icons: {
-    icon: '/logo/header-logo.svg',
-    shortcut: '/logo/header-logo.svg',
-    apple: '/logo/header-logo.svg',
-  },
-};
+  keywords: ["FORLAND", "FORLAND UAE", "commercial vehicles", "cargo trucks"],
+});
+
+const organizationStructuredData = generateStructuredData('Organization');
+const websiteStructuredData = generateStructuredData('WebSite');
 
 export default function RootLayout({
   children,
@@ -41,10 +41,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en-AE">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${effra.variable} ${richmond.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationStructuredData) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteStructuredData) }}
+        />
         {children}
       </body>
     </html>

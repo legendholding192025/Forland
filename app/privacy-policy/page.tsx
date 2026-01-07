@@ -1,5 +1,15 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import { Metadata } from 'next';
+import { generateMetadata as generateSEOMetadata } from '@/lib/seo';
+
+export const metadata: Metadata = generateSEOMetadata({
+  title: 'Privacy Policy - FORLAND UAE',
+  description: 'Read FORLAND UAE privacy policy. Learn how we collect, use, and protect your personal information in accordance with data protection regulations.',
+  keywords: ['FORLAND privacy policy', 'data protection', 'privacy'],
+  url: '/privacy-policy',
+  noindex: true,
+});
 
 export default function PrivacyPolicy() {
   return (
