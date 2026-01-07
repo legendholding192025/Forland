@@ -29,7 +29,7 @@ export default function QuoteSection() {
       last_name: formData.get('lastName') as string,
       email: formData.get('email') as string,
       phone: formData.get('phone') as string,
-      subject: 'product-information', // Default subject for product page quote requests
+      subject: formData.get('subject') as string,
       message: formData.get('message') as string || null,
     };
 
@@ -127,6 +127,37 @@ export default function QuoteSection() {
             <Field label="Last Name" required name="lastName" />
             <Field label="Email" required type="email" name="email" />
             <Field label="Phone Number" required type="tel" name="phone" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            <div>
+              <label className="block text-black mb-2" style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400 }}>
+                <span style={{ color: '#DF0011' }}>*</span> Subject
+              </label>
+              <select
+                name="subject"
+                required
+                className="w-full lg:max-w-[555.77px] outline-none px-4 focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200"
+                style={{
+                  height: '38.46px',
+                  borderRadius: '9.62px',
+                  border: '0.96px solid #2F2F2F',
+                  background: '#F5F5F5',
+                  color: '#000000',
+                  fontFamily: 'Effra, Arial, sans-serif',
+                  fontWeight: 400,
+                }}
+              >
+                <option value="" style={{ color: '#000000' }}>Select a subject</option>
+                <option value="general-inquiry">General Inquiry</option>
+                <option value="product-information">Product Information</option>
+                <option value="pricing">Pricing</option>
+                <option value="test-drive">Test Drive</option>
+                <option value="service">Service</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div></div>
           </div>
 
           <div>
