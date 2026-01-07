@@ -110,7 +110,6 @@ export async function POST(request: NextRequest) {
             </div>
             <div class="footer">
               <p>This email was sent from the FORLAND website contact form.</p>
-              <p>Submitted at: ${new Date().toLocaleString()}</p>
             </div>
           </div>
         </body>
