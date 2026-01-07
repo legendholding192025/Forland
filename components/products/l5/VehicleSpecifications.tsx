@@ -31,7 +31,7 @@ export function VehicleSpecifications() {
             <div className="rounded-xl bg-white px-4 py-4 lg:py-5 shadow-[0_1px_0_rgba(0,0,0,0.06)]">
               <SpecList
                 rows={[
-                  { label: 'GVW (kg)', value: '9000' },
+                  { label: 'GVW (kg)', value: '8500' },
                   { label: 'Payload (kg)', value: '6000' },
                 ]}
               />
@@ -49,6 +49,7 @@ export function VehicleSpecifications() {
             <SpecCard>
               <SpecList
                 rows={[
+                  { label: 'Engine brand', value: 'Cummins' },
                   { label: 'Model', value: 'ISF3.8S5154' },
                   { label: 'Displacement (L)', value: '3.76' },
                   { label: 'Max power (Hp/rpm)', value: '154' },

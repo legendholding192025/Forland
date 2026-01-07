@@ -49,6 +49,7 @@ export function VehicleSpecifications() {
             <SpecCard>
               <SpecList
                 rows={[
+                  { label: 'Engine brand', value: 'Cummins' },
                   { label: 'Model', value: 'ISF4.5S5210' },
                   { label: 'Displacement (L)', value: '4.46' },
                   { label: 'Max power (Hp/rpm)', value: '210' },

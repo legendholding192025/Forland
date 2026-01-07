@@ -389,10 +389,10 @@ export default function Header() {
               <Image
                 src="/logo/header-logo.svg"
                 alt="Forland Logo"
-                width={140}
-                height={47}
+                width={165}
+                height={55}
                 priority
-                className="h-auto md:w-[140px] md:h-[47px] w-[105px] h-[35px]"
+                className="h-auto md:w-[165px] md:h-[55px] w-[120px] h-[40px]"
               />
             </Link>
           </div>
