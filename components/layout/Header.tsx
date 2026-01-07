@@ -236,15 +236,6 @@ export default function Header() {
               <div 
                 key={item.href} 
                 className="flex items-center h-full relative"
-                onMouseEnter={() => {
-                  if (timeoutRef.current) clearTimeout(timeoutRef.current);
-                  if (item.dropdown) setActiveDropdown(item.label);
-                }}
-                onMouseLeave={() => {
-                  timeoutRef.current = setTimeout(() => {
-                    setActiveDropdown(null);
-                  }, 150);
-                }}
               >
                 {index > 0 && (
                   <span 
@@ -264,6 +255,15 @@ export default function Header() {
                     if (item.dropdown) {
                       e.preventDefault();
                     }
+                  }}
+                  onMouseEnter={() => {
+                    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                    if (item.dropdown) setActiveDropdown(item.label);
+                  }}
+                  onMouseLeave={() => {
+                    timeoutRef.current = setTimeout(() => {
+                      setActiveDropdown(null);
+                    }, 150);
                   }}
                   className="text-white hover:text-gray-200 transition-colors duration-200 flex items-center h-full gap-1 no-underline"
                   style={{ 
@@ -389,10 +389,10 @@ export default function Header() {
               <Image
                 src="/logo/header-logo.svg"
                 alt="Forland Logo"
-                width={120}
-                height={40}
+                width={140}
+                height={47}
                 priority
-                className="h-auto md:w-[120px] md:h-[40px] w-[90px] h-[30px]"
+                className="h-auto md:w-[140px] md:h-[47px] w-[105px] h-[35px]"
               />
             </Link>
           </div>
@@ -403,15 +403,6 @@ export default function Header() {
               <div 
                 key={item.href} 
                 className="flex items-center h-full relative"
-                onMouseEnter={() => {
-                  if (timeoutRef.current) clearTimeout(timeoutRef.current);
-                  if (item.dropdown) setActiveDropdown(item.label);
-                }}
-                onMouseLeave={() => {
-                  timeoutRef.current = setTimeout(() => {
-                    setActiveDropdown(null);
-                  }, 150);
-                }}
               >
                 {index > 0 && (
                   <span 
@@ -431,6 +422,15 @@ export default function Header() {
                     if (item.dropdown) {
                       e.preventDefault();
                     }
+                  }}
+                  onMouseEnter={() => {
+                    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                    if (item.dropdown) setActiveDropdown(item.label);
+                  }}
+                  onMouseLeave={() => {
+                    timeoutRef.current = setTimeout(() => {
+                      setActiveDropdown(null);
+                    }, 150);
                   }}
                   className="text-white hover:text-gray-200 transition-colors duration-200 flex items-center h-full gap-1 no-underline"
                   style={{ 

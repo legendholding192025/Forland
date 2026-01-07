@@ -40,6 +40,23 @@ export default function RequestQuoteForm() {
 
       if (error) throw error;
 
+      // Send email notification
+      try {
+        await fetch('/api/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            formType: 'request-quote',
+            formData: data,
+          }),
+        });
+      } catch (emailError) {
+        // Log email error but don't block the form submission
+        console.error('Failed to send email notification:', emailError);
+      }
+
       router.push('/thank-you?type=request-quote');
     } catch (error: any) {
       setIsSubmitting(false);

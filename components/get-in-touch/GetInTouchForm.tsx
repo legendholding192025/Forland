@@ -39,6 +39,23 @@ export default function GetInTouchForm() {
 
       if (error) throw error;
 
+      // Send email notification
+      try {
+        await fetch('/api/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            formType: 'get-in-touch',
+            formData: data,
+          }),
+        });
+      } catch (emailError) {
+        // Log email error but don't block the form submission
+        console.error('Failed to send email notification:', emailError);
+      }
+
       router.push('/thank-you?type=get-in-touch');
     } catch (error: any) {
       setIsSubmitting(false);

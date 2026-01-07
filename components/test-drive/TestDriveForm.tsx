@@ -41,6 +41,23 @@ export default function TestDriveForm() {
 
       if (error) throw error;
 
+      // Send email notification
+      try {
+        await fetch('/api/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            formType: 'test-drive',
+            formData: data,
+          }),
+        });
+      } catch (emailError) {
+        // Log email error but don't block the form submission
+        console.error('Failed to send email notification:', emailError);
+      }
+
       router.push('/thank-you?type=test-drive');
     } catch (error: any) {
       setIsSubmitting(false);
