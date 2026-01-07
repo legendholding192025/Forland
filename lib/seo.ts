@@ -150,6 +150,9 @@ export function generateMetadata({
 
   const allKeywords = [...new Set([...defaultKeywords, ...keywords])].join(', ');
 
+  // Next.js OpenGraph only supports 'website' or 'article', so map 'product' to 'website'
+  const ogType: 'website' | 'article' = type === 'product' ? 'website' : type;
+
   return {
     title: metaTitle,
     description: metaDescription,
@@ -169,7 +172,7 @@ export function generateMetadata({
       },
     },
     openGraph: {
-      type: type,
+      type: ogType,
       locale: siteConfig.locale,
       url: metaUrl,
       title: metaTitle,

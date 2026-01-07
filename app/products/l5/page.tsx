@@ -1,5 +1,5 @@
 import Header from '@/components/layout/Header';
-import Hero from '@/components/home/Hero';
+import ProductHero from '@/components/products/ProductHero';
 import Footer from '@/components/layout/Footer';
 import { VehicleSpecifications } from '@/components/products/l5/VehicleSpecifications';
 import Container from '@/components/layout/Container';
@@ -58,7 +58,10 @@ export default function ProductL5Page() {
       <div className="min-h-screen bg-white">
         <Header />
       <div className="relative">
-        <Hero />
+        <ProductHero images={[
+          'https://res.cloudinary.com/dzfhqvxnf/image/upload/v1767613593/L5-Banner-1_1_to0mgs.png',
+          'https://res.cloudinary.com/dzfhqvxnf/image/upload/v1767613545/L5-Banner-2_1_sokczh.png',
+        ]} />
         <section className="w-full py-16 bg-[#fafafa]">
           <Container>
             <div className="px-8 sm:px-12 lg:px-28">

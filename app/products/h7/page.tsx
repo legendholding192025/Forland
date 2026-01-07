@@ -1,5 +1,5 @@
 import Header from '@/components/layout/Header';
-import Hero from '@/components/home/Hero';
+import ProductHero from '@/components/products/ProductHero';
 import Footer from '@/components/layout/Footer';
 import { VehicleSpecifications } from '@/components/products/h7/VehicleSpecifications';
 import Container from '@/components/layout/Container';
@@ -58,7 +58,10 @@ export default function ProductH7Page() {
       <div className="min-h-screen bg-white">
         <Header />
       <div className="relative">
-        <Hero />
+        <ProductHero images={[
+          'https://res.cloudinary.com/dzfhqvxnf/image/upload/v1767613686/H7-Banner-1_2_1_blth7x.png',
+          'https://res.cloudinary.com/dzfhqvxnf/image/upload/v1767613513/H7-Banner-2_1_rgtaj9.png',
+        ]} />
         <section className="w-full py-16 bg-[#fafafa]">
           <Container>
             <div className="px-8 sm:px-12 lg:px-28">
