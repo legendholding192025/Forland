@@ -160,6 +160,33 @@ export function generateMetadata({
     authors: [{ name: siteConfig.name }],
     creator: siteConfig.name,
     publisher: siteConfig.name,
+    icons: {
+      icon: [
+        { url: '/logo/header-logo.svg', type: 'image/svg+xml', sizes: 'any' },
+        { url: '/logo/header-logo.svg', type: 'image/svg+xml', sizes: '16x16' },
+        { url: '/logo/header-logo.svg', type: 'image/svg+xml', sizes: '32x32' },
+        { url: '/logo/header-logo.svg', type: 'image/svg+xml', sizes: '96x96' },
+      ],
+      shortcut: '/logo/header-logo.svg',
+      apple: [
+        { url: '/logo/header-logo.svg', sizes: '180x180', type: 'image/svg+xml' },
+      ],
+      other: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          sizes: '192x192',
+          url: '/logo/header-logo.svg',
+        },
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          sizes: '512x512',
+          url: '/logo/header-logo.svg',
+        },
+      ],
+    },
+    manifest: '/site.webmanifest',
     robots: {
       index: !noindex,
       follow: !nofollow,
