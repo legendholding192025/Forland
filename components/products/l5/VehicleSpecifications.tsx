@@ -290,7 +290,7 @@ function SpecRow({ label, value, subValue }: { label: string; value?: string; su
         </>
       )}
     </div>
+
     </>
   );
 }
-

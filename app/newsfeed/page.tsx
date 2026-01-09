@@ -1,6 +1,7 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import NewsfeedHero from '@/components/newsfeed/NewsfeedHero';
+import NewsList from '@/components/newsfeed/NewsList';
 import { Metadata } from 'next';
 import { generateMetadata as generateSEOMetadata } from '@/lib/seo';
 
@@ -30,6 +31,7 @@ export default function NewsfeedPage() {
     <div className="min-h-screen bg-white">
       <Header />
       <NewsfeedHero />
+      <NewsList />
       <Footer />
     </div>
   );

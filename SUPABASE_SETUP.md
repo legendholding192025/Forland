@@ -29,8 +29,36 @@ The following tables should be created in your Supabase database:
 - `request_quote`
 - `service`
 - `get_in_touch`
+- `news_posts`
 
 Run the SQL queries from `supabase_schema.sql` in your Supabase SQL Editor if you haven't already.
+
+## Admin Dashboard
+
+The admin dashboard is available at `/admin/dashboard` for managing news posts.
+
+### Admin Password Setup
+
+1. Add the admin password to your `.env.local` file:
+   ```env
+   NEXT_PUBLIC_ADMIN_PASSWORD=your_secure_password_here
+   ```
+
+2. If not set, the default password is `admin123` (change this in production!)
+
+3. Access the admin dashboard:
+   - Navigate to `/admin/dashboard`
+   - Enter your admin password
+   - You can create, edit, publish, and delete news posts
+
+### Admin Dashboard Features
+
+- ✅ Create new news posts
+- ✅ Edit existing posts
+- ✅ Publish/Unpublish posts
+- ✅ Delete posts
+- ✅ View all posts (published and drafts)
+- ✅ Simple password authentication
 
 ## Testing the Forms
 

@@ -142,6 +142,11 @@ CREATE POLICY "Allow public insert on get_in_touch"
   TO anon, authenticated
   WITH CHECK (true);
 
+CREATE POLICY "Allow public insert on service"
+  ON service FOR INSERT
+  TO anon, authenticated
+  WITH CHECK (true);
+
 -- Policy: Only authenticated users can read (adjust as needed)
 -- You may want to restrict this further or allow public reads
 CREATE POLICY "Allow authenticated read on test_drive"
@@ -164,3 +169,59 @@ CREATE POLICY "Allow authenticated read on get_in_touch"
   TO authenticated
   USING (true);
 
+-- ============================================
+-- 5. News Posts Table
+-- ============================================
+CREATE TABLE IF NOT EXISTS news_posts (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  title VARCHAR(500) NOT NULL,
+  content TEXT NOT NULL,
+  excerpt TEXT,
+  image_url VARCHAR(1000),
+  author VARCHAR(255),
+  featured BOOLEAN DEFAULT false,
+  published BOOLEAN DEFAULT false,
+  published_at TIMESTAMP WITH TIME ZONE,
+  seo_title VARCHAR(500),
+  seo_description TEXT,
+  seo_keywords TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Indexes for news posts
+CREATE INDEX IF NOT EXISTS idx_news_posts_published ON news_posts(published, published_at DESC);
+CREATE INDEX IF NOT EXISTS idx_news_posts_created_at ON news_posts(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_news_posts_featured ON news_posts(featured, published_at DESC);
+
+-- Trigger for news posts updated_at
+CREATE TRIGGER update_news_posts_updated_at
+  BEFORE UPDATE ON news_posts
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();
+
+-- RLS for news posts
+ALTER TABLE news_posts ENABLE ROW LEVEL SECURITY;
+
+-- Policy: Allow anonymous and authenticated users to read ALL news posts
+-- (Admin dashboard needs to see all posts, including drafts)
+-- The public newsfeed page will filter by published=true in application code
+CREATE POLICY "Allow read all news"
+  ON news_posts FOR SELECT
+  TO anon, authenticated
+  USING (true);
+
+-- Policy: Allow authenticated users to insert/update/delete (for admin)
+CREATE POLICY "Allow authenticated manage news"
+  ON news_posts FOR ALL
+  TO authenticated
+  USING (true)
+  WITH CHECK (true);
+
+-- Policy: Allow anonymous users to manage news (for password-protected admin dashboard)
+-- IMPORTANT: In production, replace this with proper Supabase Auth or API route protection
+CREATE POLICY "Allow anonymous manage news"
+  ON news_posts FOR ALL
+  TO anon
+  USING (true)
+  WITH CHECK (true);
