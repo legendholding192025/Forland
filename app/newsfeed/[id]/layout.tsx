@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     const seoTitle = post.seo_title || post.title;
     const seoDescription = post.seo_description || post.excerpt || '';
     const seoKeywords = post.seo_keywords 
-      ? post.seo_keywords.split(',').map(k => k.trim()).filter(k => k.length > 0)
+      ? post.seo_keywords.split(',').map((k: string) => k.trim()).filter((k: string) => k.length > 0)
       : [];
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://forland.ae';
