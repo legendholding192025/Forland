@@ -393,7 +393,7 @@ function NewsPostForm({ post, onClose, onSuccess }: { post: any; onClose: () => 
   const [isUploading, setIsUploading] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       // Check file size (10MB max)
@@ -403,79 +403,175 @@ function NewsPostForm({ post, onClose, onSuccess }: { post: any; onClose: () => 
         e.target.value = '';
         return;
       }
+      
       setSelectedFile(file);
       setFormData({ ...formData, image_url: '' }); // Clear existing URL when file is selected
+      
+      // Upload file immediately
+      setIsUploading(true);
+      setUploadProgress(0);
+      try {
+        const imageUrl = await uploadFile(file);
+        if (imageUrl && imageUrl.trim().length > 0) {
+          setFormData({ ...formData, image_url: imageUrl });
+          setSelectedFile(null); // Clear selected file after successful upload
+        } else {
+          throw new Error('Received empty image URL from server');
+        }
+      } catch (error: any) {
+        console.error('Upload error:', error);
+        const errorMessage = error.message || 'Unknown error occurred during upload';
+        alert(`Error uploading image: ${errorMessage}\n\nPlease check:\n- Your internet connection\n- File size (max 10MB)\n- File format (images only)`);
+        e.target.value = ''; // Clear file input on error
+        setSelectedFile(null);
+        setFormData({ ...formData, image_url: '' }); // Clear image URL on error
+      } finally {
+        setIsUploading(false);
+        setUploadProgress(0);
+      }
     }
   };
 
   const uploadFile = async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    // Use Next.js API route to avoid CORS issues
+    const xhr = new XMLHttpRequest();
+
+    // Track upload progress - show 0-80% for browser to server upload
+    // The remaining 20% will be for server to external API upload
+    xhr.upload.addEventListener('progress', (e) => {
+      if (e.lengthComputable) {
+        // Map 0-100% of browser upload to 0-80% of total progress
+        const browserProgress = Math.round((e.loaded / e.total) * 80);
+        setUploadProgress(browserProgress);
+      }
+    });
+
     return new Promise((resolve, reject) => {
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const xhr = new XMLHttpRequest();
-
-      // Track upload progress
-      xhr.upload.addEventListener('progress', (e) => {
-        if (e.lengthComputable) {
-          const percentComplete = Math.round((e.loaded / e.total) * 100);
-          setUploadProgress(percentComplete);
-        }
-      });
+      // When browser upload completes, we're at 80%
+      // Now we wait for the server to upload to external API
+      let progressInterval: NodeJS.Timeout | null = null;
+      
+      // Simulate progress from 80% to 95% while waiting for server response
+      const startServerProgress = () => {
+        let currentProgress = 80;
+        progressInterval = setInterval(() => {
+          if (currentProgress < 95) {
+            currentProgress += 1;
+            setUploadProgress(currentProgress);
+          }
+        }, 200); // Update every 200ms
+      };
 
       // Handle completion
       xhr.addEventListener('load', () => {
-        if (xhr.status === 200) {
-          try {
-            const response = JSON.parse(xhr.responseText);
-            // Assuming the API returns the URL in a 'url' or 'data' field
-            const imageUrl = response.url || response.data?.url || response.data || xhr.responseText;
-            resolve(imageUrl);
-          } catch (error) {
-            // If response is not JSON, assume it's the URL directly
-            resolve(xhr.responseText.trim());
-          }
-        } else {
-          reject(new Error(`Upload failed with status ${xhr.status}`));
+        if (progressInterval) {
+          clearInterval(progressInterval);
         }
+        
+        // Complete to 100%
+        setUploadProgress(100);
+        
+        // Small delay to show 100% before resolving
+        setTimeout(() => {
+          if (xhr.status === 200 || xhr.status === 201) {
+            try {
+              const response = JSON.parse(xhr.responseText);
+              
+              // Check for success response format
+              if (response.success && response.url) {
+                resolve(response.url);
+              } else if (response.error) {
+                reject(new Error(response.error));
+              } else if (!response.success) {
+                reject(new Error(response.message || 'Upload failed'));
+              } else {
+                reject(new Error('Invalid response format: URL not found in response'));
+              }
+            } catch (error: any) {
+              reject(new Error(`Failed to process response: ${error.message}`));
+            }
+          } else {
+            let errorMessage = `Upload failed with status ${xhr.status}`;
+            try {
+              const errorResponse = JSON.parse(xhr.responseText);
+              errorMessage = errorResponse.error || errorResponse.message || errorMessage;
+            } catch (e) {
+              if (xhr.responseText) {
+                errorMessage = `${errorMessage}: ${xhr.responseText.substring(0, 200)}`;
+              }
+            }
+            reject(new Error(errorMessage));
+          }
+        }, 300);
       });
 
-      // Handle errors
+      // Handle network errors
       xhr.addEventListener('error', () => {
-        reject(new Error('Upload failed'));
+        if (progressInterval) {
+          clearInterval(progressInterval);
+        }
+        reject(new Error('Network error: Failed to connect to upload server. Please check your internet connection.'));
       });
 
       xhr.addEventListener('abort', () => {
-        reject(new Error('Upload aborted'));
+        if (progressInterval) {
+          clearInterval(progressInterval);
+        }
+        reject(new Error('Upload was cancelled'));
       });
 
-      xhr.open('POST', 'https://cdn.legendholding.com/upload.php');
+      // Handle timeout
+      xhr.timeout = 60000; // 60 seconds timeout
+      xhr.addEventListener('timeout', () => {
+        if (progressInterval) {
+          clearInterval(progressInterval);
+        }
+        reject(new Error('Upload timeout: The upload took too long. Please try again with a smaller file.'));
+      });
+
+      // Start the upload
+      xhr.open('POST', '/api/upload-image');
       xhr.send(formData);
+      
+      // Start simulating server progress after a short delay
+      // This gives time for the browser upload to start
+      setTimeout(() => {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
+          startServerProgress();
+        }
+      }, 500);
     });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate required SEO fields
+    if (!formData.seo_title || !formData.seo_title.trim()) {
+      alert('SEO Title is required');
+      return;
+    }
+    if (!formData.seo_description || !formData.seo_description.trim()) {
+      alert('SEO Description is required');
+      return;
+    }
+    if (!formData.seo_keywords || !formData.seo_keywords.trim()) {
+      alert('SEO Keywords are required');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      let imageUrl = formData.image_url;
-
-      // Upload file if selected
-      if (selectedFile) {
-        setIsUploading(true);
-        setUploadProgress(0);
-        try {
-          imageUrl = await uploadFile(selectedFile);
-          setFormData({ ...formData, image_url: imageUrl });
-        } catch (error: any) {
-          setIsUploading(false);
-          alert('Error uploading image: ' + error.message);
-          setIsSubmitting(false);
-          return;
-        }
-        setIsUploading(false);
-        setUploadProgress(0);
+      // Image should already be uploaded when file was selected
+      // If there's a selected file but no image_url, upload might have failed
+      if (selectedFile && !formData.image_url) {
+        alert('Please wait for the image upload to complete or select a different image.');
+        setIsSubmitting(false);
+        return;
       }
 
       // If marking as featured, unfeature all other posts first
@@ -500,7 +596,6 @@ function NewsPostForm({ post, onClose, onSuccess }: { post: any; onClose: () => 
 
       const dataToSubmit = {
         ...formData,
-        image_url: imageUrl,
         published_at: formData.published ? (post?.published_at || new Date().toISOString()) : null,
       };
 
@@ -629,8 +724,8 @@ function NewsPostForm({ post, onClose, onSuccess }: { post: any; onClose: () => 
                 </div>
               )}
 
-              {/* Current Image Preview or URL */}
-              {formData.image_url && !selectedFile && (
+              {/* Current Image Preview (only when editing existing post with image, and no new upload) */}
+              {formData.image_url && !selectedFile && !isUploading && post?.image_url && formData.image_url === post.image_url && (
                 <div className="mt-2">
                   <p className="text-sm mb-2" style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#666666' }}>
                     Current image:
@@ -653,30 +748,39 @@ function NewsPostForm({ post, onClose, onSuccess }: { post: any; onClose: () => 
                 </div>
               )}
 
-              {/* Selected File Preview */}
-              {selectedFile && !isUploading && (
+              {/* Uploading Status */}
+              {isUploading && (
                 <div className="mt-2">
                   <p className="text-sm mb-2" style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#666666' }}>
-                    Selected: {selectedFile.name} ({(selectedFile.size / 1024 / 1024).toFixed(2)} MB)
+                    Uploading image...
+                  </p>
+                </div>
+              )}
+
+              {/* Uploaded Image Preview (shows after successful upload, different from original) */}
+              {formData.image_url && !isUploading && (!post?.image_url || formData.image_url !== post.image_url) && (
+                <div className="mt-2">
+                  <p className="text-sm mb-2" style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#666666' }}>
+                    Uploaded image:
                   </p>
                   <div className="relative w-full h-48 rounded-lg overflow-hidden border border-gray-300">
                     <img
-                      src={URL.createObjectURL(selectedFile)}
-                      alt="Preview"
+                      src={formData.image_url}
+                      alt="Uploaded"
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <button
                     type="button"
                     onClick={() => {
-                      setSelectedFile(null);
+                      setFormData({ ...formData, image_url: '' });
                       const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
                       if (fileInput) fileInput.value = '';
                     }}
                     className="mt-2 text-sm text-[#DF0011] hover:underline"
                     style={{ fontFamily: 'Effra, Arial, sans-serif' }}
                   >
-                    Remove selected file
+                    Remove uploaded image
                   </button>
                 </div>
               )}
@@ -711,7 +815,7 @@ function NewsPostForm({ post, onClose, onSuccess }: { post: any; onClose: () => 
               <div className="space-y-4">
                 <div>
                   <label className="block mb-2" style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#000000', fontWeight: 400 }}>
-                    SEO Title
+                    SEO Title <span style={{ color: '#DF0011' }}>*</span>
                   </label>
                   <input
                     type="text"
@@ -719,35 +823,37 @@ function NewsPostForm({ post, onClose, onSuccess }: { post: any; onClose: () => 
                     onChange={(e) => setFormData({ ...formData, seo_title: e.target.value })}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#DF0011] focus:border-[#DF0011] outline-none text-black"
                     style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#000000' }}
-                    placeholder="Custom title for search engines (optional)"
+                    placeholder="Custom title for search engines"
                     maxLength={500}
+                    required
                   />
                   <p className="text-xs mt-1" style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#666666' }}>
-                    Recommended: 50-60 characters. If left empty, the post title will be used.
+                    Recommended: 50-60 characters
                   </p>
                 </div>
 
                 <div>
                   <label className="block mb-2" style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#000000', fontWeight: 400 }}>
-                    SEO Description
+                    SEO Description <span style={{ color: '#DF0011' }}>*</span>
                   </label>
                   <textarea
                     value={formData.seo_description}
                     onChange={(e) => setFormData({ ...formData, seo_description: e.target.value })}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#DF0011] focus:border-[#DF0011] outline-none text-black"
                     style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#000000' }}
-                    placeholder="Meta description for search engines (optional)"
+                    placeholder="Meta description for search engines"
                     rows={3}
                     maxLength={500}
+                    required
                   />
                   <p className="text-xs mt-1" style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#666666' }}>
-                    Recommended: 150-160 characters. If left empty, the excerpt will be used.
+                    Recommended: 150-160 characters
                   </p>
                 </div>
 
                 <div>
                   <label className="block mb-2" style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#000000', fontWeight: 400 }}>
-                    SEO Keywords
+                    SEO Keywords <span style={{ color: '#DF0011' }}>*</span>
                   </label>
                   <input
                     type="text"
@@ -756,6 +862,7 @@ function NewsPostForm({ post, onClose, onSuccess }: { post: any; onClose: () => 
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#DF0011] focus:border-[#DF0011] outline-none text-black"
                     style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#000000' }}
                     placeholder="Comma-separated keywords (e.g., forland, trucks, uae)"
+                    required
                   />
                   <p className="text-xs mt-1" style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#666666' }}>
                     Separate keywords with commas. These will be added to the default keywords.
@@ -768,18 +875,6 @@ function NewsPostForm({ post, onClose, onSuccess }: { post: any; onClose: () => 
               <div className="flex items-center">
                 <input
                   type="checkbox"
-                  id="featured"
-                  checked={formData.featured}
-                  onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                  className="mr-2"
-                />
-                <label htmlFor="featured" style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#000000', fontWeight: 400 }}>
-                  Mark as Featured Post
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
                   id="published"
                   checked={formData.published}
                   onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
@@ -787,6 +882,18 @@ function NewsPostForm({ post, onClose, onSuccess }: { post: any; onClose: () => 
                 />
                 <label htmlFor="published" style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#000000', fontWeight: 400 }}>
                   Publish immediately
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="featured"
+                  checked={formData.featured}
+                  onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
+                  className="mr-2"
+                />
+                <label htmlFor="featured" style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#000000', fontWeight: 400 }}>
+                  Mark as Featured Post
                 </label>
               </div>
             </div>

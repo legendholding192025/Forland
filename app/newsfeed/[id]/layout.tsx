@@ -2,16 +2,27 @@ import { Metadata } from 'next';
 import { generateMetadata as generateSEOMetadata } from '@/lib/seo';
 import { supabase } from '@/lib/supabase';
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> | { id: string } }): Promise<Metadata> {
   try {
-    const { data: post } = await supabase
+    // Handle both sync and async params (Next.js 15+)
+    const resolvedParams = await Promise.resolve(params);
+    const postId = resolvedParams.id;
+
+    if (!postId) {
+      return generateSEOMetadata({
+        title: 'News Post Not Found',
+        description: 'The requested news post could not be found.',
+      });
+    }
+
+    const { data: post, error } = await supabase
       .from('news_posts')
       .select('title, excerpt, image_url, seo_title, seo_description, seo_keywords')
-      .eq('id', params.id)
+      .eq('id', postId)
       .eq('published', true)
       .single();
 
-    if (!post) {
+    if (error || !post) {
       return generateSEOMetadata({
         title: 'News Post Not Found',
         description: 'The requested news post could not be found.',
@@ -26,7 +37,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
       : [];
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://forland.ae';
-    const postUrl = `${siteUrl}/newsfeed/${params.id}`;
+    const postUrl = `${siteUrl}/newsfeed/${postId}`;
 
     return generateSEOMetadata({
       title: seoTitle,
@@ -37,7 +48,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
       type: 'article',
     });
   } catch (error) {
-    console.error('Error generating metadata:', error);
+    // Silently handle errors to avoid console errors
     return generateSEOMetadata({
       title: 'News Post',
       description: 'FORLAND UAE News',

@@ -104,20 +104,6 @@ export default function NewsPostPage() {
     <div className="min-h-screen bg-white">
       <Header />
       
-      {/* Hero Image */}
-      {post.image_url && (
-        <section className="relative w-full overflow-hidden" style={{ height: '400px' }}>
-          <Image
-            src={post.image_url}
-            alt={post.title}
-            fill
-            className="object-cover"
-            priority
-            sizes="100vw"
-          />
-        </section>
-      )}
-
       {/* Content */}
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <motion.div
@@ -168,6 +154,21 @@ export default function NewsPostPage() {
               </>
             )}
           </div>
+
+          {/* Image - Placed in the middle of content */}
+          {post.image_url && (
+            <div className="mb-8">
+              <div className="relative w-full" style={{ height: '400px' }}>
+                <Image
+                  src={post.image_url}
+                  alt={post.title}
+                  fill
+                  className="object-cover rounded-lg"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 896px"
+                />
+              </div>
+            </div>
+          )}
 
           {/* Content */}
           <div
