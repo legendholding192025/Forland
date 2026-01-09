@@ -328,31 +328,38 @@ export default function AdminDashboard() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {new Date(post.created_at).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                      <button
-                        onClick={() => {
-                          setEditingPost(post);
-                          setShowForm(true);
-                        }}
-                        className="text-[#DF0011] hover:underline"
-                        style={{ fontFamily: 'Effra, Arial, sans-serif' }}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleTogglePublish(post)}
-                        className="text-blue-600 hover:underline"
-                        style={{ fontFamily: 'Effra, Arial, sans-serif' }}
-                      >
-                        {post.published ? 'Unpublish' : 'Publish'}
-                      </button>
-                      <button
-                        onClick={() => handleDelete(post.id)}
-                        className="text-red-600 hover:underline"
-                        style={{ fontFamily: 'Effra, Arial, sans-serif' }}
-                      >
-                        Delete
-                      </button>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => {
+                            setEditingPost(post);
+                            setShowForm(true);
+                          }}
+                          className="px-4 py-2 rounded-lg text-white hover:opacity-90 transition-opacity"
+                          style={{ 
+                            fontFamily: 'Effra, Arial, sans-serif',
+                            background: '#2563eb'
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleTogglePublish(post)}
+                          className={`px-4 py-2 rounded-lg text-white hover:opacity-90 transition-opacity ${
+                            post.published ? 'bg-orange-600' : 'bg-blue-600'
+                          }`}
+                          style={{ fontFamily: 'Effra, Arial, sans-serif' }}
+                        >
+                          {post.published ? 'Unpublish' : 'Publish'}
+                        </button>
+                        <button
+                          onClick={() => handleDelete(post.id)}
+                          className="px-4 py-2 rounded-lg text-white bg-red-600 hover:opacity-90 transition-opacity"
+                          style={{ fontFamily: 'Effra, Arial, sans-serif' }}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
