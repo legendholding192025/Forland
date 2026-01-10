@@ -8,8 +8,6 @@ import Link from 'next/link';
 
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const [newsPosts, setNewsPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingPosts, setIsLoadingPosts] = useState(false);
@@ -17,29 +15,17 @@ export default function AdminDashboard() {
   const [editingPost, setEditingPost] = useState<any>(null);
   const router = useRouter();
 
-  // Simple password authentication (you should use proper auth in production)
-  const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123';
-
   useEffect(() => {
     // Check if already authenticated
     const authStatus = sessionStorage.getItem('admin_authenticated');
     if (authStatus === 'true') {
       setIsAuthenticated(true);
       fetchNewsPosts();
-    }
-  }, []);
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      setIsAuthenticated(true);
-      sessionStorage.setItem('admin_authenticated', 'true');
-      setError('');
-      fetchNewsPosts();
     } else {
-      setError('Incorrect password');
+      // Redirect to login if not authenticated
+      router.push('/admin/login');
     }
-  };
+  }, [router]);
 
   const handleLogout = () => {
     setIsAuthenticated(false);
@@ -47,6 +33,7 @@ export default function AdminDashboard() {
     setPassword('');
     setShowForm(false);
     setEditingPost(null);
+    router.push('/admin/login');
   };
 
   const fetchNewsPosts = async () => {
@@ -111,62 +98,11 @@ export default function AdminDashboard() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center px-4">
-        <div className="max-w-md w-full">
-          <div className="text-center mb-8">
-            <Image
-              src="/logo/header-logo.svg"
-              alt="FORLAND Logo"
-              width={200}
-              height={60}
-              className="mx-auto object-contain"
-            />
-            <h1
-              className="text-3xl mt-6 mb-2"
-              style={{
-                fontFamily: 'Effra, Arial, sans-serif',
-                fontWeight: 400,
-                color: '#000000',
-              }}
-            >
-              Admin Dashboard
-            </h1>
-            <p
-              className="text-gray-600"
-              style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400 }}
-            >
-              Enter password to continue
-            </p>
-          </div>
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#DF0011] focus:border-[#DF0011] outline-none"
-                style={{ fontFamily: 'Effra, Arial, sans-serif' }}
-                required
-              />
-            </div>
-            {error && (
-              <p className="text-red-600 text-sm" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
-                {error}
-              </p>
-            )}
-            <button
-              type="submit"
-              className="w-full text-white py-3 rounded-lg"
-              style={{
-                fontFamily: 'Effra, Arial, sans-serif',
-                fontWeight: 400,
-                background: 'linear-gradient(90deg, #000000 0%, #910000 100%)',
-              }}
-            >
-              Login
-            </button>
-          </form>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#666666' }}>
+            Redirecting to login...
+          </p>
         </div>
       </div>
     );
@@ -570,6 +506,12 @@ function NewsPostForm({ post, onClose, onSuccess }: { post: any; onClose: () => 
       return;
     }
 
+    // Validate required image field
+    if (!formData.image_url || !formData.image_url.trim()) {
+      alert('Image is required. Please upload an image before submitting.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -695,7 +637,7 @@ function NewsPostForm({ post, onClose, onSuccess }: { post: any; onClose: () => 
 
             <div>
               <label className="block mb-2" style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#000000', fontWeight: 400 }}>
-                Image {formData.image_url && !selectedFile ? '(Current)' : ''}
+                Image <span style={{ color: '#DF0011' }}>*</span> {formData.image_url && !selectedFile ? '(Current)' : ''}
               </label>
               
               {/* File Upload Input */}
