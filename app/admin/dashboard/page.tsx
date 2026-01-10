@@ -30,7 +30,6 @@ export default function AdminDashboard() {
   const handleLogout = () => {
     setIsAuthenticated(false);
     sessionStorage.removeItem('admin_authenticated');
-    setPassword('');
     setShowForm(false);
     setEditingPost(null);
     router.push('/admin/login');
