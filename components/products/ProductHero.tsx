@@ -144,7 +144,7 @@ export default function ProductHero({ images }: ProductHeroProps) {
               style={{ top: 0, left: 0 }}
               initial={{ opacity: 0, scale: 0.8, rotate: 45, x: '-50%', y: '-50%' }}
               whileInView={{ opacity: 1, scale: 1, rotate: 0, x: '-50%', y: '-50%' }}
-              viewport={{ once: true, amount: 0.1 }}
+              viewport={{ once: false, amount: 0.1 }}
               transition={{ duration: 0.9, ease: 'easeOut' }}
             >
               <Image
@@ -190,7 +190,7 @@ export default function ProductHero({ images }: ProductHeroProps) {
                 }}
                 initial={{ opacity: 0, scale: 0.8, rotate: -45, x: '25%', y: '25%' }}
                 whileInView={{ opacity: 1, scale: 1, rotate: 0, x: '25%', y: '25%' }}
-                viewport={{ once: true, amount: 0.1 }}
+                viewport={{ once: false, amount: 0.1 }}
                 transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
               >
                 <Image
@@ -261,7 +261,7 @@ export default function ProductHero({ images }: ProductHeroProps) {
                   style={{ top: 0, left: 0 }}
                   initial={{ opacity: 0, scale: 0.8, rotate: 45, x: '-50%', y: '-50%' }}
                   whileInView={{ opacity: 1, scale: 1, rotate: 0, x: '-50%', y: '-50%' }}
-                  viewport={{ once: true, amount: 0.1 }}
+                  viewport={{ once: false, amount: 0.1 }}
                   transition={{ duration: 0.9, ease: 'easeOut' }}
                 >
                   <Image
@@ -307,7 +307,7 @@ export default function ProductHero({ images }: ProductHeroProps) {
                     }}
                     initial={{ opacity: 0, scale: 0.8, rotate: -45, x: '25%', y: '25%' }}
                     whileInView={{ opacity: 1, scale: 1, rotate: 0, x: '25%', y: '25%' }}
-                    viewport={{ once: true, amount: 0.1 }}
+                    viewport={{ once: false, amount: 0.1 }}
                     transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
                   >
                     <Image

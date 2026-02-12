@@ -92,7 +92,7 @@ export default function NewsList() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
+          viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 0.6 }}
           className="mb-12 lg:mb-16"
         >
@@ -127,7 +127,7 @@ export default function NewsList() {
             <motion.article
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
+              viewport={{ once: false, amount: 0.1 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="lg:col-span-6 relative group cursor-pointer"
             >
@@ -191,7 +191,7 @@ export default function NewsList() {
                 key={post.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.1 }}
+                viewport={{ once: false, amount: 0.1 }}
                 transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
                 className="relative group cursor-pointer"
               >
@@ -303,7 +303,7 @@ export default function NewsList() {
             <motion.button
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ duration: 0.6 }}
               onClick={() => setShowAll(!showAll)}
               className="px-8 py-3 text-white rounded-lg relative overflow-hidden group"

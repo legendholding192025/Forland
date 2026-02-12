@@ -71,7 +71,7 @@ export default function QuoteSection() {
         className="mx-auto mb-8 lg:mb-[60px] max-w-[1152px] bg-[#DF0011] flex flex-col lg:flex-row items-center justify-center lg:justify-between px-6 py-6 lg:px-20 lg:py-10 gap-4 lg:gap-0"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
+        viewport={{ once: false, amount: 0.1 }}
         transition={{ duration: 0.9, ease: 'easeOut' }}
       >
         <Image 
@@ -102,7 +102,7 @@ export default function QuoteSection() {
         style={{ maxWidth: '1152px' }}
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
+        viewport={{ once: false, amount: 0.1 }}
         transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
       >
         <p className="text-black text-lg lg:text-2xl mb-6 lg:mb-10" style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400 }}>

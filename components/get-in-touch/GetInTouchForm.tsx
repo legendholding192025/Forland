@@ -71,7 +71,7 @@ export default function GetInTouchForm() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
+            viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.9, ease: 'easeOut' }}
           >
             <h2
@@ -194,7 +194,7 @@ export default function GetInTouchForm() {
             className="mt-12"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
+            viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.9, ease: 'easeOut', delay: 0.2 }}
           >
             <h2

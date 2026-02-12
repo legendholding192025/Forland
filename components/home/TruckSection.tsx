@@ -266,7 +266,7 @@ export default function TruckSection() {
           }}
           initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
           whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.9, ease: 'easeOut' }}
         />
         
@@ -282,7 +282,7 @@ export default function TruckSection() {
           }}
           initial={{ opacity: 0, scale: 0.8, rotate: 45 }}
           whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
         />
       </div>

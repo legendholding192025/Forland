@@ -31,7 +31,7 @@ export default function ProductSection() {
                 style={{ display: 'inline-block' }}
                 initial={{ opacity: 0, scale: 0.8, rotate: 45 }}
                 whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                viewport={{ once: true, amount: 0.1 }}
+                viewport={{ once: false, amount: 0.1 }}
                 transition={{ duration: 0.9, ease: 'easeOut' }}
               />
               <span style={{ color: '#DF0011' }}>A RANGE OF PRODUCTS TO</span> FIT YOUR BUSINESS
@@ -42,7 +42,7 @@ export default function ProductSection() {
                 style={{ display: 'inline-block' }}
                 initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
                 whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                viewport={{ once: true, amount: 0.1 }}
+                viewport={{ once: false, amount: 0.1 }}
                 transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
               />
             </h2>
@@ -92,7 +92,7 @@ export default function ProductSection() {
                 }}
                 initial={{ y: '40.6%', opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.9, ease: 'easeOut' }}
               >
                 <Image
@@ -153,7 +153,7 @@ export default function ProductSection() {
                 }}
                 initial={{ y: '-40.6%', opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.9, ease: 'easeOut' }}
               >
                 <Image
