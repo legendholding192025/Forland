@@ -5,22 +5,19 @@ import { motion } from 'framer-motion';
 
 export default function GetInTouchHero() {
   return (
-    <section 
-      className="relative w-full overflow-hidden h-[286px]"
-      style={{ 
-        backgroundColor: '#000000',
+    <section
+      className="relative w-full overflow-hidden aspect-[39/28]"
+      style={{
+        backgroundImage: `url('https://cdn.legendholding.com/images/cdn_694e7951293693.75946638_20251226_120225.webp')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 75%',
+        backgroundRepeat: 'no-repeat',
       }}
     >
-      <Image
+      <img
         src="https://cdn.legendholding.com/images/cdn_694e7951293693.75946638_20251226_120225.webp"
         alt="Get in Touch Hero"
-        fill
-        className="object-cover"
-        style={{ objectPosition: 'center 75%' }}
-        priority
-        quality={100}
-        unoptimized={true}
-        sizes="100vw"
+        className="sr-only"
       />
       {/* Heading centered */}
       <div className="absolute inset-0 flex items-center justify-center gap-2 md:gap-3 z-10 px-4">

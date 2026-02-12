@@ -5,18 +5,19 @@ import { motion } from 'framer-motion';
 
 export default function RequestQuoteHero() {
   return (
-    <section 
-      className="relative w-full overflow-hidden h-[220px] sm:h-[280px] md:h-[480px]"
+    <section
+      className="relative w-full overflow-hidden aspect-[39/22] sm:aspect-[16/7] md:aspect-[4/1]"
+      style={{
+        backgroundImage: `url('https://cdn.legendholding.com/images/cdn_6945544a644ce2.36760022_20251219_133402.webp')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
     >
-      <Image
+      <img
         src="https://cdn.legendholding.com/images/cdn_6945544a644ce2.36760022_20251219_133402.webp"
         alt="Request Quote Hero"
-        fill
-        className="object-cover"
-        priority
-        quality={100}
-        unoptimized={true}
-        sizes="100vw"
+        className="sr-only"
       />
       {/* Heading - Centered on mobile, right side on desktop */}
       <div className="absolute inset-0 md:right-0 md:inset-auto md:top-1/2 md:-translate-y-1/2 flex items-center justify-center md:justify-start md:pr-8 lg:pr-16 gap-2 md:gap-3 z-10 px-4">

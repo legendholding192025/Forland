@@ -5,21 +5,19 @@ import { motion } from 'framer-motion';
 
 export default function NewsfeedHero() {
   return (
-    <section 
-      className="relative w-full overflow-hidden"
-      style={{ 
-        height: '480px',
+    <section
+      className="relative w-full overflow-hidden aspect-[4/1]"
+      style={{
+        backgroundImage: `url('https://cdn.legendholding.com/images/cdn_6948fe3f897273.25411755_20251222_081559.webp')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
       }}
     >
-      <Image
+      <img
         src="https://cdn.legendholding.com/images/cdn_6948fe3f897273.25411755_20251222_081559.webp"
         alt="Newsfeed Hero"
-        fill
-        className="object-cover"
-        priority
-        quality={100}
-        unoptimized={true}
-        sizes="100vw"
+        className="sr-only"
       />
       {/* Heading on left side */}
       <div className="absolute left-0 top-1/2 -translate-y-1/2 pl-8 lg:pl-16 flex items-center gap-3 z-10">
