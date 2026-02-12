@@ -24,85 +24,85 @@ export default function ProductHero({ images }: ProductHeroProps) {
     <>
       <style dangerouslySetInnerHTML={{__html: `
         .hero-text-1 {
-          font-size: 22px;
+          font-size: 25px;
         }
         @media (min-width: 640px) {
-          .hero-text-1 {
-            font-size: 26px;
-          }
-        }
-        @media (min-width: 768px) {
           .hero-text-1 {
             font-size: 30px;
           }
         }
+        @media (min-width: 768px) {
+          .hero-text-1 {
+            font-size: 34px;
+          }
+        }
         @media (min-width: 1024px) {
           .hero-text-1 {
-            font-size: 40px;
+            font-size: 46px;
           }
         }
         .hero-text-2 {
-          font-size: 28px;
-          top: 32px;
+          font-size: 32px;
+          top: 36px;
         }
         @media (min-width: 640px) {
           .hero-text-2 {
-            font-size: 36px;
-            top: 38px;
-          }
-        }
-        @media (min-width: 768px) {
-          .hero-text-2 {
-            font-size: 42px;
+            font-size: 40px;
             top: 42px;
           }
         }
+        @media (min-width: 768px) {
+          .hero-text-2 {
+            font-size: 48px;
+            top: 48px;
+          }
+        }
         @media (min-width: 1024px) {
           .hero-text-2 {
-            font-size: 64px;
-            top: 45px;
+            font-size: 72px;
+            top: 52px;
           }
         }
         .hero-text-3 {
-          font-size: 42px;
-          top: 64px;
+          font-size: 48px;
+          top: 72px;
         }
         @media (min-width: 640px) {
           .hero-text-3 {
-            font-size: 56px;
-            top: 72px;
+            font-size: 62px;
+            top: 80px;
           }
         }
         @media (min-width: 768px) {
           .hero-text-3 {
-            font-size: 80px;
-            top: 84px;
+            font-size: 90px;
+            top: 94px;
           }
         }
         @media (min-width: 1024px) {
           .hero-text-3 {
-            font-size: 110px;
-            top: 90px;
+            font-size: 122px;
+            top: 100px;
           }
         }
         .hero-vector {
-          width: 48px;
+          width: 52px;
           height: auto;
         }
         @media (min-width: 640px) {
           .hero-vector {
-            width: 64px;
+            width: 70px;
           }
         }
         @media (min-width: 768px) {
           .hero-vector {
-            width: 80px;
+            width: 88px;
           }
         }
         @media (min-width: 1024px) {
           .hero-vector {
-            width: 96px;
-            height: 75px;
+            width: 106px;
+            height: 82px;
           }
         }
       `}} />
