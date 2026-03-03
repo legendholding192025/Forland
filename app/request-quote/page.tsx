@@ -7,7 +7,8 @@ import { generateMetadata as generateSEOMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Request a Quote - FORLAND UAE',
-  description: 'Get a competitive quote for FORLAND H7 or L5 cargo trucks. Contact us for pricing, financing options, and special offers on commercial vehicles in the UAE.',
+  description:
+    'Get a competitive quote for FORLAND H7 or L5 cargo trucks. Contact us for pricing, financing options, and special offers on commercial vehicles in the UAE.',
   keywords: [
     'truck quote',
     'FORLAND quote',
@@ -31,12 +32,24 @@ export const metadata: Metadata = generateSEOMetadata({
   url: '/request-quote',
 });
 
-export default function RequestQuotePage() {
+type RequestQuoteSearchParams = {
+  src?: string | string[];
+};
+
+export default function RequestQuotePage({
+  searchParams,
+}: {
+  searchParams?: RequestQuoteSearchParams;
+}) {
+  const rawSrc = searchParams?.src;
+  const src = Array.isArray(rawSrc) ? rawSrc[0] : rawSrc;
+  const source = src === 'qr' ? 'qr' : undefined;
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
       <RequestQuoteHero />
-      <RequestQuoteForm />
+      <RequestQuoteForm source={source} />
       <Footer />
     </div>
   );

@@ -3,12 +3,10 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
-export default function RequestQuoteForm() {
-  const searchParams = useSearchParams();
-  const sourceFromUrl = searchParams.get('src') === 'qr' ? 'qr' : null;
+export default function RequestQuoteForm({ source }: { source?: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
   const formRef = useRef<HTMLFormElement>(null);
@@ -36,8 +34,8 @@ export default function RequestQuoteForm() {
       phone: formData.get('phone') as string,
       message: (formData.get('message') as string) || null,
     };
-    if (sourceFromUrl) {
-      data.source = sourceFromUrl;
+    if (source === 'qr') {
+      data.source = 'qr';
     }
 
     try {
