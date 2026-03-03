@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 export default function GetInTouchHero() {
   return (
     <section
-      className="relative w-full overflow-hidden aspect-[39/28]"
+      className="relative w-full overflow-hidden aspect-[39/22] sm:aspect-[16/7] md:aspect-[4/1]"
       style={{
         backgroundImage: `url('https://cdn.legendholding.com/images/cdn_694e7951293693.75946638_20251226_120225.webp')`,
         backgroundSize: 'cover',
