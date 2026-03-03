@@ -78,11 +78,26 @@ export async function POST(request: NextRequest) {
       `;
 
       // Add form-specific fields
+      if (formData.full_name) {
+        html += `<div class="field"><div class="label">Full Name:</div><div class="value">${formData.full_name}</div></div>`;
+      }
       if (formData.first_name) {
         html += `<div class="field"><div class="label">First Name:</div><div class="value">${formData.first_name}</div></div>`;
       }
       if (formData.last_name) {
         html += `<div class="field"><div class="label">Last Name:</div><div class="value">${formData.last_name}</div></div>`;
+      }
+      if (formData.company_name) {
+        html += `<div class="field"><div class="label">Company Name:</div><div class="value">${formData.company_name}</div></div>`;
+      }
+      if (formData.company_size) {
+        html += `<div class="field"><div class="label">Company Size:</div><div class="value">${formData.company_size}</div></div>`;
+      }
+      if (formData.position) {
+        html += `<div class="field"><div class="label">Position:</div><div class="value">${formData.position}</div></div>`;
+      }
+      if (formData.time_of_purchase) {
+        html += `<div class="field"><div class="label">Time of Purchase:</div><div class="value">${formData.time_of_purchase}</div></div>`;
       }
       if (formData.email) {
         html += `<div class="field"><div class="label">Email:</div><div class="value">${formData.email}</div></div>`;

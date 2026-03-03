@@ -6,23 +6,52 @@ import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
 import Link from 'next/link';
 
+type LeadType = 'get_in_touch' | 'request_quote' | 'test_drive' | 'service';
+
+interface Lead {
+  id: string;
+  type: LeadType;
+  name: string;
+  email: string;
+  phone: string;
+  created_at: string;
+  raw: Record<string, any>;
+}
+
+const LEAD_TYPES: { value: LeadType | 'all'; label: string; color: string }[] = [
+  { value: 'all', label: 'All Leads', color: '#6b7280' },
+  { value: 'get_in_touch', label: 'Get In Touch', color: '#2563eb' },
+  { value: 'request_quote', label: 'Request Quote', color: '#7c3aed' },
+  { value: 'test_drive', label: 'Test Drive', color: '#059669' },
+  { value: 'service', label: 'Service', color: '#d97706' },
+];
+
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [activeTab, setActiveTab] = useState<'news' | 'leads'>('news');
   const [newsPosts, setNewsPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingPosts, setIsLoadingPosts] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editingPost, setEditingPost] = useState<any>(null);
+
+  // Leads state
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [isLoadingLeads, setIsLoadingLeads] = useState(false);
+  const [leadsError, setLeadsError] = useState<string | null>(null);
+  const [leadTypeFilter, setLeadTypeFilter] = useState<LeadType | 'all'>('all');
+  const [leadSearch, setLeadSearch] = useState('');
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+
   const router = useRouter();
 
   useEffect(() => {
-    // Check if already authenticated
     const authStatus = sessionStorage.getItem('admin_authenticated');
     if (authStatus === 'true') {
       setIsAuthenticated(true);
       fetchNewsPosts();
+      fetchLeads();
     } else {
-      // Redirect to login if not authenticated
       router.push('/admin/login');
     }
   }, [router]);
@@ -34,6 +63,77 @@ export default function AdminDashboard() {
     setEditingPost(null);
     router.push('/admin/login');
   };
+
+  const fetchLeads = async () => {
+    setIsLoadingLeads(true);
+    setLeadsError(null);
+    try {
+      const res = await fetch('/api/admin/leads');
+      const json = await res.json();
+
+      if (!res.ok) {
+        throw new Error(json.error || 'Failed to fetch leads');
+      }
+
+      if (json.errors?.length) {
+        const hint = json.usingServiceKey
+          ? ''
+          : '\n\nYou need to add SUPABASE_SERVICE_ROLE_KEY to .env.local (find it at Supabase → Settings → API → service_role key) and restart the dev server.';
+        setLeadsError(json.errors.join('\n') + hint);
+      }
+
+      const normalize = (row: any): Lead => {
+        const type = row._lead_type as LeadType;
+        const { _lead_type, ...rawWithoutMeta } = row;
+        return {
+          id: `${type}-${row.id}`,
+          type,
+          name:
+            type === 'request_quote'
+              ? row.full_name || ''
+              : `${row.first_name || ''} ${row.last_name || ''}`.trim(),
+          email: row.email || '',
+          phone: row.phone || '',
+          created_at: row.created_at,
+          raw: rawWithoutMeta,
+        };
+      };
+
+      setLeads((json.leads || []).map(normalize));
+    } catch (err: any) {
+      setLeadsError('Error fetching leads: ' + err.message);
+    } finally {
+      setIsLoadingLeads(false);
+    }
+  };
+
+  const handleDeleteLead = async (lead: Lead) => {
+    if (!confirm('Are you sure you want to delete this lead?')) return;
+    try {
+      const res = await fetch('/api/admin/leads', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ table: lead.type, id: lead.raw.id }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Delete failed');
+      if (selectedLead?.id === lead.id) setSelectedLead(null);
+      fetchLeads();
+    } catch (err: any) {
+      alert('Error deleting lead: ' + err.message);
+    }
+  };
+
+  const filteredLeads = leads.filter((l) => {
+    const matchesType = leadTypeFilter === 'all' || l.type === leadTypeFilter;
+    const q = leadSearch.toLowerCase();
+    const matchesSearch =
+      !q ||
+      l.name.toLowerCase().includes(q) ||
+      l.email.toLowerCase().includes(q) ||
+      l.phone.toLowerCase().includes(q);
+    return matchesType && matchesSearch;
+  });
 
   const fetchNewsPosts = async () => {
     try {
@@ -107,8 +207,12 @@ export default function AdminDashboard() {
     );
   }
 
+  const getLeadTypeMeta = (type: LeadType) =>
+    LEAD_TYPES.find((t) => t.value === type) ?? LEAD_TYPES[0];
+
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
@@ -122,11 +226,7 @@ export default function AdminDashboard() {
               />
               <h1
                 className="text-2xl"
-                style={{
-                  fontFamily: 'Effra, Arial, sans-serif',
-                  fontWeight: 400,
-                  color: '#000000',
-                }}
+                style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400, color: '#000000' }}
               >
                 Admin Dashboard
               </h1>
@@ -142,174 +242,433 @@ export default function AdminDashboard() {
               <button
                 onClick={handleLogout}
                 className="px-4 py-2 text-white rounded-lg"
-                style={{
-                  fontFamily: 'Effra, Arial, sans-serif',
-                  background: '#DF0011',
-                }}
+                style={{ fontFamily: 'Effra, Arial, sans-serif', background: '#DF0011' }}
               >
                 Logout
               </button>
             </div>
           </div>
         </div>
+
+        {/* Tab Bar */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex gap-0 border-t border-gray-200">
+            {[
+              { key: 'news', label: 'News Posts' },
+              { key: 'leads', label: `Leads${leads.length ? ` (${leads.length})` : ''}` },
+            ].map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key as 'news' | 'leads')}
+                className="px-6 py-3 text-sm border-b-2 transition-colors"
+                style={{
+                  fontFamily: 'Effra, Arial, sans-serif',
+                  borderBottomColor: activeTab === tab.key ? '#DF0011' : 'transparent',
+                  color: activeTab === tab.key ? '#DF0011' : '#6b7280',
+                  background: 'transparent',
+                }}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6 flex justify-between items-center">
-          <h2
-            className="text-2xl"
-            style={{
-              fontFamily: 'Effra, Arial, sans-serif',
-              fontWeight: 400,
-              color: '#000000',
-            }}
-          >
-            News Posts
-          </h2>
-          <button
-            onClick={() => {
-              setShowForm(true);
-              setEditingPost(null);
-            }}
-            className="px-6 py-2 text-white rounded-lg"
-            style={{
-              fontFamily: 'Effra, Arial, sans-serif',
-              background: '#DF0011',
-            }}
-          >
-            + New Post
-          </button>
-        </div>
 
-        {showForm && (
-          <NewsPostForm
-            post={editingPost}
-            onClose={() => {
-              setShowForm(false);
-              setEditingPost(null);
-            }}
-            onSuccess={() => {
-              setShowForm(false);
-              setEditingPost(null);
-              fetchNewsPosts();
-            }}
-          />
+        {/* ── NEWS POSTS TAB ── */}
+        {activeTab === 'news' && (
+          <>
+            <div className="mb-6 flex justify-between items-center">
+              <h2
+                className="text-2xl"
+                style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400, color: '#000000' }}
+              >
+                News Posts
+              </h2>
+              <button
+                onClick={() => { setShowForm(true); setEditingPost(null); }}
+                className="px-6 py-2 text-white rounded-lg"
+                style={{ fontFamily: 'Effra, Arial, sans-serif', background: '#DF0011' }}
+              >
+                + New Post
+              </button>
+            </div>
+
+            {showForm && (
+              <NewsPostForm
+                post={editingPost}
+                onClose={() => { setShowForm(false); setEditingPost(null); }}
+                onSuccess={() => { setShowForm(false); setEditingPost(null); fetchNewsPosts(); }}
+              />
+            )}
+
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      {['Title', 'Status', 'Created', 'Actions'].map((h) => (
+                        <th
+                          key={h}
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          style={{ fontFamily: 'Effra, Arial, sans-serif' }}
+                        >
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {newsPosts.map((post) => (
+                      <tr key={post.id}>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
+                            {post.title}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex flex-col gap-1">
+                            <span
+                              className={`px-2 py-1 text-xs rounded-full ${post.published ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}
+                              style={{ fontFamily: 'Effra, Arial, sans-serif' }}
+                            >
+                              {post.published ? 'Published' : 'Draft'}
+                            </span>
+                            {post.featured && (
+                              <span className="px-2 py-1 text-xs rounded-full bg-[#DF0011] text-white" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
+                                Featured
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {new Date(post.created_at).toLocaleDateString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => { setEditingPost(post); setShowForm(true); }}
+                              className="px-4 py-2 rounded-lg text-white hover:opacity-90 transition-opacity"
+                              style={{ fontFamily: 'Effra, Arial, sans-serif', background: '#2563eb' }}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleTogglePublish(post)}
+                              className={`px-4 py-2 rounded-lg text-white hover:opacity-90 transition-opacity ${post.published ? 'bg-orange-600' : 'bg-blue-600'}`}
+                              style={{ fontFamily: 'Effra, Arial, sans-serif' }}
+                            >
+                              {post.published ? 'Unpublish' : 'Publish'}
+                            </button>
+                            <button
+                              onClick={() => handleDelete(post.id)}
+                              className="px-4 py-2 rounded-lg text-white bg-red-600 hover:opacity-90 transition-opacity"
+                              style={{ fontFamily: 'Effra, Arial, sans-serif' }}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {isLoadingPosts && (
+                  <div className="text-center py-12 text-gray-500" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
+                    Loading posts...
+                  </div>
+                )}
+                {!isLoadingPosts && newsPosts.length === 0 && (
+                  <div className="text-center py-12 text-gray-500" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
+                    No news posts yet. Create your first post!
+                  </div>
+                )}
+              </div>
+            </div>
+          </>
         )}
 
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    style={{ fontFamily: 'Effra, Arial, sans-serif' }}
+        {/* ── LEADS TAB ── */}
+        {activeTab === 'leads' && (
+          <>
+            <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <h2
+                className="text-2xl"
+                style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400, color: '#000000' }}
+              >
+                Leads
+              </h2>
+              <button
+                onClick={fetchLeads}
+                className="self-start sm:self-auto px-4 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 transition-colors"
+                style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#374151' }}
+              >
+                ↻ Refresh
+              </button>
+            </div>
+
+            {/* Filters */}
+            <div className="bg-white rounded-lg shadow p-4 mb-4 flex flex-col sm:flex-row gap-3">
+              {/* Type filter pills */}
+              <div className="flex flex-wrap gap-2">
+                {LEAD_TYPES.map((t) => (
+                  <button
+                    key={t.value}
+                    onClick={() => setLeadTypeFilter(t.value)}
+                    className="px-3 py-1.5 rounded-full text-xs transition-all"
+                    style={{
+                      fontFamily: 'Effra, Arial, sans-serif',
+                      background: leadTypeFilter === t.value ? t.color : '#f3f4f6',
+                      color: leadTypeFilter === t.value ? '#ffffff' : '#374151',
+                      border: `1.5px solid ${leadTypeFilter === t.value ? t.color : '#e5e7eb'}`,
+                    }}
                   >
-                    Title
-                  </th>
-                  <th
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    style={{ fontFamily: 'Effra, Arial, sans-serif' }}
-                  >
-                    Status
-                  </th>
-                  <th
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    style={{ fontFamily: 'Effra, Arial, sans-serif' }}
-                  >
-                    Created
-                  </th>
-                  <th
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    style={{ fontFamily: 'Effra, Arial, sans-serif' }}
-                  >
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {newsPosts.map((post) => (
-                  <tr key={post.id}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div
-                        className="text-sm font-medium text-gray-900"
-                        style={{ fontFamily: 'Effra, Arial, sans-serif' }}
-                      >
-                        {post.title}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex flex-col gap-1">
-                        <span
-                          className={`px-2 py-1 text-xs rounded-full ${
-                            post.published
-                              ? 'bg-green-100 text-green-800'
-                              : 'bg-gray-100 text-gray-800'
-                          }`}
-                          style={{ fontFamily: 'Effra, Arial, sans-serif' }}
-                        >
-                          {post.published ? 'Published' : 'Draft'}
-                        </span>
-                        {post.featured && (
-                          <span
-                            className="px-2 py-1 text-xs rounded-full bg-[#DF0011] text-white"
-                            style={{ fontFamily: 'Effra, Arial, sans-serif' }}
-                          >
-                            Featured
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Date(post.created_at).toLocaleDateString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => {
-                            setEditingPost(post);
-                            setShowForm(true);
-                          }}
-                          className="px-4 py-2 rounded-lg text-white hover:opacity-90 transition-opacity"
-                          style={{ 
-                            fontFamily: 'Effra, Arial, sans-serif',
-                            background: '#2563eb'
-                          }}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => handleTogglePublish(post)}
-                          className={`px-4 py-2 rounded-lg text-white hover:opacity-90 transition-opacity ${
-                            post.published ? 'bg-orange-600' : 'bg-blue-600'
-                          }`}
-                          style={{ fontFamily: 'Effra, Arial, sans-serif' }}
-                        >
-                          {post.published ? 'Unpublish' : 'Publish'}
-                        </button>
-                        <button
-                          onClick={() => handleDelete(post.id)}
-                          className="px-4 py-2 rounded-lg text-white bg-red-600 hover:opacity-90 transition-opacity"
-                          style={{ fontFamily: 'Effra, Arial, sans-serif' }}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+                    {t.label}
+                    {t.value !== 'all' && (
+                      <span className="ml-1 opacity-75">
+                        ({leads.filter((l) => l.type === t.value).length})
+                      </span>
+                    )}
+                  </button>
                 ))}
-              </tbody>
-            </table>
-            {isLoadingPosts && (
-              <div className="text-center py-12 text-gray-500" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
-                Loading posts...
+              </div>
+
+              {/* Search */}
+              <div className="sm:ml-auto">
+                <input
+                  type="text"
+                  placeholder="Search name, email, phone…"
+                  value={leadSearch}
+                  onChange={(e) => setLeadSearch(e.target.value)}
+                  className="w-full sm:w-64 px-4 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#DF0011] focus:border-[#DF0011] outline-none"
+                  style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#000000' }}
+                />
+              </div>
+            </div>
+
+            {/* Error banner */}
+            {leadsError && (
+              <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <p
+                  className="text-sm font-medium text-red-700 mb-1"
+                  style={{ fontFamily: 'Effra, Arial, sans-serif' }}
+                >
+                  Could not fetch leads
+                </p>
+                <pre
+                  className="text-xs text-red-600 whitespace-pre-wrap"
+                  style={{ fontFamily: 'Effra, Arial, sans-serif' }}
+                >
+                  {leadsError}
+                </pre>
               </div>
             )}
-            {!isLoadingPosts && newsPosts.length === 0 && (
-              <div className="text-center py-12 text-gray-500" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
-                No news posts yet. Create your first post!
+
+            {/* Leads table */}
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      {['Type', 'Name', 'Email', 'Phone', 'Date', 'Actions'].map((h) => (
+                        <th
+                          key={h}
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          style={{ fontFamily: 'Effra, Arial, sans-serif' }}
+                        >
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {filteredLeads.map((lead) => {
+                      const meta = getLeadTypeMeta(lead.type);
+                      return (
+                        <tr key={lead.id} className="hover:bg-gray-50 transition-colors">
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span
+                              className="px-2 py-1 text-xs rounded-full text-white"
+                              style={{ fontFamily: 'Effra, Arial, sans-serif', background: meta.color }}
+                            >
+                              {meta.label}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
+                            {lead.name || '—'}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
+                            {lead.email || '—'}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
+                            {lead.phone || '—'}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
+                            {new Date(lead.created_at).toLocaleDateString('en-GB', {
+                              day: '2-digit', month: 'short', year: 'numeric',
+                            })}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => setSelectedLead(lead)}
+                                className="px-4 py-1.5 rounded-lg text-white text-xs hover:opacity-90 transition-opacity"
+                                style={{ fontFamily: 'Effra, Arial, sans-serif', background: '#2563eb' }}
+                              >
+                                View
+                              </button>
+                              <button
+                                onClick={() => handleDeleteLead(lead)}
+                                className="px-4 py-1.5 rounded-lg text-white text-xs bg-red-600 hover:opacity-90 transition-opacity"
+                                style={{ fontFamily: 'Effra, Arial, sans-serif' }}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+
+                {isLoadingLeads && (
+                  <div className="text-center py-12 text-gray-500" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
+                    Loading leads…
+                  </div>
+                )}
+                {!isLoadingLeads && filteredLeads.length === 0 && (
+                  <div className="text-center py-12 text-gray-400" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
+                    {leads.length === 0 ? 'No leads yet.' : 'No leads match your filters.'}
+                  </div>
+                )}
               </div>
+            </div>
+
+            {/* Results count */}
+            {!isLoadingLeads && filteredLeads.length > 0 && (
+              <p className="mt-3 text-sm text-gray-400" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
+                Showing {filteredLeads.length} of {leads.length} total leads
+              </p>
             )}
+          </>
+        )}
+      </div>
+
+      {/* Lead Detail Modal */}
+      {selectedLead && (
+        <LeadDetailModal lead={selectedLead} onClose={() => setSelectedLead(null)} onDelete={(lead) => { handleDeleteLead(lead); }} />
+      )}
+    </div>
+  );
+}
+
+function LeadDetailModal({
+  lead,
+  onClose,
+  onDelete,
+}: {
+  lead: Lead;
+  onClose: () => void;
+  onDelete: (lead: Lead) => void;
+}) {
+  const meta = LEAD_TYPES.find((t) => t.value === lead.type)!;
+
+  const FIELD_LABELS: Record<string, string> = {
+    first_name: 'First Name',
+    last_name: 'Last Name',
+    full_name: 'Full Name',
+    email: 'Email',
+    phone: 'Phone',
+    message: 'Message',
+    company_name: 'Company Name',
+    company_size: 'Company Size',
+    position: 'Position',
+    time_of_purchase: 'Time of Purchase',
+    model: 'Model',
+    emirates: 'Emirate',
+    additional_info: 'Additional Info',
+    created_at: 'Submitted At',
+  };
+
+  const SKIP_FIELDS = new Set(['id', 'updated_at']);
+
+  const fields = Object.entries(lead.raw).filter(([k]) => !SKIP_FIELDS.has(k));
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-lg max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-xl">
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-3">
+              <span
+                className="px-3 py-1 text-sm rounded-full text-white"
+                style={{ fontFamily: 'Effra, Arial, sans-serif', background: meta.color }}
+              >
+                {meta.label}
+              </span>
+              <h2
+                className="text-xl"
+                style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400, color: '#000000' }}
+              >
+                Lead Details
+              </h2>
+            </div>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600 text-xl leading-none"
+            >
+              ✕
+            </button>
+          </div>
+
+          <dl className="space-y-4">
+            {fields.map(([key, value]) => {
+              if (value === null || value === undefined || value === '') return null;
+              const label = FIELD_LABELS[key] || key.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+              const display =
+                key === 'created_at'
+                  ? new Date(value as string).toLocaleString('en-GB', {
+                      day: '2-digit', month: 'short', year: 'numeric',
+                      hour: '2-digit', minute: '2-digit',
+                    })
+                  : String(value);
+              return (
+                <div key={key} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+                  <dt
+                    className="text-xs uppercase tracking-wider text-gray-400 mb-1"
+                    style={{ fontFamily: 'Effra, Arial, sans-serif' }}
+                  >
+                    {label}
+                  </dt>
+                  <dd
+                    className="text-sm text-gray-900 whitespace-pre-wrap break-words"
+                    style={{ fontFamily: 'Effra, Arial, sans-serif' }}
+                  >
+                    {display}
+                  </dd>
+                </div>
+              );
+            })}
+          </dl>
+
+          <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-100">
+            <button
+              onClick={() => { onDelete(lead); onClose(); }}
+              className="px-5 py-2 rounded-lg text-white text-sm bg-red-600 hover:opacity-90 transition-opacity"
+              style={{ fontFamily: 'Effra, Arial, sans-serif' }}
+            >
+              Delete Lead
+            </button>
+            <button
+              onClick={onClose}
+              className="px-5 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 transition-colors"
+              style={{ fontFamily: 'Effra, Arial, sans-serif', color: '#374151' }}
+            >
+              Close
+            </button>
           </div>
         </div>
       </div>

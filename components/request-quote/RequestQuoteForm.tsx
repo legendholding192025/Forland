@@ -25,11 +25,13 @@ export default function RequestQuoteForm() {
 
     const formData = new FormData(form);
     const data = {
-      first_name: formData.get('firstName') as string,
-      last_name: formData.get('lastName') as string,
+      full_name: formData.get('fullName') as string,
+      company_name: formData.get('companyName') as string,
+      company_size: formData.get('companySize') as string,
+      position: formData.get('position') as string,
+      time_of_purchase: formData.get('timeOfPurchase') as string,
       email: formData.get('email') as string,
       phone: formData.get('phone') as string,
-      subject: formData.get('subject') as string,
       message: formData.get('message') as string || null,
     };
 
@@ -118,24 +120,24 @@ export default function RequestQuoteForm() {
               onSubmit={handleSubmit}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <Field label="First Name" required name="firstName" />
-                <Field label="Last Name" required name="lastName" />
+                <Field label="Full Name" required name="fullName" />
+                <Field label="Email" required type="email" name="email" />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <Field label="Email" required type="email" name="email" />
                 <Field label="Phone Number" required type="tel" name="phone" />
+                <Field label="Company Name" required name="companyName" />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
                   <label className="block text-black mb-2" style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400 }}>
-                    <span style={{ color: '#DF0011' }}>*</span> Subject
+                    <span style={{ color: '#DF0011' }}>*</span> Company Size
                   </label>
                   <select
-                    name="subject"
+                    name="companySize"
                     required
-                    className="w-full outline-none px-4 focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200"
+                    className="w-full outline-none px-4 focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200 text-black"
                     style={{
                       maxWidth: '555.77px',
                       height: '38.46px',
@@ -147,33 +149,63 @@ export default function RequestQuoteForm() {
                       fontWeight: 400,
                     }}
                   >
-                    <option value="" style={{ color: '#000000' }}>Select a subject</option>
-                    <option value="general-inquiry">General Inquiry</option>
-                    <option value="product-information">Product Information</option>
-                    <option value="pricing">Pricing</option>
-                    <option value="test-drive">Test Drive</option>
-                    <option value="service">Service</option>
-                    <option value="other">Other</option>
+                    <option value="" style={{ color: '#000000' }}>Select company size</option>
+                    <option value="0-50">0-50</option>
+                    <option value="51-100">51-100</option>
+                    <option value="101-150">101-150</option>
+                    <option value="151-250">151-250</option>
+                    <option value="251-350">251-350</option>
+                    <option value="500+">500+</option>
                   </select>
                 </div>
-                <div></div>
+                <Field label="Position" required name="position" />
               </div>
 
-              <div>
-                <label className="block text-black mb-2" style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400 }}>
-                  Message
-                </label>
-                <textarea
-                  name="message"
-                  className="w-full px-4 py-3 outline-none text-black focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200"
-                  style={{
-                    height: '82px',
-                    borderRadius: '9.62px',
-                    border: '0.96px solid #2F2F2F',
-                    fontFamily: 'Effra, Arial, sans-serif',
-                    fontWeight: 400,
-                  }}
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <label className="block text-black mb-2" style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400 }}>
+                    <span style={{ color: '#DF0011' }}>*</span> Time of Purchase
+                  </label>
+                  <select
+                    name="timeOfPurchase"
+                    required
+                    className="w-full outline-none px-4 focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200 text-black"
+                    style={{
+                      maxWidth: '555.77px',
+                      height: '38.46px',
+                      borderRadius: '9.62px',
+                      border: '0.96px solid #2F2F2F',
+                      background: '#F5F5F5',
+                      color: '#000000',
+                      fontFamily: 'Effra, Arial, sans-serif',
+                      fontWeight: 400,
+                    }}
+                  >
+                    <option value="" style={{ color: '#000000' }}>Select time of purchase</option>
+                    <option value="immediate">Immediate</option>
+                    <option value="1-month">1 month</option>
+                    <option value="2-month">2 month</option>
+                    <option value="3-month">3 month</option>
+                    <option value="more-than-3-months">More than 3 Months</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-black mb-2" style={{ fontFamily: 'Effra, Arial, sans-serif', fontWeight: 400 }}>
+                    Message
+                  </label>
+                  <textarea
+                    name="message"
+                    className="w-full px-4 py-3 outline-none text-black focus:ring-2 focus:ring-[#DF0011] focus:!border-[#DF0011] transition-all duration-200"
+                    style={{
+                      maxWidth: '555.77px',
+                      height: '82px',
+                      borderRadius: '9.62px',
+                      border: '0.96px solid #2F2F2F',
+                      fontFamily: 'Effra, Arial, sans-serif',
+                      fontWeight: 400,
+                    }}
+                  />
+                </div>
               </div>
 
               <div className="flex justify-center pt-6">
