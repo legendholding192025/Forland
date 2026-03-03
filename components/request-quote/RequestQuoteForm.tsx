@@ -3,10 +3,12 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
 export default function RequestQuoteForm() {
+  const searchParams = useSearchParams();
+  const sourceFromUrl = searchParams.get('src') === 'qr' ? 'qr' : null;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
   const formRef = useRef<HTMLFormElement>(null);
@@ -24,7 +26,7 @@ export default function RequestQuoteForm() {
     }
 
     const formData = new FormData(form);
-    const data = {
+    const data: Record<string, string | null> = {
       full_name: formData.get('fullName') as string,
       company_name: formData.get('companyName') as string,
       company_size: formData.get('companySize') as string,
@@ -32,8 +34,11 @@ export default function RequestQuoteForm() {
       time_of_purchase: formData.get('timeOfPurchase') as string,
       email: formData.get('email') as string,
       phone: formData.get('phone') as string,
-      message: formData.get('message') as string || null,
+      message: (formData.get('message') as string) || null,
     };
+    if (sourceFromUrl) {
+      data.source = sourceFromUrl;
+    }
 
     try {
       const { error } = await supabase

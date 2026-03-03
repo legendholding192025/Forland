@@ -40,6 +40,7 @@ export default function AdminDashboard() {
   const [isLoadingLeads, setIsLoadingLeads] = useState(false);
   const [leadsError, setLeadsError] = useState<string | null>(null);
   const [leadTypeFilter, setLeadTypeFilter] = useState<LeadType | 'all'>('all');
+  const [leadSourceFilter, setLeadSourceFilter] = useState<'all' | 'qr'>('all');
   const [leadSearch, setLeadSearch] = useState('');
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
@@ -126,13 +127,16 @@ export default function AdminDashboard() {
 
   const filteredLeads = leads.filter((l) => {
     const matchesType = leadTypeFilter === 'all' || l.type === leadTypeFilter;
+    const matchesSource =
+      leadSourceFilter === 'all' ||
+      (l.type === 'request_quote' && l.raw?.source === 'qr');
     const q = leadSearch.toLowerCase();
     const matchesSearch =
       !q ||
       l.name.toLowerCase().includes(q) ||
       l.email.toLowerCase().includes(q) ||
       l.phone.toLowerCase().includes(q);
-    return matchesType && matchesSearch;
+    return matchesType && matchesSource && matchesSearch;
   });
 
   const fetchNewsPosts = async () => {
@@ -435,6 +439,31 @@ export default function AdminDashboard() {
                 ))}
               </div>
 
+              {/* Source filter (QR tracking) */}
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-gray-500" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>Source:</span>
+                {(['all', 'qr'] as const).map((src) => (
+                  <button
+                    key={src}
+                    onClick={() => setLeadSourceFilter(src)}
+                    className="px-3 py-1.5 rounded-full text-xs transition-all"
+                    style={{
+                      fontFamily: 'Effra, Arial, sans-serif',
+                      background: leadSourceFilter === src ? '#111827' : '#f3f4f6',
+                      color: leadSourceFilter === src ? '#fff' : '#374151',
+                      border: `1.5px solid ${leadSourceFilter === src ? '#111827' : '#e5e7eb'}`,
+                    }}
+                  >
+                    {src === 'all' ? 'All' : 'QR code only'}
+                    {src === 'qr' && (
+                      <span className="ml-1 opacity-75">
+                        ({leads.filter((l) => l.type === 'request_quote' && l.raw?.source === 'qr').length})
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+
               {/* Search */}
               <div className="sm:ml-auto">
                 <input
@@ -472,7 +501,7 @@ export default function AdminDashboard() {
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
-                      {['Type', 'Name', 'Email', 'Phone', 'Date', 'Actions'].map((h) => (
+                      {['Type', 'Name', 'Email', 'Phone', 'Source', 'Date', 'Actions'].map((h) => (
                         <th
                           key={h}
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -504,6 +533,15 @@ export default function AdminDashboard() {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
                             {lead.phone || '—'}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
+                            {lead.type === 'request_quote' && lead.raw?.source === 'qr' ? (
+                              <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs">QR code</span>
+                            ) : lead.type === 'request_quote' ? (
+                              <span className="text-gray-400">Website</span>
+                            ) : (
+                              '—'
+                            )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500" style={{ fontFamily: 'Effra, Arial, sans-serif' }}>
                             {new Date(lead.created_at).toLocaleDateString('en-GB', {
@@ -590,6 +628,7 @@ function LeadDetailModal({
     model: 'Model',
     emirates: 'Emirate',
     additional_info: 'Additional Info',
+    source: 'Source',
     created_at: 'Submitted At',
   };
 
@@ -634,7 +673,9 @@ function LeadDetailModal({
                       day: '2-digit', month: 'short', year: 'numeric',
                       hour: '2-digit', minute: '2-digit',
                     })
-                  : String(value);
+                  : key === 'source'
+                    ? (value === 'qr' ? 'QR code' : String(value))
+                    : String(value);
               return (
                 <div key={key} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
                   <dt
