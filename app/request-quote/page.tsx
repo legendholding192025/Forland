@@ -32,18 +32,13 @@ export const metadata: Metadata = generateSEOMetadata({
   url: '/request-quote',
 });
 
-type RequestQuoteSearchParams = {
-  src?: string | string[];
-};
-
-export default function RequestQuotePage({
+export default async function RequestQuotePage({
   searchParams,
 }: {
-  searchParams?: RequestQuoteSearchParams;
+  searchParams: Promise<{ src?: string }>;
 }) {
-  const rawSrc = searchParams?.src;
-  const src = Array.isArray(rawSrc) ? rawSrc[0] : rawSrc;
-  const source = src === 'qr' ? 'qr' : undefined;
+  const params = await searchParams;
+  const source = params?.src === 'qr' ? 'qr' : undefined;
 
   return (
     <div className="min-h-screen bg-white">
