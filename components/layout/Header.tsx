@@ -82,7 +82,13 @@ export default function Header() {
       >
         <div className="h-full mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '1440px' }}>
           <div className="h-full flex items-center justify-between">
-            <div className="flex items-center gap-2">
+            <a
+              href="https://www.google.com/maps/place/Legend+World+Rent+a+Car+-+Car+Rental+Dubai+-+Al+Quoz/@25.1297337,55.2427977,17z/data=!3m1!4b1!4m6!3m5!1s0x3e5f69c714664d71:0xcc04169981c4f1b2!8m2!3d25.1297289!4d55.2453726!16s%2Fg%2F11q8whn9vw?entry=ttu&g_ep=EgoyMDI2MDMyMi4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-white hover:opacity-80 transition-opacity duration-200 no-underline"
+              aria-label="Open location in Google Maps"
+            >
               <Image
                 src="/logo/Location.svg"
                 alt="Location"
@@ -103,7 +109,7 @@ export default function Header() {
               >
                 Plot 59 22nd St - Al Quoz, Al Quoz Industrial Area 2 - Dubai, UAE
               </div>
-            </div>
+            </a>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <Image
