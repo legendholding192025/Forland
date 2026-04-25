@@ -3,20 +3,10 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { fetchPublishedNewsPosts, type NewsPostRow } from '@/lib/website-data';
 import Link from 'next/link';
 
-interface NewsPost {
-  id: string;
-  title: string;
-  content: string;
-  excerpt: string | null;
-  image_url: string | null;
-  author: string | null;
-  featured: boolean;
-  published_at: string | null;
-  created_at: string;
-}
+type NewsPost = NewsPostRow;
 
 export default function NewsList() {
   const [newsPosts, setNewsPosts] = useState<NewsPost[]>([]);
@@ -29,15 +19,8 @@ export default function NewsList() {
 
   const fetchNewsPosts = async () => {
     try {
-      const { data, error } = await supabase
-        .from('news_posts')
-        .select('*')
-        .eq('published', true)
-        .order('featured', { ascending: false })
-        .order('published_at', { ascending: false });
-
-      if (error) throw error;
-      setNewsPosts(data || []);
+      const data = await fetchPublishedNewsPosts();
+      setNewsPosts(data);
     } catch (error: any) {
       console.error('Error fetching news posts:', error);
     } finally {

@@ -2,31 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { fetchNewsPostById, type NewsPostRow } from '@/lib/website-data';
 import Image from 'next/image';
 import Link from 'next/link';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { motion } from 'framer-motion';
 
-interface NewsPost {
-  id: string;
-  title: string;
-  content: string;
-  excerpt: string | null;
-  image_url: string | null;
-  author: string | null;
-  published_at: string | null;
-  created_at: string;
-  seo_title: string | null;
-  seo_description: string | null;
-  seo_keywords: string | null;
-}
-
 export default function NewsPostPage() {
   const params = useParams();
   const router = useRouter();
-  const [post, setPost] = useState<NewsPost | null>(null);
+  const [post, setPost] = useState<NewsPostRow | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -39,14 +25,7 @@ export default function NewsPostPage() {
   const fetchPost = async (id: string) => {
     try {
       setIsLoading(true);
-      const { data, error } = await supabase
-        .from('news_posts')
-        .select('*')
-        .eq('id', id)
-        .eq('published', true)
-        .single();
-
-      if (error) throw error;
+      const data = await fetchNewsPostById(id, { requirePublished: true });
       if (!data) {
         setError('News post not found');
         return;

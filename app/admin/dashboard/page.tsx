@@ -2,7 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import {
+  createNewsPost,
+  deleteNewsPost,
+  fetchAllNewsPostsForAdmin,
+  resetFeaturedNewsPosts,
+  updateNewsPost,
+  updateNewsPostPublished,
+} from '@/lib/website-data';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -77,9 +84,10 @@ export default function AdminDashboard() {
       }
 
       if (json.errors?.length) {
-        const hint = json.usingServiceKey
-          ? ''
-          : '\n\nYou need to add SUPABASE_SERVICE_ROLE_KEY to .env.local (find it at Supabase → Settings → API → service_role key) and restart the dev server.';
+        const hint =
+          json.dataBackend === 'postgres' || json.usingServiceKey
+            ? ''
+            : '\n\nYou need to add SUPABASE_SERVICE_ROLE_KEY to .env.local (find it at Supabase → Settings → API → service_role key) and restart the dev server.';
         setLeadsError(json.errors.join('\n') + hint);
       }
 
@@ -142,24 +150,14 @@ export default function AdminDashboard() {
   const fetchNewsPosts = async () => {
     try {
       setIsLoadingPosts(true);
-      const { data, error } = await supabase
-        .from('news_posts')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error('Supabase error:', error);
-        alert(`Error fetching news posts: ${error.message || JSON.stringify(error)}`);
-        throw error;
-      }
+      const data = await fetchAllNewsPostsForAdmin();
       setNewsPosts(data || []);
     } catch (error: any) {
       console.error('Error fetching news posts:', error);
-      // Show user-friendly error message
       if (error?.message) {
         alert(`Error: ${error.message}`);
       } else {
-        alert('Failed to fetch news posts. Please check your Supabase connection and RLS policies.');
+        alert('Failed to fetch news posts. Check your data backend (Supabase or PostgreSQL) configuration.');
       }
     } finally {
       setIsLoadingPosts(false);
@@ -170,12 +168,7 @@ export default function AdminDashboard() {
     if (!confirm('Are you sure you want to delete this news post?')) return;
 
     try {
-      const { error } = await supabase
-        .from('news_posts')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
+      await deleteNewsPost(id);
       fetchNewsPosts();
     } catch (error: any) {
       alert('Error deleting post: ' + error.message);
@@ -184,15 +177,10 @@ export default function AdminDashboard() {
 
   const handleTogglePublish = async (post: any) => {
     try {
-      const { error } = await supabase
-        .from('news_posts')
-        .update({
-          published: !post.published,
-          published_at: !post.published ? new Date().toISOString() : null,
-        })
-        .eq('id', post.id);
-
-      if (error) throw error;
+      await updateNewsPostPublished(post.id, {
+        published: !post.published,
+        published_at: !post.published ? new Date().toISOString() : null,
+      });
       fetchNewsPosts();
     } catch (error: any) {
       alert('Error updating post: ' + error.message);
@@ -924,22 +912,7 @@ function NewsPostForm({ post, onClose, onSuccess }: { post: any; onClose: () => 
 
       // If marking as featured, unfeature all other posts first
       if (formData.featured) {
-        if (post) {
-          // For existing post, exclude it from unfeaturing
-          const { error: unfeatureError } = await supabase
-            .from('news_posts')
-            .update({ featured: false })
-            .neq('id', post.id);
-
-          if (unfeatureError) throw unfeatureError;
-        } else {
-          // For new post, unfeature all existing posts
-          const { error: unfeatureError } = await supabase
-            .from('news_posts')
-            .update({ featured: false });
-
-          if (unfeatureError) throw unfeatureError;
-        }
+        await resetFeaturedNewsPosts(post ? post.id : null);
       }
 
       const dataToSubmit = {
@@ -948,16 +921,9 @@ function NewsPostForm({ post, onClose, onSuccess }: { post: any; onClose: () => 
       };
 
       if (post) {
-        // Update existing post
-        const { error } = await supabase
-          .from('news_posts')
-          .update(dataToSubmit)
-          .eq('id', post.id);
-        if (error) throw error;
+        await updateNewsPost(post.id, dataToSubmit);
       } else {
-        // Create new post
-        const { error } = await supabase.from('news_posts').insert([dataToSubmit]);
-        if (error) throw error;
+        await createNewsPost(dataToSubmit);
       }
 
       onSuccess();

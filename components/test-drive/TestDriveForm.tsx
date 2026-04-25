@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { insertFormRow } from '@/lib/website-data';
 
 export default function TestDriveForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,11 +35,7 @@ export default function TestDriveForm() {
     };
 
     try {
-      const { error } = await supabase
-        .from('test_drive')
-        .insert([data]);
-
-      if (error) throw error;
+      await insertFormRow('test_drive', data);
 
       // Send email notification
       try {

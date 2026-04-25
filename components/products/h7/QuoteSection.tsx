@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { insertFormRow } from '@/lib/website-data';
 
 export default function QuoteSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,11 +34,7 @@ export default function QuoteSection() {
     };
 
     try {
-      const { error } = await supabase
-        .from('request_quote')
-        .insert([data]);
-
-      if (error) throw error;
+      await insertFormRow('request_quote', data);
 
       // Send email notification
       try {

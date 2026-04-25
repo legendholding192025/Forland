@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { generateMetadata as generateSEOMetadata } from '@/lib/seo';
-import { supabase } from '@/lib/supabase';
+import { fetchNewsPostForMetadata } from '@/lib/news-for-metadata';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> | { id: string } }): Promise<Metadata> {
   try {
@@ -15,14 +15,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       });
     }
 
-    const { data: post, error } = await supabase
-      .from('news_posts')
-      .select('title, excerpt, image_url, seo_title, seo_description, seo_keywords')
-      .eq('id', postId)
-      .eq('published', true)
-      .single();
+    const post = await fetchNewsPostForMetadata(postId);
 
-    if (error || !post) {
+    if (!post) {
       return generateSEOMetadata({
         title: 'News Post Not Found',
         description: 'The requested news post could not be found.',

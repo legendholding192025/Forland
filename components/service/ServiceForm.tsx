@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { insertFormRow } from '@/lib/website-data';
 
 export default function ServiceForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,11 +33,7 @@ export default function ServiceForm() {
     };
 
     try {
-      const { error } = await supabase
-        .from('service')
-        .insert([data]);
-
-      if (error) throw error;
+      await insertFormRow('service', data);
 
       // Send email notification
       try {
