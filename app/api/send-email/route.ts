@@ -1,7 +1,13 @@
 import { Resend } from 'resend';
 import { NextRequest, NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResendClient(): Resend | null {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    return null;
+  }
+  return new Resend(apiKey);
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -133,6 +139,14 @@ export async function POST(request: NextRequest) {
 
       return html;
     };
+
+    const resend = getResendClient();
+    if (!resend) {
+      return NextResponse.json(
+        { error: 'Email configuration missing' },
+        { status: 500 }
+      );
+    }
 
     // Send email
     const { data, error } = await resend.emails.send({
