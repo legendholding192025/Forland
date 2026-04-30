@@ -84,11 +84,7 @@ export default function AdminDashboard() {
       }
 
       if (json.errors?.length) {
-        const hint =
-          json.dataBackend === 'postgres' || json.usingServiceKey
-            ? ''
-            : '\n\nYou need to add SUPABASE_SERVICE_ROLE_KEY to .env.local (find it at Supabase → Settings → API → service_role key) and restart the dev server.';
-        setLeadsError(json.errors.join('\n') + hint);
+        setLeadsError(json.errors.join('\n'));
       }
 
       const normalize = (row: any): Lead => {
@@ -157,7 +153,7 @@ export default function AdminDashboard() {
       if (error?.message) {
         alert(`Error: ${error.message}`);
       } else {
-        alert('Failed to fetch news posts. Check your data backend (Supabase or PostgreSQL) configuration.');
+        alert('Failed to fetch news posts. Check your PostgreSQL configuration.');
       }
     } finally {
       setIsLoadingPosts(false);

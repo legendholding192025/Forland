@@ -1,5 +1,5 @@
 /**
- * Browser-safe data access: uses /api/db/* when NEXT_PUBLIC_DATA_BACKEND=postgres, else Supabase.
+ * Browser-safe data access via Postgres-backed API routes.
  */
 import { isPostgresDataBackend } from '@/lib/env-data';
 
@@ -16,23 +16,18 @@ export async function insertFormRow(
     }
   }
 
-  if (isPostgresDataBackend()) {
-    const res = await fetch('/api/db/forms', {
-      method: 'POST',
-      headers: jsonHeaders,
-      body: JSON.stringify({ table, data: clean }),
-    });
-    const j = (await res.json().catch(() => ({}))) as { error?: string };
-    if (!res.ok) {
-      throw new Error(j.error || 'Failed to save form');
-    }
-    return;
+  if (!isPostgresDataBackend()) {
+    throw new Error('Unsupported data backend');
   }
 
-  const { supabase } = await import('@/lib/supabase');
-  const { error } = await supabase.from(table).insert([clean]);
-  if (error) {
-    throw error;
+  const res = await fetch('/api/db/forms', {
+    method: 'POST',
+    headers: jsonHeaders,
+    body: JSON.stringify({ table, data: clean }),
+  });
+  const j = (await res.json().catch(() => ({}))) as { error?: string };
+  if (!res.ok) {
+    throw new Error(j.error || 'Failed to save form');
   }
 }
 
@@ -53,91 +48,57 @@ export type NewsPostRow = {
 };
 
 export async function fetchPublishedNewsPosts(): Promise<NewsPostRow[]> {
-  if (isPostgresDataBackend()) {
-    const res = await fetch('/api/db/news?scope=published');
-    const j = (await res.json()) as { posts?: NewsPostRow[]; error?: string };
-    if (!res.ok) {
-      throw new Error(j.error || 'Failed to load news');
-    }
-    return j.posts || [];
+  if (!isPostgresDataBackend()) {
+    throw new Error('Unsupported data backend');
   }
 
-  const { supabase } = await import('@/lib/supabase');
-  const { data, error } = await supabase
-    .from('news_posts')
-    .select('*')
-    .eq('published', true)
-    .order('featured', { ascending: false })
-    .order('published_at', { ascending: false });
-
-  if (error) {
-    throw error;
+  const res = await fetch('/api/db/news?scope=published');
+  const j = (await res.json()) as { posts?: NewsPostRow[]; error?: string };
+  if (!res.ok) {
+    throw new Error(j.error || 'Failed to load news');
   }
-  return (data || []) as NewsPostRow[];
+  return j.posts || [];
 }
 
 export async function fetchNewsPostById(
   id: string,
   options: { requirePublished: boolean }
 ): Promise<NewsPostRow | null> {
-  if (isPostgresDataBackend()) {
-    const q = options.requirePublished ? '?publishedOnly=true' : '';
-    const res = await fetch(`/api/db/news/${id}${q}`);
-    const j = (await res.json()) as { post?: NewsPostRow | null; error?: string };
-    if (!res.ok) {
-      throw new Error(j.error || 'Failed to load post');
-    }
-    return j.post ?? null;
+  if (!isPostgresDataBackend()) {
+    throw new Error('Unsupported data backend');
   }
 
-  const { supabase } = await import('@/lib/supabase');
-  let q = supabase.from('news_posts').select('*').eq('id', id);
-  if (options.requirePublished) {
-    q = q.eq('published', true);
+  const q = options.requirePublished ? '?publishedOnly=true' : '';
+  const res = await fetch(`/api/db/news/${id}${q}`);
+  const j = (await res.json()) as { post?: NewsPostRow | null; error?: string };
+  if (!res.ok) {
+    throw new Error(j.error || 'Failed to load post');
   }
-  const { data, error } = await q.maybeSingle();
-  if (error) {
-    throw error;
-  }
-  return data as NewsPostRow | null;
+  return j.post ?? null;
 }
 
 export async function fetchAllNewsPostsForAdmin(): Promise<NewsPostRow[]> {
-  if (isPostgresDataBackend()) {
-    const res = await fetch('/api/db/news?scope=all');
-    const j = (await res.json()) as { posts?: NewsPostRow[]; error?: string };
-    if (!res.ok) {
-      throw new Error(j.error || 'Failed to load news');
-    }
-    return j.posts || [];
+  if (!isPostgresDataBackend()) {
+    throw new Error('Unsupported data backend');
   }
 
-  const { supabase } = await import('@/lib/supabase');
-  const { data, error } = await supabase
-    .from('news_posts')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    throw error;
+  const res = await fetch('/api/db/news?scope=all');
+  const j = (await res.json()) as { posts?: NewsPostRow[]; error?: string };
+  if (!res.ok) {
+    throw new Error(j.error || 'Failed to load news');
   }
-  return (data || []) as NewsPostRow[];
+  return j.posts || [];
 }
 
 export async function deleteNewsPost(id: string): Promise<void> {
-  if (isPostgresDataBackend()) {
-    const res = await fetch(`/api/db/news/${id}`, { method: 'DELETE' });
-    const j = (await res.json().catch(() => ({}))) as { error?: string };
-    if (!res.ok) {
-      throw new Error(j.error || 'Delete failed');
-    }
-    return;
+  if (!isPostgresDataBackend()) {
+    throw new Error('Unsupported data backend');
   }
 
-  const { supabase } = await import('@/lib/supabase');
-  const { error } = await supabase.from('news_posts').delete().eq('id', id);
-  if (error) {
-    throw error;
+  const res = await fetch(`/api/db/news/${id}`, { method: 'DELETE' });
+  const j = (await res.json().catch(() => ({}))) as { error?: string };
+  if (!res.ok) {
+    throw new Error(j.error || 'Delete failed');
   }
 }
 
@@ -145,77 +106,52 @@ export async function updateNewsPostPublished(
   id: string,
   update: { published: boolean; published_at: string | null }
 ): Promise<void> {
-  if (isPostgresDataBackend()) {
-    const res = await fetch(`/api/db/news/${id}`, {
-      method: 'PATCH',
-      headers: jsonHeaders,
-      body: JSON.stringify(update),
-    });
-    const j = (await res.json().catch(() => ({}))) as { error?: string };
-    if (!res.ok) {
-      throw new Error(j.error || 'Update failed');
-    }
-    return;
+  if (!isPostgresDataBackend()) {
+    throw new Error('Unsupported data backend');
   }
 
-  const { supabase } = await import('@/lib/supabase');
-  const { error } = await supabase.from('news_posts').update(update).eq('id', id);
-  if (error) {
-    throw error;
+  const res = await fetch(`/api/db/news/${id}`, {
+    method: 'PATCH',
+    headers: jsonHeaders,
+    body: JSON.stringify(update),
+  });
+  const j = (await res.json().catch(() => ({}))) as { error?: string };
+  if (!res.ok) {
+    throw new Error(j.error || 'Update failed');
   }
 }
 
 export async function resetFeaturedNewsPosts(exceptId: string | null): Promise<void> {
-  if (isPostgresDataBackend()) {
-    const res = await fetch('/api/db/news/reset-featured', {
-      method: 'POST',
-      headers: jsonHeaders,
-      body: JSON.stringify(exceptId ? { exceptId } : {}),
-    });
-    const j = (await res.json().catch(() => ({}))) as { error?: string };
-    if (!res.ok) {
-      throw new Error(j.error || 'Failed to update featured state');
-    }
-    return;
+  if (!isPostgresDataBackend()) {
+    throw new Error('Unsupported data backend');
   }
 
-  const { supabase } = await import('@/lib/supabase');
-  if (exceptId) {
-    const { error } = await supabase
-      .from('news_posts')
-      .update({ featured: false })
-      .neq('id', exceptId);
-    if (error) {
-      throw error;
-    }
-  } else {
-    const { error } = await supabase.from('news_posts').update({ featured: false });
-    if (error) {
-      throw error;
-    }
+  const res = await fetch('/api/db/news/reset-featured', {
+    method: 'POST',
+    headers: jsonHeaders,
+    body: JSON.stringify(exceptId ? { exceptId } : {}),
+  });
+  const j = (await res.json().catch(() => ({}))) as { error?: string };
+  if (!res.ok) {
+    throw new Error(j.error || 'Failed to update featured state');
   }
 }
 
 export async function createNewsPost(
   row: Record<string, string | boolean | null | undefined>
 ): Promise<void> {
-  if (isPostgresDataBackend()) {
-    const res = await fetch('/api/db/news', {
-      method: 'POST',
-      headers: jsonHeaders,
-      body: JSON.stringify(row),
-    });
-    const j = (await res.json().catch(() => ({}))) as { error?: string };
-    if (!res.ok) {
-      throw new Error(j.error || 'Failed to create post');
-    }
-    return;
+  if (!isPostgresDataBackend()) {
+    throw new Error('Unsupported data backend');
   }
 
-  const { supabase } = await import('@/lib/supabase');
-  const { error } = await supabase.from('news_posts').insert([row]);
-  if (error) {
-    throw error;
+  const res = await fetch('/api/db/news', {
+    method: 'POST',
+    headers: jsonHeaders,
+    body: JSON.stringify(row),
+  });
+  const j = (await res.json().catch(() => ({}))) as { error?: string };
+  if (!res.ok) {
+    throw new Error(j.error || 'Failed to create post');
   }
 }
 
@@ -223,22 +159,17 @@ export async function updateNewsPost(
   id: string,
   row: Record<string, string | boolean | null | undefined>
 ): Promise<void> {
-  if (isPostgresDataBackend()) {
-    const res = await fetch(`/api/db/news/${id}`, {
-      method: 'PATCH',
-      headers: jsonHeaders,
-      body: JSON.stringify(row),
-    });
-    const j = (await res.json().catch(() => ({}))) as { error?: string };
-    if (!res.ok) {
-      throw new Error(j.error || 'Failed to update post');
-    }
-    return;
+  if (!isPostgresDataBackend()) {
+    throw new Error('Unsupported data backend');
   }
 
-  const { supabase } = await import('@/lib/supabase');
-  const { error } = await supabase.from('news_posts').update(row).eq('id', id);
-  if (error) {
-    throw error;
+  const res = await fetch(`/api/db/news/${id}`, {
+    method: 'PATCH',
+    headers: jsonHeaders,
+    body: JSON.stringify(row),
+  });
+  const j = (await res.json().catch(() => ({}))) as { error?: string };
+  if (!res.ok) {
+    throw new Error(j.error || 'Failed to update post');
   }
 }
