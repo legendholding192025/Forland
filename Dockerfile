@@ -1,8 +1,6 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package*.json ./
-COPY .npmrc ./
-COPY prisma ./prisma
 RUN npm ci
 
 FROM node:20-alpine AS builder
@@ -19,8 +17,6 @@ ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
 COPY package*.json ./
-COPY .npmrc ./
-COPY prisma ./prisma
 RUN npm ci --omit=dev
 
 COPY --from=builder /app/public ./public
