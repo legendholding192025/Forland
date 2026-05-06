@@ -120,7 +120,7 @@ export default function Header() {
                   className="w-4 h-4"
                 />
                 <a 
-                  href="tel:80010888"
+                  href="tel:8002482"
                   className="text-white hover:opacity-80 transition-opacity duration-200"
                   style={{ 
                     fontFamily: 'Effra, Arial, sans-serif',
@@ -131,7 +131,7 @@ export default function Header() {
                     letterSpacing: '0%'
                   }}
                 >
-                  800 10 888
+                  800 2482
                 </a>
               </div>
               <div className="flex items-center gap-2">
@@ -207,7 +207,7 @@ export default function Header() {
           {/* Mobile: Left side - Phone and Email icons */}
           <div className="md:hidden flex items-center gap-3">
             <a 
-              href="tel:80010888"
+              href="tel:8002482"
               className="text-white hover:opacity-80 transition-opacity duration-200"
               aria-label="Call us"
             >

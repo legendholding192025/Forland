@@ -221,7 +221,7 @@ export default function Footer() {
                     className="w-4 h-4"
                   />
                   <a 
-                    href="tel:80010888"
+                    href="tel:8002482"
                     className="text-white hover:opacity-80 transition-opacity duration-200"
                     style={{ 
                       fontFamily: 'Effra, Arial, sans-serif',
@@ -232,7 +232,7 @@ export default function Footer() {
                       letterSpacing: '0%'
                     }}
                   >
-                    800 10 888
+                    800 2482
                   </a>
                 </div>
                 {/* Email */}
